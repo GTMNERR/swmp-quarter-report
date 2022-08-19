@@ -37,22 +37,22 @@ execute:
   code-overflow: wrap
   
 format:
-  docx:
-    toc: true
-    toc-depth: 2
-    reference-doc: template.docx
-    always_allow_html: true
+  # docx:
+  #   toc: true
+  #   toc-depth: 2
+  #   reference-doc: template.docx
+  #   always_allow_html: true
   html:
     theme: cosmo
     toc: true
     toc-depth: 3
-  pdf:
-    documentclass: scrbook
-    classoption: ["oneside"]
-    template-partials: ["partials/before-body.tex"]
-    toc: true
-    toc-depth: 2
-    lof: true
-    lot: true
-    include-in-header: 
-      - partials/inheader.tex
+  # pdf:
+  #   documentclass: scrbook
+  #   classoption: ["oneside"]
+  #   template-partials: ["partials/before-body.tex"]
+  #   toc: true
+  #   toc-depth: 2
+  #   lof: true
+  #   lot: true
+  #   include-in-header: 
+  #     - partials/inheader.tex
