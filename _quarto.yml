@@ -1,0 +1,55 @@
+project:
+  type: book
+  output-dir: docs
+  output-file: "QmdReport"
+  
+book:
+  title: Guana Tolomato Matanzas National Estuarine Research Reserve 
+  subtitle: Quarterly Weather and Water Quality Monitoring Summary Report
+  # cover-image:
+  # image: 
+  downloads: [pdf, docx]
+  author:
+    - name: Shannon Dunnigan
+      # affiliations:
+      #   - name: 
+    # - name: Kathryn Petrinec
+    #   # affiliations:
+    #   #   - name: Florida Department of Environmental Protection
+    # - name: Nikki Dix
+    #   # affiliations:
+    #   #   - name: 
+  chapters:
+    - index.qmd
+    - text/background.qmd
+    
+  repo-url: https://github.com/GTMNERR/swmp-quarter-report
+  repo-actions: [edit, source, issue]
+  search: true
+
+# bibliography: references.bib
+  
+execute:
+  echo: false
+  code-overflow: wrap
+  
+format:
+  docx:
+    toc: true
+    toc-depth: 2
+    reference-doc: template.docx
+    always_allow_html: true
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+  pdf:
+    documentclass: scrbook
+    classoption: ["oneside"]
+    template-partials: ["partials/before-body.tex"]
+    toc: true
+    toc-depth: 2
+    lof: true
+    lot: true
+    include-in-header: 
+      - partials/inheader.tex
