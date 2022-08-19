@@ -22,12 +22,15 @@ book:
   chapters:
     - index.qmd
     - text/background.qmd
+    - text/environmental.qmd
     
   repo-url: https://github.com/GTMNERR/swmp-quarter-report
   repo-actions: [edit, source, issue]
   search: true
 
 # bibliography: references.bib
+
+freeze: true
   
 execute:
   echo: false
