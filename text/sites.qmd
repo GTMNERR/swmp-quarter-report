@@ -1,0 +1,89 @@
+---
+title: "Sites"
+link-external-icon: true
+link-external-newwindow: true
+execute:
+  warning: false
+  error: false
+---
+
+## Station Information
+
+The continuous water quality component of the SWMP is comprised of four fixed monitoring stations, at which automated instruments (data sondes) are deployed to continuously collect information on a suite of water quality parameters. Discrete water samples are collected monthly for nutrients and other parameters at these same four stations, with an additional diel sampler deployed at one station. To complement the water quality data, the GTMNERR also operates and maintains one continuous meteorological station.
+
+::: callout-note
+All SWMP data are publicly available for download through the NERRS Centralized Data Management Office (CDMO). The CDMO supports data management protocols for SWMP and is responsible for ensuring that SWMP data are of high quality and accessible online (<https://www.nerrsdata.org>).
+:::
+
+## Locations
+
+```{r}
+#| label: load-map-data
+#| include: false
+
+source(here::here('R', '00_loadpackages.R'))
+source(here::here('R', '04_map.R'))
+```
+
+The climate of Northeast Florida is classified as humid subtropical and is characteristic of the Gulf and Atlantic Coastal Plain of the Southeastern United States. The GTMNERR is in the Florida Upper East Coast Drainage Basin and includes over 30,000 hectares of publicly owned forested uplands, tidal wetlands, estuarine lagoons, and offshore seas. It is associated with the riverine systems of the Tolomato and Guana River estuaries to the north and the Matanzas River and Pellicer Creek estuaries to the south. Until recently, the reserve was comprised of northern and southern components geographically separated by the greater St. Augustine area (@fig-map). In March of 2020, the boundary was expanded to include the Intracoastal Waterway through the City of St. Augustine, connecting the two components.
+
+```{r}
+#| label: fig-map
+#| echo: false
+#| fig.cap: Map of location for water quality, which includes data sonde and monthly grab samples for nutrients, and weather stations within the GTM Research Reserve. The red line represents the boundary of the GTM Research Reserve and the sites are indicated with a blue pin. The sites are named based on the nomenclature of the NERRs SWMP.
+
+# I want to make an interactive reserve map here with leaflet
+# here's a resource I want to use https://towardsdatascience.com/making-interactive-maps-in-r-with-less-than-15-lines-of-code-bfd81f587e12
+# picking different map styles: https://leaflet-extras.github.io/leaflet-providers/preview/
+
+spatial %>%
+  leaflet(width = 900) %>%
+  addTiles() %>%
+  addMarkers(clusterOptions = markerClusterOptions(),
+             label = ~htmlEscape(station_code),
+             labelOptions = labelOptions(textsize = "15px")) %>%
+  addPolygons(data = shape_data, weight = 5, col = 'red')
+```
+
+The four SWMP water quality stations operated in the GTMNERR are Pine Island, San Sebastian, Fort Matanzas, and Pellicer Creek . The locations of these stations were selected to represent the influence of watersheds with varying degrees of urban development and reflect a diversity of physical processes (e.g., tidal exchange, freshwater input) and climatic conditions. The weather station is located near the mouth of Pellicer Creek.
+
+## Characteristics
+
+::: {#fig-wq-stations layout-ncol="2"}
+![Pine Island](/images/gtmpiwq.jpg){#fig-pi-wq}
+
+![San Sebastian](/images/gtmsswq.jpg){#fig-ss-wq}
+
+![Fort Matanzas](/images/gtmfmwq.jpg){#fig-fm-wq}
+
+![Pellicer Creek](/images/gtmpcwq.jpg){#fig-pc-wq}
+
+SWMP Water Quality Stations
+:::
+
+The Pine Island water quality station (@fig-pi-wq) is located at Channel Marker 25 in the Tolomato River (30.0508 N; -81.3674 W), adjacent to Pine Island and near the mouth of Deep Creek, which provides freshwater drainage from silviculture-dominated uplands in the northwestern portion of the Tolomato River Basin. The station is within Class II shellfish harvesting waters. Also located within the Tolomato River Basin are both the Guana River Marsh Aquatic Preserve and the Guana River. The Guana River runs parallel to the Tolomato on the seaward side, with the two lagoons joining 11.3 km north of the St. Augustine Inlet. The Tolomato River Basin converges with the Matanzas River and Salt Run from the south before flowing into the Atlantic Ocean at the St. Augustine Inlet.
+
+The San Sebastian water quality station (@fig-ss-wq) is approximately 4 km south of the St. Augustine Inlet at the confluence of the San Sebastian and Matanzas Rivers on Channel Marker 1 (29.8688 N; -81.3074 W). The San Sebastian River drains an urbanized watershed in the western portion of St. Augustine, which is characterized by both residential and commercial development, including five marinas.
+
+The Matanzas River estuary is approximately 32 km in length and extends 13 km south of the Matanzas Inlet. Both the St. Augustine and Matanzas Inlets provide oceanic exchange to the system. The Matanzas Inlet, one of the last "natural" inlets on Florida's east coast, has been unimproved and is suitable only for small watercrafts. The Fort Matanzas water quality station (@fig-fm-wq) is located at Channel Marker 75 in the Matanzas River approximately 4 km north of the Matanzas Inlet (29.7370 N; -81.2459 W). This station is within Class II shellfish harvesting waters and is bordered to the east by residential development on Anastasia Island.
+
+Pellicer Creek is located in the southern part of the Matanzas River Basin, serves as a border between St. Johns and Flagler counties, and is surrounded by public conservation lands. Pellicer Creek is a tidal creek and is the primary source of natural freshwater drainage into the Matanzas River. The Pellicer Creek water quality station (@fig-pc-wq) is at the end of a recreational dock in Faver-Dykes State Park located within the Pellicer Creek Aquatic Preserve (29.6671 N; -81.2574 W). The Pellicer Creek weather station (@fig-pc-met) is approximately 4 km southeast of the Pellicer Creek water quality station, at the mouth of Pellicer Creek in Princess Place Preserve in Flagler County (29.6578 N, -81.2328 W). The station is located on a 1.8-m2 wooden deck built 1.3 m above a sand flat in a high marsh habitat. Excluding the rain gauge, which is located away from the tower on the southeast corner of the platform, all sensors are mounted on a 3-m aluminum tower secured to the wooden deck. Data collected at the water quality and weather stations in Pellicer Creek are transmitted via telemetry and are available for viewing online in near real-time at www.nerrsdata.org.
+
+![Pellicer Creek Weather Station](/images/gtmpcmet.JPG){#fig-pc-met}
+
+## CMECS Classifications
+
+The stations have also been defined using the National Oceanic and Atmospheric Administration's [Coastal and Marine Ecological Standard (CMECS)](https://iocm.noaa.gov/standards/cmecs-home.html). This information was compiled as part of a larger system-wide effort to combine the many factors that influence coastal water quality. For more information on the NERRS Characteristics of Land Use and Ecosystems (CLUE) project, visit <https://www.nerra.org/swmp-clue/>.
+
+```{r}
+#| label: tbl-cmecs
+#| tbl-cap: Coastal and Marine Ecological Standard CMECS Classifications for the four GTM Research Reserve long-term water quality monitoring stations, Pine Island gtmpiwq, San Sebastian gtmsswq, Fort Matanzas gtmfmwq, and Pellicer Creek gtmpcwq.
+
+cmecs <- readxl::read_xlsx(here('data', 'cmecs.xlsx'))
+
+cmecs |> kbl(align = "c") |> 
+  kable_styling(fixed_thead = T) |> 
+  row_spec(0, bold = T) |> 
+  column_spec(1, border_right = T) |>
+  kable_classic(c('striped', 'hover'), html_font = "Open Sans", full_width = F)
+```
