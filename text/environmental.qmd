@@ -5,8 +5,6 @@ editor_options:
 execute: 
   warning: false
   error: false
-filters: 
-  - lightbox
 ---
 
 ```{r}
@@ -93,7 +91,7 @@ historical_daily_range(pc, param = 'temp', target_yr = 2022)
 
 ## Salinity
 
-The heavy rainfall in March 2021 was evident in the salinity values at all stations, with the greatest impact occurring at the shallowest site, Pellicer Creek, which is also the most sensitive to runoff effects (@fig-range-sal-4). Salinity at Pine Island was much higher than average from June-July (@fig-range-sal-1). 
+The heavy rainfall in March 2022 was evident in the salinity values at all stations, with the greatest impact occurring at the shallowest site, Pellicer Creek, which is also the most sensitive to runoff effects (@fig-range-sal-4). Salinity at Pine Island was much higher than average from June-July (@fig-range-sal-1). 
 
 ```{r}
 #| label: fig-range-sal
