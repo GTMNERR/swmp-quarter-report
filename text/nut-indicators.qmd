@@ -64,6 +64,7 @@ Pellicer Creek is located within a waterbody with known impairments for dissolve
 #| fig.subcap:
 #|     - "For the past five years"
 #|     - "For the current 2022 year"
+#| layout-ncol: 2
     
 threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2017, 2022), 
                         thresholds = c(2,5),
