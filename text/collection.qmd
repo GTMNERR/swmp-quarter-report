@@ -10,7 +10,9 @@ editor_options:
 
 The meteorological data during the study period were collected using two different data loggers: the CR10X-2M and the CR1000. Both data loggers collected data using standardized programs created by the CDMO. From January 1, 2003 to June 19, 2006, the CR10X-2M logger sampled all weather station sensors every 5 sec and calculated both hourly and daily averages for air temperature, wind direction, and wind speed. Additionally, instantaneous samples of these parameters were recorded every 15 min. Precipitation data were summed and recorded as 15-minute, hourly, and daily totals. For the remainder of the study period the CR1000 logger was used and sampled 15-min averages of 5-sec readings for air temperature, wind direction, and wind speed. The precipitation sensor measured 15-min totals.
 
+::: column-margin
 ![Weather Station at Pellicer Creek during a monthy data download and station cleaning and maintenance in September, 2020.](/images/2020.09.30_METstation_SDunnigan.jpg){#fig-met-station}
+:::
 
 A maximum four-week sampling interval (i.e., time between data downloads) was used to avoid losing data and to provide for regular inspection and maintenance of the station. At each visit to the station, sensor performance was checked by comparing weather station values to those of a handheld Kestrel 4000 wind/weather instrument. All sensors were inspected for damage or debris and repaired and cleaned accordingly after the download of data were downloaded to a Palm Pilot. Except for the rain gauge (which was calibrated in-house), all sensors were removed and sent to Campbell Scientific for re-calibration when appropriate. In addition to data obtained directly from the data logger, data were also transmitted via Campbell Scientific telemetry equipment to a NOAA GOES satellite hourly.
 
@@ -26,17 +28,12 @@ Data sondes began collectingcollected temperature, salinity, dissolved oxygen, p
 
 Water samples were collected monthly at each of the four water quality monitoring stations for nitrite + nitrate, ammonium, total nitrogen, orthophosphate, total phosphorus, chlorophyll a, and total suspended solids using two types of sampling methods (grab and diel), on the same day during an ebb tide. Grab samples were collected from all stations in duplicate using a pole sampler and bucket. Diel samples were only collected at the Pellicer Creek station at 2.5-hour intervals for a 25-hour (lunar day) period using a Teledyne ISCO automatic sampler equipped with an internal ice bath to keep samples cold. Both grab and diel samples were collected from the approximate depth of the sonde sensors, 1 m above the bottom. Samples were filtered in the field whenever feasible; otherwise, they were placed on ice in the dark and filtered immediately upon returning to the laboratory.
 
-::: {#fig-nut layout-ncol=2}
-
+::: {#fig-nut layout-ncol="2"}
 ![Grab sample collection using sampling pole.](/images/2016-07-14_silas-pulling-water-PC.jpg){#fig-grab-sample}
 
 ![Diel sampler deployed at Pellicer Creek station.](/images/ISCO-Silas-Tanner.jpg){#fig-isco}
 
-
 Collection methods for nutrient analyses
-
 :::
 
 Water samples collected between January 1, 2003 and June 30, 2010 were collected and analyzed by University of Florida's (UF) Department of Fisheries and Aquatic Sciences. Samples collected between July 1, 2010 and November 30, 2012 were collected by GTMNERR and analyzed by the UF lab. Samples collected on or after December 1, 2012 were collected by GTMNERR and analyzed by the Florida Department of Environmental Protection's (FDEP) Central Laboratory. Both laboratories were certified through the National Environmental Laboratory Accreditation Program and used the American Public Health Association and Environmental Protection Agency methods for analyses. Method details can be found in annual metadata files at www.nerrsdata.org.
-
-After plotting discrete parameters over time, a shift was apparent in total suspended solids after 2012. This observation raised the question of comparability between the two labs. To explore further, nonparametric Kruskal-Wallis tests were conducted on total suspended solids, chlorophyll a, ammonium, nitrite + nitrate, orthophosphate, and total phosphorus, and all but chlorophyll a were significantly different (p \< 0.01) from 2002--2012 (analyses performed by the UF lab) and 2013--2022 (analyses performed by the FDEP lab). Unfortunately, no direct lab comparisons were made to address comparability at the time of the switch. Therefore, we cannot rule out the lab switch as a cause of the significant differences among time periods, although it is possible they were driven by real trends over time. Though methods were similar between both labs, differences such as the use of acidification in the sample preservation process for nitrogen and phosphorus tests performed by the FDEP lab could have led to slight differences.
