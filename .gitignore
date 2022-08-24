@@ -6,3 +6,7 @@
 /.quarto/
 /_site/
 /_book/
+/data/
+/images/
+
+/site_libs/
