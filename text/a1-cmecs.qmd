@@ -1,0 +1,27 @@
+---
+title: "Appendix 1 - CMECS Classifications"
+link-external-icon: true
+link-external-newwindow: true
+execute:
+  warning: false
+  error: false
+---
+
+This information was compiled as part of a larger system-wide effort to combine the many factors that influence coastal water quality. For more information on the NERRS Characteristics of Land Use and Ecosystems (CLUE) project, visit <https://www.nerra.org/swmp-clue/>.
+
+```{r}
+#| label: tbl-cmecs
+#| tbl-cap: Coastal and Marine Ecological Standard CMECS Classifications for the four GTM Research Reserve long-term water quality monitoring stations, Pine Island gtmpiwq, San Sebastian gtmsswq, Fort Matanzas gtmfmwq, and Pellicer Creek gtmpcwq.
+
+library(here)
+library(kableExtra) 
+library(readxl)
+
+cmecs <- readxl::read_xlsx(here('data', 'cmecs.xlsx'))
+
+cmecs |> kbl(align = "c") |> 
+  kable_styling(fixed_thead = T) |> 
+  row_spec(0, bold = T) |> 
+  column_spec(1, border_right = T) |>
+  kable_classic(c('striped', 'hover'), full_width = F)
+```
