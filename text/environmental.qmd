@@ -5,6 +5,8 @@ editor_options:
 execute: 
   warning: false
   error: false
+filters: 
+  - lightbox
 ---
 
 ```{r}
@@ -14,6 +16,8 @@ source(here::here('R', '00_loadpackages.R'))
 source(here::here('R', '02.2_load_wrangle_WQ-and-MET.R'))
 ```
 
+The following include variables that establish the estuarine setting: rainfall, water temperature, and salinity. These variables are driven primarily by climatic patterns and largely influence water quality condition.
+
 ## Rainfall
 
 The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). This year, the GTM Research Reserve weather station recorded much higher rainfall in the first quarter than the previous five years (@fig-rainfall-1). The majority of this rainfall occurred during the month of March with approximately 200 mm (7.87 in) of rai (@fig-rainfall-2).
@@ -21,10 +25,10 @@ The simplest way to bin rainfall within a single year is to present the data by 
 ```{r}
 #| label: fig-rainfall
 #| echo: false
-#| fig.cap: Rainfall
+#| fig.cap: Rainfall at the Pellicer Creek weather station.
 #| fig.subcap:
-#|    - "Ongoing quarterly totals of precipitation at the Pellicer Creek weather station."
-#|    - "Current year monthly totals"
+#|    - "Ongoing quarterly totals of precipitation."
+#|    - "Current year monthly total precipitation."
 #| layout-ncol: 2
 
 MET |> 
@@ -65,12 +69,12 @@ MET |>
 
 ## Temperature
 
-### Annual
+Water temperature daily range was quite variable in the first quarter of the year (January - March), where daily average temperatures were much lower than average in February, but the following month in March ended up being higher than average (@fig-range-temp). These higher than average daily values were likely driven up by the large amounts of rainfall this area experienced during this time (@fig-rainfall-2). Beginning in the latter part of May through the entire summer, waters were much warmer than average, particularly in the shallower sites (@fig-annual-temp-1; @fig-annual-temp-4)
 
 ```{r}
 #| label: fig-range-temp
 #| echo: false
-#| fig.cap: Historical Daily Range of Water Temperature at each SWMP Station with Current Daily Average Overlay.
+#| fig.cap: Historical daily range of water temperature at each SWMP water quality station with current year daily average overlaid in blue.
 #| fig.subcap:
 #|    - "Pine Island"
 #|    - "San Sebastian"
@@ -87,10 +91,14 @@ historical_daily_range(fm, param = 'temp', target_yr = 2022)
 historical_daily_range(pc, param = 'temp', target_yr = 2022)
 ```
 
+## Salinity
+
+The heavy rainfall in March 2021 was evident in the salinity values at all stations, with the greatest impact occurring at the shallowest site, Pellicer Creek, which is also the most sensitive to runoff effects (@fig-range-sal-4). Salinity at Pine Island was much higher than average from June-July (@fig-range-sal-1). 
+
 ```{r}
-#| label: fig-annual-temp
+#| label: fig-range-sal
 #| echo: false
-#| fig.cap: Annual Boxplots of Water Temperature at each SWMP Station.
+#| fig.cap: Historical daily range of salinity at each SWMP water quality station with current year daily average overlaid in blue.
 #| fig.subcap:
 #|    - "Pine Island"
 #|    - "San Sebastian"
@@ -98,11 +106,11 @@ historical_daily_range(pc, param = 'temp', target_yr = 2022)
 #|    - "Pellicer Creek"
 #| layout-ncol: 2
 
-seasonal_boxplot(pi, param = 'temp') + labs(title = "Pine Island") + theme(legend.position = "none")
+historical_daily_range(pi, param = 'sal', target_yr = 2022)
 
-seasonal_boxplot(ss, param = 'temp') + labs(title = "San Sebastian") + theme(legend.position = "none")
+historical_daily_range(ss, param = 'sal', target_yr = 2022)
 
-seasonal_boxplot(fm, param = 'temp') + labs(title = "Fort Matanzas") + theme(legend.position = "none")
+historical_daily_range(fm, param = 'sal', target_yr = 2022)
 
-seasonal_boxplot(pc, param = 'temp') + labs(title = "Pellicer Creek") + theme(legend.position = "none")
+historical_daily_range(pc, param = 'sal', target_yr = 2022)
 ```
