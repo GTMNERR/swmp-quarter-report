@@ -1,0 +1,108 @@
+---
+title: "Environmental"
+editor_options: 
+  chunk_output_type: console
+execute: 
+  warning: false
+  error: false
+---
+
+```{r}
+#| label: met-data-load
+#| include: false
+source(here::here('R', '00_loadpackages.R'))
+source(here::here('R', '02.2_load_wrangle_WQ-and-MET.R'))
+```
+
+## Rainfall
+
+The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). This year, the GTM Research Reserve weather station recorded much higher rainfall in the first quarter than the previous five years (@fig-rainfall-1). The majority of this rainfall occurred during the month of March with approximately 200 mm (7.87 in) of rai (@fig-rainfall-2).
+
+```{r}
+#| label: fig-rainfall
+#| echo: false
+#| fig.cap: Rainfall
+#| fig.subcap:
+#|    - "Ongoing quarterly totals of precipitation at the Pellicer Creek weather station."
+#|    - "Current year monthly totals"
+#| layout-ncol: 2
+
+MET |> 
+  SWMPrExtension::seasonal_barplot(param = 'totprcp',
+                                   season_grps = list(c(1,2,3), 
+                                                      c(4,5,6), 
+                                                      c(7,8,9), 
+                                                      c(10, 11, 12)),
+                                   season_names = c('Jan-Mar', 
+                                                    'Apr-Jun', 
+                                                    'Jul-Sep', 
+                                                    'Oct-Dec'),
+                                   hist_avg = TRUE,
+                                   converted = T) + 
+  theme(axis.text.x = element_text(angle = 45,
+                                   vjust = 0.6),
+        axis.text = element_text(color = "black", size = 18),
+        axis.title.y = element_text(size = 20))
+
+MET |> 
+  filter(datetimestamp > '2022-01-01 00:15') %>%
+  mutate(date = as.Date(datetimestamp),
+         month = lubridate::month(date, label = T)) %>% 
+  # group_by(month) %>%
+  # summarise(sum = sum(totprcp, na.rm = T)) %>%
+  # summarise(mean = mean(sum)) %>%
+  ggplot() +
+  geom_col(aes(x = month, y = totprcp), fill = "#0075AC") +
+  geom_hline(yintercept = 92.8, size = 2, linetype = "dashed", color = "grey50") +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black", size= 18),
+        axis.title.y = element_text(color = "black", size = 20)) +
+  labs(x = '',
+       y = 'Total Precipitation (mm)',
+       caption = "Hortizontal line represents current year monthly average.")
+```
+
+## Temperature
+
+### Annual
+
+```{r}
+#| label: fig-range-temp
+#| echo: false
+#| fig.cap: Historical Daily Range of Water Temperature at each SWMP Station with Current Daily Average Overlay.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+historical_daily_range(pi, param = 'temp', target_yr = 2022)
+
+historical_daily_range(ss, param = 'temp', target_yr = 2022)
+
+historical_daily_range(fm, param = 'temp', target_yr = 2022)
+
+historical_daily_range(pc, param = 'temp', target_yr = 2022)
+```
+
+```{r}
+#| label: fig-annual-temp
+#| echo: false
+#| fig.cap: Annual Boxplots of Water Temperature at each SWMP Station.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+seasonal_boxplot(pi, param = 'temp') + labs(title = "Pine Island") + theme(legend.position = "none")
+
+seasonal_boxplot(ss, param = 'temp') + labs(title = "San Sebastian") + theme(legend.position = "none")
+
+seasonal_boxplot(fm, param = 'temp') + labs(title = "Fort Matanzas") + theme(legend.position = "none")
+
+seasonal_boxplot(pc, param = 'temp') + labs(title = "Pellicer Creek") + theme(legend.position = "none")
+```
