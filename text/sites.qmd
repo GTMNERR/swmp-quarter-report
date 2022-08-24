@@ -21,7 +21,8 @@ All SWMP data are publicly available for download through the NERRS Centralized 
 #| label: load-map-data
 #| include: false
 
-source(here::here('R', '00_loadpackages.R'))
+library(here)
+
 source(here::here('R', '04_map.R'))
 ```
 
@@ -45,11 +46,10 @@ spatial %>%
   addPolygons(data = shape_data, weight = 5, col = 'red')
 ```
 
-The four SWMP water quality stations operated in the GTMNERR are Pine Island, San Sebastian, Fort Matanzas, and Pellicer Creek . The locations of these stations were selected to represent the influence of watersheds with varying degrees of urban development and reflect a diversity of physical processes (e.g., tidal exchange, freshwater input) and climatic conditions. The weather station is located near the mouth of Pellicer Creek.
-
-## Characteristics
+The four SWMP water quality stations operated in the GTMNERR are Pine Island, San Sebastian, Fort Matanzas, and Pellicer Creek (@fig-wq-stations). The locations of these stations were selected to represent the influence of watersheds with varying degrees of urban development and reflect a diversity of physical processes (e.g., tidal exchange, freshwater input) and climatic conditions. The weather station is located near the mouth of Pellicer Creek.
 
 ::: {#fig-wq-stations layout-ncol="2"}
+
 ![Pine Island](/images/gtmpiwq.jpg){#fig-pi-wq}
 
 ![San Sebastian](/images/gtmsswq.jpg){#fig-ss-wq}
@@ -58,8 +58,11 @@ The four SWMP water quality stations operated in the GTMNERR are Pine Island, Sa
 
 ![Pellicer Creek](/images/gtmpcwq.jpg){#fig-pc-wq}
 
+
 SWMP Water Quality Stations
 :::
+
+## Characteristics
 
 The Pine Island water quality station (@fig-pi-wq) is located at Channel Marker 25 in the Tolomato River (30.0508 N; -81.3674 W), adjacent to Pine Island and near the mouth of Deep Creek, which provides freshwater drainage from silviculture-dominated uplands in the northwestern portion of the Tolomato River Basin. The station is within Class II shellfish harvesting waters. Also located within the Tolomato River Basin are both the Guana River Marsh Aquatic Preserve and the Guana River. The Guana River runs parallel to the Tolomato on the seaward side, with the two lagoons joining 11.3 km north of the St. Augustine Inlet. The Tolomato River Basin converges with the Matanzas River and Salt Run from the south before flowing into the Atlantic Ocean at the St. Augustine Inlet.
 
@@ -69,21 +72,11 @@ The Matanzas River estuary is approximately 32 km in length and extends 13 km so
 
 Pellicer Creek is located in the southern part of the Matanzas River Basin, serves as a border between St. Johns and Flagler counties, and is surrounded by public conservation lands. Pellicer Creek is a tidal creek and is the primary source of natural freshwater drainage into the Matanzas River. The Pellicer Creek water quality station (@fig-pc-wq) is at the end of a recreational dock in Faver-Dykes State Park located within the Pellicer Creek Aquatic Preserve (29.6671 N; -81.2574 W). The Pellicer Creek weather station (@fig-pc-met) is approximately 4 km southeast of the Pellicer Creek water quality station, at the mouth of Pellicer Creek in Princess Place Preserve in Flagler County (29.6578 N, -81.2328 W). The station is located on a 1.8-m2 wooden deck built 1.3 m above a sand flat in a high marsh habitat. Excluding the rain gauge, which is located away from the tower on the southeast corner of the platform, all sensors are mounted on a 3-m aluminum tower secured to the wooden deck. Data collected at the water quality and weather stations in Pellicer Creek are transmitted via telemetry and are available for viewing online in near real-time at www.nerrsdata.org.
 
+::: column-margin
 ![Pellicer Creek Weather Station](/images/gtmpcmet.JPG){#fig-pc-met}
+:::
 
 ## CMECS Classifications
 
-The stations have also been defined using the National Oceanic and Atmospheric Administration's [Coastal and Marine Ecological Standard (CMECS)](https://iocm.noaa.gov/standards/cmecs-home.html). This information was compiled as part of a larger system-wide effort to combine the many factors that influence coastal water quality. For more information on the NERRS Characteristics of Land Use and Ecosystems (CLUE) project, visit <https://www.nerra.org/swmp-clue/>.
+The stations have also been defined using the National Oceanic and Atmospheric Administration's [Coastal and Marine Ecological Standard (CMECS)](https://iocm.noaa.gov/standards/cmecs-home.html)(@tbl-cmecs).
 
-```{r}
-#| label: tbl-cmecs
-#| tbl-cap: Coastal and Marine Ecological Standard CMECS Classifications for the four GTM Research Reserve long-term water quality monitoring stations, Pine Island gtmpiwq, San Sebastian gtmsswq, Fort Matanzas gtmfmwq, and Pellicer Creek gtmpcwq.
-
-cmecs <- readxl::read_xlsx(here('data', 'cmecs.xlsx'))
-
-cmecs |> kbl(align = "c") |> 
-  kable_styling(fixed_thead = T) |> 
-  row_spec(0, bold = T) |> 
-  column_spec(1, border_right = T) |>
-  kable_classic(c('striped', 'hover'), html_font = "Open Sans", full_width = F)
-```
