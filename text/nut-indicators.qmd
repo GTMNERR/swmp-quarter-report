@@ -1,0 +1,325 @@
+---
+title: "Nutrient Indicators"
+editor_options: 
+  chunk_output_type: console
+execute: 
+  warning: false
+  error: false
+---
+
+```{r}
+#| label: met-data-load
+#| include: false
+library(here)
+
+source(here::here('R', '00_loadpackages.R'))
+source(here::here('R', '02.1_load_wrangle_NUT.R'))
+source(here::here('R', '02.2_load_wrangle_WQ-and-MET.R'))
+source(here::here('R', '03_graph_fxns.R'))
+```
+
+The State Thresholds used in the chlorophyll *a*, total nitrogen, and total phosphorus calculations come from Florida State Surface Water Quality Standards within the Florida Administrative Code.
+
+::: callout-note
+# Access the Standards
+
+By visiting https://www.flrules.org/gateway/ruleno.asp?id=62-302.530
+:::
+
+## Dissolved Oxygen
+
+All stations experience seasonal patterns in dissolved oxygen with lower values in the warm, summer months (@fig-do).
+
+```{r}
+#| label: fig-do
+#| echo: false
+#| fig.cap: Historical daily range of dissolved oxygen at each SWMP water quality station with current year daily average overlaid in blue. Horizontal dashed red line indicates 2mg/L hypoxia threshold.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+pi |> 
+  filter(do_mgl > 0) |> 
+historical_daily_range(param = 'do_mgl', target_yr = 2022, criteria = 2)
+
+historical_daily_range(ss, param = 'do_mgl', target_yr = 2022, criteria = 2)
+
+historical_daily_range(filter(fm, do_mgl > 0), param = 'do_mgl', target_yr = 2022, criteria = 2)
+
+pc |>
+  filter(do_mgl < 20 & do_mgl > 0) |> 
+  historical_daily_range(param = 'do_mgl', target_yr = 2022, criteria = 2)
+
+```
+
+Pellicer Creek is located within a waterbody with known impairments for dissolved oxygen, chlorophyll a, and fecal coliform bacteria. As such, this station frequently experiences low dissolved oxygen values, particularly in the summer months; this year has been no exception (@fig-do-pc).
+
+```{r}
+#| label: fig-do-pc
+#| echo: false
+#| fig.cap: Continuous dissolved oxygen at Pellicer Creek with monthly average overlaid in solid gray line. Conditions are indicated as good when above 5 mg/L, fair between 2 and 5 mg/L, and poor if less than 2 mg/L.
+#| fig.subcap:
+#|     - "For the past five years"
+#|     - "For the current 2022 year"
+    
+threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2017, 2022), 
+                        thresholds = c(2,5),
+                        threshold_labs = c('Poor', 'Fair', 'Good'), 
+                        monthly_smooth = TRUE, 
+                        threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')) +
+  theme(axis.text = element_text(color = "black", size = 18),
+        axis.title.y = element_text(size = 20))
+
+
+
+threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2022, 2022), 
+                        thresholds = c(2,5),
+                        threshold_labs = c('Poor', 'Fair', 'Good'), 
+                        monthly_smooth = TRUE, 
+                        threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')) +
+  theme(axis.text = element_text(color = "black", size = 18),
+        axis.title.y = element_text(size = 20))
+
+```
+
+## Chlorophyll *a*
+
+So far, this year has seen elevated chlorophyll *a* levels at the three intracoastal waterway sites (@fig-chla-boxplots). The levels have been especially high at Pine Island since April (@fig-chla-boxplots-1). The highest observed chlorophyll in the time series was observed in April this year (18.5 $\mu$g/L). San Sebastian also had the highest chlorophyll observed in January and Feburary of this year compared to the same months in all previous years (6.85 and 5.6 $\mu$g/L, respectively; @fig-chla-boxplots-2).
+
+```{r}
+#| label: fig-chla-boxplots
+#| echo: false
+#| fig.cap: Historical monthly chlorophyll a at each SWMP water quality station with current year monthly value overlaid in red. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+boxplot_currentyear(station = "gtmpinut", 
+                    param = 0, 
+                    threshold = 6.6) +
+  # labs(title = "Pine Island") +
+  annotate("text",
+             x = "Mar",
+             y = 16,
+             size = 3,
+             color = "blue",
+             label = "State Threshold 6.6 (\U00B5g/L)")
+
+boxplot_currentyear(station = "gtmssnut", 
+                    param = 0, 
+                    threshold = 4.0) +
+  # labs(title = "San Sebastian") +
+  annotate("text",
+           x = "Mar",
+           y = 16,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 4.0 (\U00B5g/L)")
+
+boxplot_currentyear(station = "gtmfmnut", 
+                    param = 0, 
+                    threshold = 5.5) +
+  # labs(title = "Fort Matanzas") +
+  annotate("text",
+           x = "Mar",
+           y = 24,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 5.5 (\U00B5g/L)")
+
+boxplot_currentyear(station = "gtmpcnut", 
+                    param = 0, 
+                    threshold = 4.3) +
+  # labs(title = "Pellicer Creek") +
+  annotate("text",
+           x = "Mar",
+           y = 38,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 4.3 (\U00B5g/L)")
+```
+
+Interpretation of patterns in annual geometric means (AGM) for chlorophyll at each site is not available at this time since the 2022 value includes an incomplete record; however, several sites are elevated with current calculations (@fig-chla-agm).
+
+```{r}
+#| label: fig-chla-agm
+#| echo: false
+#| fig.cap: Annual geometric means of monthly chlorophyll a at each SWMP water quality station. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530. Values exceeding the threshold are indicated in red. The 2022 value is based upon data to date and does not equal an entire year of data.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+agm(station = "gtmpinut", 
+                             param = 0, 
+                             threshold = 6.6) +
+  # labs(title = "Pine Island") +
+  annotate("text",
+           x = "2006",
+           y = 8,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 6.6 (\U00B5g/L)")
+
+agm(station = "gtmssnut", 
+                             param = 0, 
+                             threshold = 4.0) +
+  # labs(title = "San Sebastian") +
+  annotate("text",
+           x = "2006",
+           y = 6,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 4.0 (\U00B5g/L)")
+
+agm(station = "gtmfmnut", 
+                             param = 0, 
+                             threshold = 5.5) +
+  # labs(title = "Fort Matanzas") +
+  annotate("text",
+           x = "2006",
+           y = 6,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 5.5 (\U00B5g/L)")
+
+agm(station = "gtmpcnut", 
+                             param = 0, 
+                             threshold = 4.3) +
+  # labs(title = "Pellicer Creek") +
+  annotate("text",
+           x = "2006",
+           y = 16,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 4.3 (\U00B5g/L)")
+
+```
+
+## Total Nitrogen
+
+Total nitrogen is a calculated parameter based on the addition of TKN and NO23. This year, quite a bit of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated. This was especially true at Pine Island which only has data in January and February (@fig-tn-boxplots-1) and the remaining sites are typically missing the March data.
+
+```{r}
+#| label: fig-tn-boxplots
+#| echo: false
+#| fig.cap: Historical monthly total nitrogen at each SWMP water quality station with current year monthly value overlaid in red. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+boxplot_currentyear(station = "gtmpinut", 
+                             param = 1, 
+                             threshold = 0.65) +
+  labs(title = "Pine Island") +
+  annotate("text",
+           x = "Mar",
+           y = 1.2,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 0.65 (mg/L)")
+
+boxplot_currentyear(station = "gtmssnut", 
+                             param = 1, 
+                             threshold = 0.55) +
+  # labs(title = "San Sebastian") +
+  annotate("text",
+           x = "Mar",
+           y = 1.0,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 0.55 (mg/L)")
+
+boxplot_currentyear(station = "gtmfmnut", 
+                             param = 1, 
+                             threshold = 0.55) +
+  # labs(title = "Fort Matanzas") +
+  annotate("text",
+           x = "Mar",
+           y = 1.0,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 0.55 (mg/L)")
+
+boxplot_currentyear(station = "gtmpcnut", 
+                             param = 1, 
+                             threshold = 1.10) +
+  # labs(title = "Pellicer Creek") +
+  annotate("text",
+           x = "Mar",
+           y = 1.7,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 1.10 (mg/L)")
+```
+
+## Total Phosphorus
+
+Total phosphorus continues to fall below the state threshold for every station (@fig-tp-boxplots). Though below the state threshold, Pine Island experienced elevated TP levels April-July (@fig-tp-boxplots-1). Total phosphorus levels were typically much lower than average at the remaining sites during that same time period.
+
+```{r}
+#| label: fig-tp-boxplots
+#| echo: false
+#| fig.cap: Historical monthly total phosphorus at each SWMP water quality station with current year monthly value overlaid in red. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+boxplot_currentyear(station = "gtmpinut", 
+                             param = 2, 
+                             threshold = 0.105) +
+ # labs(title = "Pine Island") +
+  annotate("text",
+           x = "Mar",
+           y = 0.15,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 0.105 (mg/L)")
+
+boxplot_currentyear(station = "gtmssnut", 
+                             param = 2, 
+                             threshold = 0.11) +
+  # labs(title = "San Sebastian") +
+  annotate("text",
+           x = "Mar",
+           y = 0.12,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 0.11 (mg/L)")
+
+boxplot_currentyear(station = "gtmfmnut", 
+                             param = 2, 
+                             threshold = 0.111) +
+# labs(title = "Fort Matanzas") +
+  annotate("text",
+           x = "Mar",
+           y = 0.12,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 0.111 (mg/L)")
+
+boxplot_currentyear(station = "gtmpcnut", 
+                             param = 2, 
+                             threshold = 0.123) +
+# labs(title = "Pellicer Creek") +
+  annotate("text",
+           x = "Mar",
+           y = 0.25,
+           size = 3,
+           color = "blue",
+           label = "State Threshold 0.123 (mg/L)")
+```
