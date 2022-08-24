@@ -3,8 +3,8 @@ project:
   output-dir: docs
   
 book:
-  title: Guana Tolomato Matanzas National Estuarine Research Reserve 
-  subtitle: Quarterly Weather and Water Quality Monitoring Summary Report
+  title:  Quarterly System-Wide Monitoring Program (SWMP) Report
+  subtitle: Guana Tolomato Matanzas National Estuarine Research Reserve
   # cover-image:
   # image: 
   downloads: [pdf]
@@ -26,14 +26,23 @@ book:
       chapters:
       - text/environmental.qmd
       - text/nut-indicators.qmd
+  appendices: 
+    - text/a1-cmecs.qmd
     
+  # site-url: https://GTMNERR.github.io/swmp-quarter-report
   repo-url: https://github.com/GTMNERR/swmp-quarter-report
   repo-actions: [edit, source, issue]
   search: true
 
+  page-footer:
+      left: |
+        This report was last updated on August 24, 2022.
+      right: |
+        Built with <a href="https://quarto.org/">Quarto</a>.
+
 # bibliography: references.bib
 
-# freeze: true
+freeze: true
   
 execute:
   echo: false
@@ -47,15 +56,8 @@ format:
     toc: true
     toc-depth: 3
   # pdf:
-  #   documentclass: scrbook
-  #   classoption: ["oneside"]
-  #   template-partials: ["partials/before-body.tex"]
+  #   documentclass: report
   #   toc: true
-  #   toc-depth: 2
+  #   toc-depth: 3
   #   lof: true
   #   lot: true
-  #   include-in-header: 
-  #     - partials/inheader.tex
-
-filters: 
-  - lightbox
