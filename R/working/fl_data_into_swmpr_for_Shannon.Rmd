@@ -1,0 +1,106 @@
+---
+title: "Create SWMPr Object from non-CDMO data"
+author: "Dave Eslinger"
+date: "10/27/2020, revised 9/24/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r libraries, include=FALSE}
+suppressPackageStartupMessages({
+library(SWMPrExtension)
+library(tidyverse)
+library(broom)
+})
+```
+
+## Assumptions
+
+We have a large amount of monitoring data and want to take advantage of the SWMPr and SWMPrExtension packages, however, the data is not actually SWMP data, so doens't come in the usual format that one gets SWMP data in from CDMO.
+
+## With Non-SWMP data
+
+First load the raw non-SWMP CSV data
+
+```{r read_csv}
+load("./NUT.RData")
+```
+
+The `swmpr()` call needs to have just datetimestamp and data+qa columns, so remove the extras, while also making names lower case.  
+
+```{r remove_non-SWMP_variables}
+names(NUT) <- tolower(names(NUT))
+# Just did this to check all the names.  Get rid of all but
+# datetimestamp and data + f_data columns.
+
+raw2 <- select(NUT, -c(station_code, monitoring_program, rep, f_record)) %>% 
+  rename(datetimestamp = date_time_stamp)
+all_names <- colnames(raw2)
+
+```
+
+**N.B.**: The below chunk to check variable names is not needed.  It turns out it doesn't matter in the `swmpr::qaqc()` call.
+
+```{r check_variable_names_and_order}
+evens <- seq(from = 2, to = length(all_names), by = 2)
+odds <- seq(from = 3, to = length(all_names), by = 2)  # Skip 1, since datetimestamp must be variable 1
+
+if(sum(all_names[evens] == paste0("f_", all_names[odds])) ==
+   (length(raw2)-1) /2) { # Oops! out of order
+  new_order <- c( 1, rbind(odds, evens))
+  raw2 <- raw2[new_order]
+}
+```
+
+A swmpr object needs a time zone 
+```{r fix_timestamp}
+timezone <- "America/Jamaica"  #Default to EST.  Note that SWMPr does not use daylight savings time.
+
+raw2$datetimestamp <- as.POSIXct(raw2$datetimestamp, tz = timezone, format = '%m/%d/%Y %H:%M')    
+
+```
+
+and a "reserve name", which can be 5 characters (usually 3-letter reserve abbreviation and 2 char. site abbreviation) and a 2-3 letter abbreviation for the data type, one of "wq", "nut", or "met".  I'm not sure this matters.
+
+
+**UPDATE!** The object sent to `swmpr::swmpr()` must be of class `data.frame` **ONLY**.  It can not be a `tibble`.
+
+```{r create_swmpr_object}
+swmp1 <- swmpr(as.data.frame(raw2),"gtmXXwq")
+
+class(swmp1)
+str(swmp1)
+#head(swmp1)
+```
+
+Seems to work, or at least didn't break.  Let's try some QA
+
+```{r do_qaqc}
+# First check the QAQC flags:
+
+flags <- qaqcchk(swmp3)  # Make a table of all the flags
+
+flags[flags$flag == "0", ]  # check number & type of"Good" data, flag = 0
+
+swmp2 <- tail(swmp1) %>% 
+  select(starts_with("f_")) #  Just looking at the last flags here.  Not sure why I did that, actually.
+
+swmp1qc <- qaqc(swmp1, qaqc_keep = "0")  #Keep just the good data.
+```
+
+And some plotting
+```{r make_test_plots}
+seasonal_boxplot(swmp1qc, param = 'do_mgl', target_yr = '2019')
+threshold_criteria_plot(swmp1qc, param = 'do_mgl', rng = 2020, thresholds = c(2,5))
+```
+
+That thrshold criteria plot looks odd, plot just the do_mgl outside of SWMPrExtension to check
+```{r check_plotting}
+plot(swmp1qc$datetimestamp, swmp1qc$do_mgl)
+```
+
+OK, so it appears ot just be odd-looking data.
