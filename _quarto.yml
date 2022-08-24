@@ -15,9 +15,6 @@ book:
     - name: Kathryn Petrinec
       # affiliations:
       #   - name: Florida Department of Environmental Protection
-    # - name: Nikki Dix
-    #   # affiliations:
-    #   #   - name: 
   chapters:
     - index.qmd
     - part: text/background.qmd
