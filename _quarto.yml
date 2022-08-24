@@ -25,6 +25,7 @@ book:
     - part: text/results.qmd
       chapters:
       - text/environmental.qmd
+      - text/nut-indicators.qmd
     
   repo-url: https://github.com/GTMNERR/swmp-quarter-report
   repo-actions: [edit, source, issue]
@@ -55,3 +56,6 @@ format:
   #   lot: true
   #   include-in-header: 
   #     - partials/inheader.tex
+
+filters: 
+  - lightbox
