@@ -105,9 +105,10 @@ So far, this year has seen elevated chlorophyll *a* levels at the three intracoa
 #| layout-ncol: 2
 
 boxplot_currentyear(station = "gtmpinut", 
-                    param = 0, 
-                    threshold = 6.6) +
-  # labs(title = "Pine Island") +
+                     param = chla_n, 
+                     threshold = TRUE,
+                     thres_val = 6.6) +
+  labs(y = "Mean Monthly Chlorophyll-a (\U00B5g/L)") +
   annotate("text",
              x = "Mar",
              y = 16,
@@ -116,9 +117,10 @@ boxplot_currentyear(station = "gtmpinut",
              label = "State Threshold 6.6 (\U00B5g/L)")
 
 boxplot_currentyear(station = "gtmssnut", 
-                    param = 0, 
-                    threshold = 4.0) +
-  # labs(title = "San Sebastian") +
+                     param = chla_n, 
+                     threshold = TRUE,
+                     thres_val = 4.0) +
+  labs(y = "Mean Monthly Chlorophyll-a (\U00B5g/L)") +
   annotate("text",
            x = "Mar",
            y = 16,
@@ -127,9 +129,10 @@ boxplot_currentyear(station = "gtmssnut",
            label = "State Threshold 4.0 (\U00B5g/L)")
 
 boxplot_currentyear(station = "gtmfmnut", 
-                    param = 0, 
-                    threshold = 5.5) +
-  # labs(title = "Fort Matanzas") +
+                    param = chla_n, 
+                    threshold = TRUE,
+                    thres_val = 5.5) +
+  labs(y = "Mean Monthly Chlorophyll-a (\U00B5g/L)") +
   annotate("text",
            x = "Mar",
            y = 24,
@@ -138,9 +141,10 @@ boxplot_currentyear(station = "gtmfmnut",
            label = "State Threshold 5.5 (\U00B5g/L)")
 
 boxplot_currentyear(station = "gtmpcnut", 
-                    param = 0, 
-                    threshold = 4.3) +
-  # labs(title = "Pellicer Creek") +
+                     param = chla_n, 
+                     threshold = TRUE,
+                     thres_val = 4.3) +
+  labs(y = "Mean Monthly Chlorophyll-a (\U00B5g/L)") +
   annotate("text",
            x = "Mar",
            y = 38,
@@ -163,9 +167,10 @@ Interpretation of patterns in annual geometric means (AGM) for chlorophyll at ea
 #| layout-ncol: 2
 
 agm(station = "gtmpinut", 
-                             param = 0, 
-                             threshold = 6.6) +
-  # labs(title = "Pine Island") +
+    param = CHLA_agm, 
+    threshold = TRUE,
+    thres_val = 6.6) +
+  labs(y = "Geo.Mean Annual Chlorophyll-a (\U00B5g/L)") +
   annotate("text",
            x = "2006",
            y = 8,
@@ -174,9 +179,10 @@ agm(station = "gtmpinut",
            label = "State Threshold 6.6 (\U00B5g/L)")
 
 agm(station = "gtmssnut", 
-                             param = 0, 
-                             threshold = 4.0) +
-  # labs(title = "San Sebastian") +
+    param = CHLA_agm, 
+    threshold = TRUE,
+    thres_val = 4.0) +
+  labs(y = "Geo.Mean Annual Chlorophyll-a (\U00B5g/L)") +
   annotate("text",
            x = "2006",
            y = 6,
@@ -185,9 +191,10 @@ agm(station = "gtmssnut",
            label = "State Threshold 4.0 (\U00B5g/L)")
 
 agm(station = "gtmfmnut", 
-                             param = 0, 
-                             threshold = 5.5) +
-  # labs(title = "Fort Matanzas") +
+    param = CHLA_agm, 
+    threshold = TRUE,
+    thres_val = 5.5) +
+  labs(y = "Geo.Mean Annual Chlorophyll-a (\U00B5g/L)") +
   annotate("text",
            x = "2006",
            y = 6,
@@ -196,9 +203,10 @@ agm(station = "gtmfmnut",
            label = "State Threshold 5.5 (\U00B5g/L)")
 
 agm(station = "gtmpcnut", 
-                             param = 0, 
-                             threshold = 4.3) +
-  # labs(title = "Pellicer Creek") +
+    param = CHLA_agm, 
+    threshold = TRUE,
+    thres_val = 4.3) +
+  labs(y = "Geo.Mean Annual Chlorophyll-a (\U00B5g/L)") +
   annotate("text",
            x = "2006",
            y = 16,
@@ -208,9 +216,15 @@ agm(station = "gtmpcnut",
 
 ```
 
-## Total Nitrogen
+## Nitrogen
 
-Total nitrogen is a calculated parameter based on the addition of TKN and NO23. This year, quite a bit of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated. This was especially true at Pine Island which only has data in January and February (@fig-tn-boxplots-1) and the remaining sites are typically missing the March data.
+Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated (see below). However, total kjeldahl nitrogen (TKN) show distinctive patterns at all sites (@fig-tkn-boxplots). At Pine Island, there is a distinctive pattern of very low values between January-March and elevated levels from April-July (@fig-tkn-boxplots-1). This distinctive shift between March and April may likely be in response to the large levels of rainfall the system experienced in March (@fig-rainfall-2). This response was seen at all the other sites, especially Pellicer Creek, which is also a more brackish site and sensitive to upland freshwater deposition (@fig-tkn-boxplots-2).
+
+### Total Nitrogen
+
+TN is a calculated value based on TKN and NO23.
+
+This year, quite a bit of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated. This was especially true at Pine Island which only has data in January and February (@fig-tn-boxplots-1) and the remaining sites are typically missing the March data.
 
 ```{r}
 #| label: fig-tn-boxplots
@@ -224,9 +238,10 @@ Total nitrogen is a calculated parameter based on the addition of TKN and NO23. 
 #| layout-ncol: 2
 
 boxplot_currentyear(station = "gtmpinut", 
-                             param = 1, 
-                             threshold = 0.65) +
-  labs(title = "Pine Island") +
+                     param = tn,
+                     threshold = TRUE,
+                     thres_val = 0.65) +
+  labs(y = "Mean Monthly Total Nitrogen (mg/L)") +
   annotate("text",
            x = "Mar",
            y = 1.2,
@@ -235,9 +250,10 @@ boxplot_currentyear(station = "gtmpinut",
            label = "State Threshold 0.65 (mg/L)")
 
 boxplot_currentyear(station = "gtmssnut", 
-                             param = 1, 
-                             threshold = 0.55) +
-  # labs(title = "San Sebastian") +
+                    param = tn,
+                    threshold = TRUE,
+                    thres_val = 0.55) +
+  labs(y = "Mean Monthly Total Nitrogen (mg/L)") +
   annotate("text",
            x = "Mar",
            y = 1.0,
@@ -246,9 +262,10 @@ boxplot_currentyear(station = "gtmssnut",
            label = "State Threshold 0.55 (mg/L)")
 
 boxplot_currentyear(station = "gtmfmnut", 
-                             param = 1, 
-                             threshold = 0.55) +
-  # labs(title = "Fort Matanzas") +
+                     param = tn, 
+                     threshold = TRUE,
+                     thres_val = 0.55) +
+  labs(y = "Mean Monthly Total Nitrogen (mg/L)") +
   annotate("text",
            x = "Mar",
            y = 1.0,
@@ -257,9 +274,10 @@ boxplot_currentyear(station = "gtmfmnut",
            label = "State Threshold 0.55 (mg/L)")
 
 boxplot_currentyear(station = "gtmpcnut", 
-                             param = 1, 
-                             threshold = 1.10) +
-  # labs(title = "Pellicer Creek") +
+                     param = tn, 
+                     threshold = TRUE,
+                     thres_val = 1.10) +
+  labs(y = "Mean Monthly Total Nitrogen (mg/L)") +
   annotate("text",
            x = "Mar",
            y = 1.7,
@@ -268,9 +286,87 @@ boxplot_currentyear(station = "gtmpcnut",
            label = "State Threshold 1.10 (mg/L)")
 ```
 
-## Total Phosphorus
+### Dissolved Inorganic Nitrogen
 
-Total phosphorus continues to fall below the state threshold for every station (@fig-tp-boxplots). Though below the state threshold, Pine Island experienced elevated TP levels April-July (@fig-tp-boxplots-1). Total phosphorus levels were typically much lower than average at the remaining sites during that same time period.
+DIN is a calculated value based on NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information for this year (@fig-din-boxplots).
+
+```{r}
+#| label: fig-tn-boxplots
+#| echo: false
+#| fig.cap: Historical monthly total nitrogen at each SWMP water quality station with current year monthly value overlaid in red. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+boxplot_currentyear(station = "gtmpinut", 
+                     param = din, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)") 
+
+boxplot_currentyear(station = "gtmssnut", 
+                     param = din, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)")
+
+boxplot_currentyear(station = "gtmfmnut", 
+                     param = din, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)")
+
+boxplot_currentyear(station = "gtmpcnut", 
+                     param = din, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)")
+
+
+```
+
+### Total Kjeldahl Nitrogen
+
+TKN is the total concentration of organic nitrogen and ammonia. It is directly measured in our samples.
+
+```{r}
+#| label: fig-tn-boxplots
+#| echo: false
+#| fig.cap: Historical monthly total nitrogen at each SWMP water quality station with current year monthly value overlaid in red. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+boxplot_currentyear(station = "gtmpinut", 
+                     param = tkn, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Total Kjeldahl Nitrogen (mg/L)") 
+
+boxplot_currentyear(station = "gtmssnut", 
+                     param = tkn, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Total Kjeldahl Nitrogen (mg/L)")
+
+boxplot_currentyear(station = "gtmfmnut", 
+                     param = tkn, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Total Kjeldahl Nitrogen (mg/L)")
+
+boxplot_currentyear(station = "gtmpcnut", 
+                     param = tkn, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Total Kjeldahl Nitrogen (mg/L)")
+
+
+```
+
+## Phosphorus
+
+Total phosphorus continues to fall below the state threshold for every station (@fig-tp-boxplots). Though below the state threshold, Pine Island experienced elevated TP levels April-July (@fig-tp-boxplots-1). Total phosphorus levels were typically much lower than average at the remaining sites during that same time period. In general, orthophosphate levels typically fell within the historical ranges at all sites; however, elevated amounts were observed in April at all four stations (@fig-po4-boxplots).
+
+### Total Phosphorus
 
 ```{r}
 #| label: fig-tp-boxplots
@@ -284,9 +380,10 @@ Total phosphorus continues to fall below the state threshold for every station (
 #| layout-ncol: 2
 
 boxplot_currentyear(station = "gtmpinut", 
-                             param = 2, 
-                             threshold = 0.105) +
- # labs(title = "Pine Island") +
+                    param = tp, 
+                    threshold = TRUE,
+                    thres_val = 0.105) +
+  labs(y = "Mean Monthly Total Phosphorus (mg/L)") +
   annotate("text",
            x = "Mar",
            y = 0.15,
@@ -294,10 +391,11 @@ boxplot_currentyear(station = "gtmpinut",
            color = "blue",
            label = "State Threshold 0.105 (mg/L)")
 
-boxplot_currentyear(station = "gtmssnut", 
-                             param = 2, 
-                             threshold = 0.11) +
-  # labs(title = "San Sebastian") +
+boxplot_currentyear(station = "gtmssnut",
+                    param = tp,
+                    threshold = TRUE, 
+                    thres_val = 0.11) +
+  labs(y = "Mean Monthly Total Phosphorus (mg/L)") +
   annotate("text",
            x = "Mar",
            y = 0.12,
@@ -306,9 +404,10 @@ boxplot_currentyear(station = "gtmssnut",
            label = "State Threshold 0.11 (mg/L)")
 
 boxplot_currentyear(station = "gtmfmnut", 
-                             param = 2, 
-                             threshold = 0.111) +
-# labs(title = "Fort Matanzas") +
+                     param = tp,
+                     threshold = TRUE, 
+                     thres_val = 0.111) +
+  labs(y = "Mean Monthly Total Phosphorus (mg/L)") +
   annotate("text",
            x = "Mar",
            y = 0.12,
@@ -317,13 +416,48 @@ boxplot_currentyear(station = "gtmfmnut",
            label = "State Threshold 0.111 (mg/L)")
 
 boxplot_currentyear(station = "gtmpcnut", 
-                             param = 2, 
-                             threshold = 0.123) +
-# labs(title = "Pellicer Creek") +
+                     param = tp, 
+                     threshold = TRUE,
+                     thres_val = 0.123) +
+  labs(y = "Mean Monthly Total Phosphorus (mg/L)") +
   annotate("text",
            x = "Mar",
            y = 0.25,
            size = 3,
            color = "blue",
            label = "State Threshold 0.123 (mg/L)")
+```
+
+### Orthophosphate
+
+```{r}
+#| label: fig-po4-boxplots
+#| echo: false
+#| fig.cap: Historical monthly orthophosphate at each SWMP water quality station with current year monthly value overlaid in red.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+boxplot_currentyear(station = "gtmpinut", 
+                     param = po4f, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Orthophosphate (mg/L)") 
+
+boxplot_currentyear(station = "gtmssnut", 
+                     param = po4f, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Orthophosphate (mg/L)") 
+
+boxplot_currentyear(station = "gtmfmnut", 
+                     param = po4f, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Orthophosphate (mg/L)") 
+
+boxplot_currentyear(station = "gtmpcnut", 
+                     param = po4f, 
+                     threshold = FALSE) +
+ labs(y = "Mean Monthly Orthophosphate (mg/L)") 
 ```
