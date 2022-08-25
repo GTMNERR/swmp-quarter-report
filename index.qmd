@@ -1,6 +1,6 @@
 # Citation {.unnumbered}
 
-Dunnigan, S., and K. Petrinec. 2022. Guana Tolomato Matanzas National Estuarine Research Reserve Quarterly Weather and Water Quality Monitoring Summary Report. Guana Tolomato Matanzas National Estuarine Research Reserve, Ponte Vedra Beach, FL
+Dunnigan, S., K. Petrinec, and N. Dix. 2022. Guana Tolomato Matanzas National Estuarine Research Reserve Quarterly Weather and Water Quality Monitoring Summary Report. Guana Tolomato Matanzas National Estuarine Research Reserve, Ponte Vedra Beach, FL
 
 ```{=openxml}
 <w:p><w:r><w:br w:type="page"/></w:r></w:p>
