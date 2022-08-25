@@ -18,7 +18,7 @@ The following include variables that establish the estuarine setting: rainfall, 
 
 ## Rainfall
 
-The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). This year, the GTM Research Reserve weather station recorded much higher rainfall in the first quarter than the previous five years (@fig-rainfall-1). The majority of this rainfall occurred during the month of March with approximately 200 mm (7.87 in) of rai (@fig-rainfall-2).
+The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). This year, the GTM Research Reserve weather station recorded much higher rainfall in the first quarter than the previous five years (@fig-rainfall-1). The majority of this rainfall occurred during the month of March with approximately 200 mm (7.87 in) of rain (@fig-rainfall-2).
 
 ```{r}
 #| label: fig-rainfall
@@ -40,7 +40,7 @@ MET |>
                                                     'Jul-Sep', 
                                                     'Oct-Dec'),
                                    hist_avg = TRUE,
-                                   converted = T) + 
+                                   converted = F) + 
   theme(axis.text.x = element_text(angle = 45,
                                    vjust = 0.6),
         axis.text = element_text(color = "black", size = 18),
