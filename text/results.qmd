@@ -3,36 +3,6 @@ title: "Results"
 editor: visual
 ---
 
-The results are presented under the following sections:
-
--   Environmental
-
-    -   Rainfall
-
-    -   Temperature
-
-    -   Salinity
-
--   Nutrient Indicators
-
-    -   Dissolved Oxygen
-
-    -   Chlorophyll *a*
-
-    -   Nitrogen
-
-        -   Total Nitrogen
-
-        -   Dissolved Inorganic Nitrogen
-
-        -   Total Kjeldahl Nitrogen
-
-    -   Phosphorus
-
-        -   Total Phosphorus
-
-        -   Orthophosphate
-
 Analyses were conducted in R and RStudio:
 
 ```{r}
