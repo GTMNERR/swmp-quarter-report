@@ -8,7 +8,7 @@ editor_options:
 
 ## Weather
 
-The meteorological data during the study period were collected using two different data loggers: the CR10X-2M and the CR1000. Both data loggers collected data using standardized programs created by the CDMO. From January 1, 2003 to June 19, 2006, the CR10X-2M logger sampled all weather station sensors every 5 sec and calculated both hourly and daily averages for air temperature, wind direction, and wind speed. Additionally, instantaneous samples of these parameters were recorded every 15 min. Precipitation data were summed and recorded as 15-minute, hourly, and daily totals. For the remainder of the study period the CR1000 logger was used and sampled 15-min averages of 5-sec readings for air temperature, wind direction, and wind speed. The precipitation sensor measured 15-min totals.
+The meteorological data were collected using a Campbell Scientific CR1000 logger and sampled 15-min averages of 5-sec readings for air temperature, wind direction, and wind speed. The precipitation sensor measured 15-min totals. Historically, a CR10x-2M logger was used to collect meteorological data. The CR10X-2M logger sampled all weather station sensors every 5 sec and calculated both hourly and daily averages for air temperature, wind direction, and wind speed. Additionally, instantaneous samples of these parameters were recorded every 15 min. Precipitation data were summed and recorded as 15-minute, hourly, and daily totals.
 
 ::: column-margin
 ![Weather Station at Pellicer Creek during a monthy data download and station cleaning and maintenance in September, 2020.](/images/2020.09.30_METstation_SDunnigan.jpg){#fig-met-station}
