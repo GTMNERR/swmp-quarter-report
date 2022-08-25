@@ -36,6 +36,9 @@ ul.task-list{list-style: none;}
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -193,12 +196,12 @@ ul.task-list{list-style: none;}
 
 <section id="weather" class="level2 page-columns page-full" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="weather"><span class="header-section-number">2.1</span> Weather</h2>
-<p>The meteorological data during the study period were collected using two different data loggers: the CR10X-2M and the CR1000. Both data loggers collected data using standardized programs created by the CDMO. From January 1, 2003 to June 19, 2006, the CR10X-2M logger sampled all weather station sensors every 5 sec and calculated both hourly and daily averages for air temperature, wind direction, and wind speed. Additionally, instantaneous samples of these parameters were recorded every 15 min. Precipitation data were summed and recorded as 15-minute, hourly, and daily totals. For the remainder of the study period the CR1000 logger was used and sampled 15-min averages of 5-sec readings for air temperature, wind direction, and wind speed. The precipitation sensor measured 15-min totals.</p>
+<p>The meteorological data were collected using a Campbell Scientific CR1000 logger and sampled 15-min averages of 5-sec readings for air temperature, wind direction, and wind speed. The precipitation sensor measured 15-min totals. Historically, a CR10x-2M logger was used to collect meteorological data. The CR10X-2M logger sampled all weather station sensors every 5 sec and calculated both hourly and daily averages for air temperature, wind direction, and wind speed. Additionally, instantaneous samples of these parameters were recorded every 15 min. Precipitation data were summed and recorded as 15-minute, hourly, and daily totals.</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
 <div id="fig-met-station" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="../images/2020.09.30_METstation_SDunnigan.jpg" class="img-fluid figure-img"></p>
+<p><a href="../images/2020.09.30_METstation_SDunnigan.jpg" class="lightbox" title="Weather Station at Pellicer Creek during a monthy data download and station cleaning and maintenance in September, 2020." data-gallery="quarto-lightbox-gallery-1"><img src="../images/2020.09.30_METstation_SDunnigan.jpg" class="img-fluid figure-img"></a></p>
 <p></p><figcaption class="figure-caption">Figure 2.1: Weather Station at Pellicer Creek during a monthy data download and station cleaning and maintenance in September, 2020.</figcaption><p></p>
 </figure>
 </div>
@@ -206,9 +209,9 @@ ul.task-list{list-style: none;}
 </section>
 <section id="water-quality-continuous" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="water-quality-continuous"><span class="header-section-number">2.2</span> Water quality – continuous</h2>
-<p>The continuous water quality stations were equipped with YSI 6-Series Multiparameter (2003-2015) and YSI EXO2 (2015-present) data sondes during the study period. The sondes were anchored within a 10-cm (inside diameter) PVC housing pipe mounted vertically onto a piling. Either a steel pin at the bottom of the pipe held the sonde at a position within 1 m from the bottom, or the sonde was suspended by a chain or rope such that the sensor portion of the sonde extended beyond the end of the PVC housing 1 m from the bottom. To facilitate water flow across the sensors, several 2-cm holes were drilled into the submerged portion of the pipe. Hole density was greatest near the base where the sonde sensors were located.</p>
+<p>The continuous water quality stations were equipped with YSI 6-Series Multiparameter (2003-2015) and YSI EXO2 (2015-present) data sondes. The sondes were anchored within a 10-cm (inside diameter) PVC housing pipe mounted vertically onto a piling. Either a steel pin at the bottom of the pipe held the sonde at a position within 1 m from the bottom, or the sonde was suspended by a chain or rope such that the sensor portion of the sonde extended beyond the end of the PVC housing 1 m from the bottom. To facilitate water flow across the sensors, several 2-cm holes were drilled into the submerged portion of the pipe. Hole density was greatest near the base where the sonde sensors were located.</p>
 <p>Data sonde exchanges at all stations were made at approximately two-week intervals and usually took less than five minutes. The inside of each deployment tube was scraped clean with a customized tool prior to the deployment of the newly calibrated sonde. All calibration, post-deployment readings, and reconditioning of the sondes and sensors were performed in accordance with the methods outlined in the standard operating procedures for the sonde model, in addition to procedures created by the NERRS CDMO (NERRS, 2013).</p>
-<p>Data sondes began collectingcollected temperature, salinity, dissolved oxygen, pH, depth (water depth above instrument placement), and turbidity data at 30-min intervals, beginning at the Pine Island and Fort Matanzas monitoring stations in December 2000 and at the San Sebastian and Pellicer Creek monitoring stations in February 2002. Data collected prior to 2003 were not included in this report. The January 1, 2003 to December 31, 2017 study period was selected because 2003 was the first calendar year in which all four SWMP stations collected data. In January 2007, the NERRS changed from collecting continuous data at 30-min intervals to 15-min intervals. Data used in this report contain both sampling intervals.</p>
+<p>Data sondes collected temperature, salinity, dissolved oxygen, pH, depth (water depth above instrument placement), and turbidity data at 30-min intervals, beginning at the Pine Island and Fort Matanzas monitoring stations in December 2000 and at the San Sebastian and Pellicer Creek monitoring stations in February 2002. In January 2007, the NERRS changed from collecting continuous data at 30-min intervals to 15-min intervals. Data used in this report contain both sampling intervals.</p>
 </section>
 <section id="water-quality-discrete" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="water-quality-discrete"><span class="header-section-number">2.3</span> Water quality – discrete</h2>
@@ -216,21 +219,17 @@ ul.task-list{list-style: none;}
 <div id="fig-nut" class="quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-grab-sample" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-grab-sample" class="quarto-figure quarto-figure-center anchored" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
-<p><img src="../images/2016-07-14_silas-pulling-water-PC.jpg" class="img-fluid figure-img" data-ref-parent="fig-nut"></p>
+<p><a href="../images/2016-07-14_silas-pulling-water-PC.jpg" class="lightbox" title="Grab sample collection using sampling pole." data-gallery="quarto-lightbox-gallery-2"><img src="../images/2016-07-14_silas-pulling-water-PC.jpg" class="img-fluid figure-img"></a></p>
 <p></p><figcaption class="figure-caption">(a) Grab sample collection using sampling pole.</figcaption><p></p>
 </figure>
 </div>
-</div>
-<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-isco" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-isco" class="quarto-figure quarto-figure-center anchored" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
-<p><img src="../images/ISCO-Silas-Tanner.jpg" class="img-fluid figure-img" data-ref-parent="fig-nut"></p>
+<p><a href="../images/ISCO-Silas-Tanner.jpg" class="lightbox" title="Diel sampler deployed at Pellicer Creek station." data-gallery="quarto-lightbox-gallery-3"><img src="../images/ISCO-Silas-Tanner.jpg" class="img-fluid figure-img"></a></p>
 <p></p><figcaption class="figure-caption">(b) Diel sampler deployed at Pellicer Creek station.</figcaption><p></p>
 </figure>
-</div>
 </div>
 </div>
 <p></p><figcaption class="figure-caption">Figure 2.2: Collection methods for nutrient analyses</figcaption><p></p>
@@ -374,6 +373,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-right">Built with <a href="https://quarto.org/">Quarto</a>.</div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":true,"closeEffect":"zoom"});</script>
 
 
 
