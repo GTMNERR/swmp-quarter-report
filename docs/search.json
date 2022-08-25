@@ -68,5 +68,40 @@
     "title": "4  Environmental",
     "section": "4.3 Salinity",
     "text": "4.3 Salinity\nThe heavy rainfall in March 2022 was evident in the salinity values at all stations, with the greatest impact occurring at the shallowest site, Pellicer Creek, which is also the most sensitive to runoff effects (Figure 4.3 (d)). Salinity at Pine Island was much higher than average from June-July (Figure 4.3 (a)).\n\n\n\n\n\n\n(a) Pine Island\n\n\n\n\n\n(b) San Sebastian\n\n\n\n\n\n\n\n(c) Fort Matanzas\n\n\n\n\n\n(d) Pellicer Creek\n\n\n\nFigure 4.3: Historical daily range of salinity at each SWMP water quality station with current year daily average overlaid in blue."
+  },
+  {
+    "objectID": "text/nut-indicators.html",
+    "href": "text/nut-indicators.html",
+    "title": "5  Nutrient Indicators",
+    "section": "",
+    "text": "The State Thresholds used in the chlorophyll a, total nitrogen, and total phosphorus calculations come from Florida State Surface Water Quality Standards within the Florida Administrative Code."
+  },
+  {
+    "objectID": "text/nut-indicators.html#dissolved-oxygen",
+    "href": "text/nut-indicators.html#dissolved-oxygen",
+    "title": "5  Nutrient Indicators",
+    "section": "5.1 Dissolved Oxygen",
+    "text": "5.1 Dissolved Oxygen\nAll stations experience seasonal patterns in dissolved oxygen with lower values in the warm, summer months (Figure 5.1).\n\n\n\n\n\n\n(a) Pine Island\n\n\n\n\n\n(b) San Sebastian\n\n\n\n\n\n\n\n(c) Fort Matanzas\n\n\n\n\n\n(d) Pellicer Creek\n\n\n\nFigure 5.1: Historical daily range of dissolved oxygen at each SWMP water quality station with current year daily average overlaid in blue. Horizontal dashed red line indicates 2mg/L hypoxia threshold.\n\n\nPellicer Creek is located within a waterbody with known impairments for dissolved oxygen, chlorophyll a, and fecal coliform bacteria. As such, this station frequently experiences low dissolved oxygen values, particularly in the summer months; this year has been no exception (Figure 5.2).\n\n\n\n\n\n\n(a) For the past five years\n\n\n\n\n\n(b) For the current 2022 year\n\n\n\nFigure 5.2: Continuous dissolved oxygen at Pellicer Creek with monthly average overlaid in solid gray line. Conditions are indicated as good when above 5 mg/L, fair between 2 and 5 mg/L, and poor if less than 2 mg/L."
+  },
+  {
+    "objectID": "text/nut-indicators.html#chlorophyll-a",
+    "href": "text/nut-indicators.html#chlorophyll-a",
+    "title": "5  Nutrient Indicators",
+    "section": "5.2 Chlorophyll a",
+    "text": "5.2 Chlorophyll a\nSo far, this year has seen elevated chlorophyll a levels at the three intracoastal waterway sites (Figure 5.3). The levels have been especially high at Pine Island since April (Figure 5.3 (a)). The highest observed chlorophyll in the time series was observed in April this year (18.5 \\(\\mu\\)g/L). San Sebastian also had the highest chlorophyll observed in January and Feburary of this year compared to the same months in all previous years (6.85 and 5.6 \\(\\mu\\)g/L, respectively; Figure 5.3 (b)).\n\n\n\n\n\n\n(a) Pine Island\n\n\n\n\n\n(b) San Sebastian\n\n\n\n\n\n\n\n(c) Fort Matanzas\n\n\n\n\n\n(d) Pellicer Creek\n\n\n\nFigure 5.3: Historical monthly chlorophyll a at each SWMP water quality station with current year monthly value overlaid in red. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530.\n\n\nInterpretation of patterns in annual geometric means (AGM) for chlorophyll at each site is not available at this time since the 2022 value includes an incomplete record; however, several sites are elevated with current calculations (Figure 5.4).\n\n\n\n\n\n\n(a) Pine Island\n\n\n\n\n\n(b) San Sebastian\n\n\n\n\n\n\n\n(c) Fort Matanzas\n\n\n\n\n\n(d) Pellicer Creek\n\n\n\nFigure 5.4: Annual geometric means of monthly chlorophyll a at each SWMP water quality station. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530. Values exceeding the threshold are indicated in red. The 2022 value is based upon data to date and does not equal an entire year of data."
+  },
+  {
+    "objectID": "text/nut-indicators.html#nitrogen",
+    "href": "text/nut-indicators.html#nitrogen",
+    "title": "5  Nutrient Indicators",
+    "section": "5.3 Nitrogen",
+    "text": "5.3 Nitrogen\nInterpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated (see below). However, total kjeldahl nitrogen (TKN) show distinctive patterns at all sites (Figure 5.7). At Pine Island, there is a distinctive pattern of very low values between January-March and elevated levels from April-July (Figure 5.7 (a)). This distinctive shift between March and April may likely be in response to the large levels of rainfall the system experienced in March (Figure 4.1 (b)). This response was seen at all the other sites, especially Pellicer Creek, which is also a more brackish site and sensitive to upland freshwater deposition (Figure 5.7 (b)).\n\n5.3.1 Total Nitrogen\nTN is a calculated value based on TKN and NO23.\nThis year, quite a bit of the NO23 values fell below the Florida Department of Environmental Protection Central Lab’s minimum detection limit and therefore TN was not able to be calculated. This was especially true at Pine Island which only has data in January and February (Figure 5.5 (a)) and the remaining sites are typically missing the March data.\n\n\n\n\n\n\n(a) Pine Island\n\n\n\n\n\n(b) San Sebastian\n\n\n\n\n\n\n\n(c) Fort Matanzas\n\n\n\n\n\n(d) Pellicer Creek\n\n\n\nFigure 5.5: Historical monthly total nitrogen at each SWMP water quality station with current year monthly value overlaid in red. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530.\n\n\n\n\n5.3.2 Dissolved Inorganic Nitrogen\nDIN is a calculated value based on NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information for this year (Figure 5.6).\n\n\n\n\n\n\n(a) Pine Island\n\n\n\n\n\n(b) San Sebastian\n\n\n\n\n\n\n\n(c) Fort Matanzas\n\n\n\n\n\n(d) Pellicer Creek\n\n\n\nFigure 5.6: Historical monthly dissolved inorganic nitrogen at each SWMP water quality station with current year monthly value overlaid in red.\n\n\n\n\n5.3.3 Total Kjeldahl Nitrogen\nTKN is the total concentration of organic nitrogen and ammonia. It is directly measured in our samples.\n\n\n\n\n\n\n(a) Pine Island\n\n\n\n\n\n(b) San Sebastian\n\n\n\n\n\n\n\n(c) Fort Matanzas\n\n\n\n\n\n(d) Pellicer Creek\n\n\n\nFigure 5.7: Historical monthly total kjeldahl nitrogen at each SWMP water quality station with current year monthly value overlaid in red."
+  },
+  {
+    "objectID": "text/nut-indicators.html#phosphorus",
+    "href": "text/nut-indicators.html#phosphorus",
+    "title": "5  Nutrient Indicators",
+    "section": "5.4 Phosphorus",
+    "text": "5.4 Phosphorus\nTotal phosphorus continues to fall below the state threshold for every station (Figure 5.8). Though below the state threshold, Pine Island experienced elevated TP levels April-July (Figure 5.8 (a)). Total phosphorus levels were typically much lower than average at the remaining sites during that same time period. In general, orthophosphate levels typically fell within the historical ranges at all sites; however, elevated amounts were observed in April at all four stations (Figure 5.9).\n\n5.4.1 Total Phosphorus\n\n\n\n\n\n\n(a) Pine Island\n\n\n\n\n\n(b) San Sebastian\n\n\n\n\n\n\n\n(c) Fort Matanzas\n\n\n\n\n\n(d) Pellicer Creek\n\n\n\nFigure 5.8: Historical monthly total phosphorus at each SWMP water quality station with current year monthly value overlaid in red. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530.\n\n\n\n\n5.4.2 Orthophosphate\n\n\n\n\n\n\n(a) Pine Island\n\n\n\n\n\n(b) San Sebastian\n\n\n\n\n\n\n\n(c) Fort Matanzas\n\n\n\n\n\n(d) Pellicer Creek\n\n\n\nFigure 5.9: Historical monthly orthophosphate at each SWMP water quality station with current year monthly value overlaid in red."
   }
 ]
