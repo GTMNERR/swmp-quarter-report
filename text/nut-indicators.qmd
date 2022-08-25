@@ -1,7 +1,5 @@
 ---
 title: "Nutrient Indicators"
-editor_options: 
-  chunk_output_type: console
 execute: 
   warning: false
   error: false

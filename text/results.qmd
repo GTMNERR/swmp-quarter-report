@@ -3,11 +3,35 @@ title: "Results"
 editor: visual
 ---
 
-## Data Analysis
+The results are presented under the following sections:
 
-Long-term trends over the 15-year study period were analyzed using the nonparametric Seasonal Kendall-Mann (SK) test with EnvStats (Millard, 2013). Trends for continuous data were calculated using monthly means of 15- and 30-min observations. For discrete chlorophyll a data, trends were calculated using means of monthly replicates for all stations except Pellicer Creek. Trends at Pellicer Creek were calculated using means of monthly replicates and diel samples. Trends were not calculated for other discrete parameters due to concerns about the lab switch in December 2012 affecting consistency (see Data Collection section). Trends in chlorophyll a were assessed because the Kruskal-Wallis test did not show evidence of a lab switch effect.
+-   Environmental
 
-Minimum detection limits (MDLs) for total suspended solids, chlorophyll a, uncorrected chlorophyll a, ammonium, nitrite + nitrate, total nitrogen, orthophosphate, and total phosphorus varied throughout the 15-year study period. Nitrite + nitrate data were evaluated to determine if the changing MDLs influenced the long-term trend results. Data values that fell below the highest MDL (0.062 mg/L) for nitrite + nitrate were adjusted to the MDL value. Long-term trends were evaluated on both the adjusted MDL data set and non-adjusted using the Seasonal Kendall-Mann test. The MDL adjusted results were compared to the non-adjusted results, and it was determined that adjusting the data did not change the long-term trend interpretation. Thus, no changes were made to the dataset for the long-term trend analysis.
+    -   Rainfall
+
+    -   Temperature
+
+    -   Salinity
+
+-   Nutrient Indicators
+
+    -   Dissolved Oxygen
+
+    -   Chlorophyll *a*
+
+    -   Nitrogen
+
+        -   Total Nitrogen
+
+        -   Dissolved Inorganic Nitrogen
+
+        -   Total Kjeldahl Nitrogen
+
+    -   Phosphorus
+
+        -   Total Phosphorus
+
+        -   Orthophosphate
 
 Analyses were conducted in R and RStudio:
 
