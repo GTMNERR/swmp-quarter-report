@@ -7,7 +7,7 @@ book:
   subtitle: Guana Tolomato Matanzas National Estuarine Research Reserve
   # cover-image:
   # image: 
-  downloads: [pdf]
+  # downloads: [pdf]
   author:
     - name: Shannon Dunnigan
       # affiliations:
@@ -37,7 +37,7 @@ book:
 
   page-footer:
       left: |
-        This report was last updated on August 24, 2022.
+        The data used in this report was last updated on August 24, 2022.
       right: |
         Built with <a href="https://quarto.org/">Quarto</a>.
 
@@ -60,9 +60,9 @@ format:
     theme: cosmo
     toc: true
     toc-depth: 3
-  pdf:
-    documentclass: report
-    toc: true
-    toc-depth: 3
-    lof: true
-    lot: true
+#  pdf:
+#    documentclass: report
+#    toc: true
+#    toc-depth: 3
+#    lof: true
+#    lot: true
