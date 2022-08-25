@@ -102,7 +102,7 @@ NUT_monthly <- bind_rows("gtmpinut" = pi_nut_mo,
                          "gtmfmnut" = fm_nut_mo, 
                          "gtmpcnut" = pc_nut_mo, 
                          .id = "station_code") %>%
-  select(station_code, datetimestamp, tn, tp, chla_n) %>% 
+  # select(station_code, datetimestamp, tn, tp, chla_n, tkn, po4f, din) %>% 
   dplyr::mutate(year = lubridate::year(datetimestamp), 
                 month_abb = lubridate::month(datetimestamp, label = TRUE, abbr = TRUE),
                 month = lubridate::month(datetimestamp),
