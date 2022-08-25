@@ -291,9 +291,9 @@ boxplot_currentyear(station = "gtmpcnut",
 DIN is a calculated value based on NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information for this year (@fig-din-boxplots).
 
 ```{r}
-#| label: fig-tn-boxplots
+#| label: fig-din-boxplots
 #| echo: false
-#| fig.cap: Historical monthly total nitrogen at each SWMP water quality station with current year monthly value overlaid in red. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530.
+#| fig.cap: Historical monthly dissolved inorganic nitrogen at each SWMP water quality station with current year monthly value overlaid in red. 
 #| fig.subcap:
 #|    - "Pine Island"
 #|    - "San Sebastian"
@@ -329,9 +329,9 @@ boxplot_currentyear(station = "gtmpcnut",
 TKN is the total concentration of organic nitrogen and ammonia. It is directly measured in our samples.
 
 ```{r}
-#| label: fig-tn-boxplots
+#| label: fig-tkn-boxplots
 #| echo: false
-#| fig.cap: Historical monthly total nitrogen at each SWMP water quality station with current year monthly value overlaid in red. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530.
+#| fig.cap: Historical monthly total kjeldahl nitrogen at each SWMP water quality station with current year monthly value overlaid in red. 
 #| fig.subcap:
 #|    - "Pine Island"
 #|    - "San Sebastian"
