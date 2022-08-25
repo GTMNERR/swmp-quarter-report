@@ -5,6 +5,9 @@ link-external-newwindow: true
 execute:
   warning: false
   error: false
+filters:
+  - lightbox
+lightbox: auto
 ---
 
 ## Station Information
