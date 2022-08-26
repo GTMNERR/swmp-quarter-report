@@ -1,7 +1,5 @@
 ---
 title: "Environmental"
-editor_options: 
-  chunk_output_type: console
 execute: 
   warning: false
   error: false
@@ -70,7 +68,7 @@ MET |>
 
 ## Temperature
 
-Water temperature daily range was quite variable in the first quarter of the year (January - March), where daily average temperatures were much lower than average in February, but the following month in March ended up being higher than average (@fig-range-temp). These higher than average daily values were likely driven up by the large amounts of rainfall this area experienced during this time (@fig-rainfall-2). Beginning in the latter part of May through the entire summer, waters were much warmer than average, particularly in the shallower sites (@fig-annual-temp-1; @fig-annual-temp-4)
+Water temperature daily range was quite variable in the first quarter of the year (January - March), where daily average temperatures were much lower than average in February, but the following month in March ended up being higher than average (@fig-range-temp). These higher than average daily values were likely driven up by the large amounts of rainfall this area experienced during this time (@fig-rainfall-2). Beginning in the latter part of May through the entire summer, waters were much warmer than average, particularly in the shallower sites (@fig-range-temp-1; @fig-range-temp-4)
 
 ```{r}
 #| label: fig-range-temp
