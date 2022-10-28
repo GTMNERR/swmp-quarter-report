@@ -1,0 +1,114 @@
+---
+title: "Hurricane Ian"
+editor_options: 
+  chunk_output_type: console
+execute: 
+  warning: false
+  error: false
+filters: 
+  - lightbox
+lightbox: auto
+---
+
+```{r}
+#| label: data-load
+#| include: false
+library(here)
+
+source(here::here('R', '00_loadpackages.R'))
+source(here::here('R', '02.1_load_wrangle_NUT.R'))
+source(here::here('R', '02.2_load_wrangle_WQ-and-MET.R'))
+source(here::here('R', '03_graph_fxns.R'))
+```
+
+![Hurricane Ian's full journey across the Caribbean, through the Gulf of Mexico, and into the Southeast U.S. 09/23/2022 00:00 UTC- 10/01/2022 00:00 UTC. GeoColor product from NOAA GOES-16 satellite. Accessed: https://satlib.cira.colostate.edu/event/hurricane-ian/](/data/hurricane-ian/202209230000-202210010010_g16_fd_geocolor_ianfulljourney_nolabels.mp4)
+
+Hurricane Ian made landfall near Cayo Costa in southwestern Florida at 3:05pm ET on Wednesday, September 28, 2022 as a Category 4 storm. It then made it's way across the Florida peninsula to Cape Canaveral while downgrading to a Tropical Storm, before hitting the Atlantic Ocean in the early evening of Thursday, September 29, 2022 where it then strengthened to a Category 1 storm and headed towards the South Carolina coast. It made landfall south of Georgetown, South Carolina as a Category 1 storm the afternoon of Friday, September 30, 2022.
+
+The effects of Hurricane Ian began at the GTM Research Reserve in northeast Florida
+
+## Onset of winds
+
+The winds picked up in northeast Florida the morning of Wednesday, September 28, 2022 and predominantly from the northeast direction. News reports of the region [experiencing a Nor'easter](https://floridapolitics.com/archives/559346-duval-ian/) began on September 28th and the weather station in Pellicer Creek supports the onset of predominating northeasterly winds midday on Tuesday, September 27th that extended until after the storm went off the coast the evening of Thursday, September 29th (@fig-winds). The station experienced sustained winds in excess of 30mph from 5am until almost 5pm on Thursday, September 29th when the storm moved offshore (@fig-winds-1). Maximum gusts during this same period of time were greater than 45 mph with the greatest gusts recorded at 48 mph (@fig-winds-2).
+
+```{r}
+#| label: fig-winds
+#| echo: false
+#| fig.cap: Hourly wind speed and direction from the Pellicer Creek weather station during timeperiod of Hurricane Ian within the state of Florida, USA (Tuesday, September 27 - Saturday, October 1, 2022). The warmer the color, the higher the recorded wind speed. The arrows indicate the direction the wind was blowing towards and the length of the arrow reflects the wind speed information with longer meaning faster. All data is based upon 5 second readings at the weather station.
+#| fig.subcap:
+#|    - "Averaged hourly wind speeds"
+#|    - "Maximum wind gust recorded within each hour"
+
+# helpful resources
+# https://stackoverflow.com/questions/47880918/how-to-plot-wind-direction-with-lat-lon-and-arrow-in-ggplot2 
+# https://stackoverflow.com/questions/49639881/how-to-get-a-legend-on-geom-spoke
+
+# create new df for just wspd and direction data with conversions to SI units
+MET_wind <- MET %>% 
+  filter(between(datetimestamp, 
+                 as.POSIXct("2022-09-27 00:00:00"), 
+                 as.POSIXct("2022-10-02 00:00:00"))) %>%
+  aggreswmp(by = "hours", params = c('wspd', 'maxwspd', 'wdir')) %>% 
+  mutate(day = lubridate::date(datetimestamp),
+         hour = lubridate::hour(datetimestamp),
+         wspd_mph = wspd * 2.23694,
+         maxwspd_mph = maxwspd * 2.23694,
+         wdir_x = ((wdir +180) * 0.0174533)) # angles are in radians not degrees, need to convert for plotting
+
+
+MET_wind %>% 
+  filter(day > as.Date("2022-09-26")) %>% 
+  ggplot(aes(x = hour, 
+             y = day, 
+             fill = wspd_mph, 
+             angle = wdir_x, 
+             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
+    geom_raster() +
+    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
+    scale_fill_distiller(palette = "RdYlBu") + 
+    coord_equal(expand = 0) +
+    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
+    theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12),
+        legend.position = 'top', 
+        legend.direction = 'horizontal') +
+  labs(x = "Hour of Day (24hr)",
+       y = "",
+       fill = "Wind Speed (mph)")
+
+
+MET_wind %>% 
+  filter(day > as.Date("2022-09-26")) %>% 
+  ggplot(aes(x = hour, 
+             y = day, 
+             fill = maxwspd_mph, 
+             angle = wdir_x, 
+             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
+    geom_raster() +
+    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
+    scale_fill_distiller(palette = "RdYlBu") + 
+    coord_equal(expand = 0) +
+    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
+    theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12),
+        legend.position = 'top', 
+        legend.direction = 'horizontal') +
+  labs(x = "Hour of Day (24hr)",
+       y = "",
+       fill = "Max Wind Gusts (mph)")
+
+```
+
+## Rising tides
+
+```{r}
+pc %>% 
+  filter(between(datetimestamp, 
+                 as.POSIXct("2022-10-03 00:00:00"), 
+                 as.POSIXct("2022-10-07 00:00:00"))) %>%
+  summarize_all(mean, na.rm = T)
+```
+
+## Heavy rainfall
+
+## Loaded freshwater system
