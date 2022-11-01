@@ -92,7 +92,8 @@ MET_wind %>%
     theme_classic() +
   theme(axis.text = element_text(color = "black", size = 12),
         legend.position = 'top', 
-        legend.direction = 'horizontal') +
+        legend.direction = 'horizontal',
+        axis.line = element_blank()) +
   labs(x = "Hour of Day (24hr)",
        y = "",
        fill = "Max Wind Gusts (mph)")
@@ -102,11 +103,60 @@ MET_wind %>%
 ## Rising tides
 
 ```{r}
-pc %>% 
+# library(gganimate)
+
+WQ %>% 
   filter(between(datetimestamp, 
-                 as.POSIXct("2022-10-03 00:00:00"), 
-                 as.POSIXct("2022-10-07 00:00:00"))) %>%
-  summarize_all(mean, na.rm = T)
+                 as.POSIXct("2022-09-28 00:00:00"), 
+                 as.POSIXct("2022-10-02 00:00:00"))) %>%
+  mutate(depth = if_else(station == "gtmpcwq", 
+                         level + 1.11427, 
+                         depth),
+         station = factor(station,
+                          levels = c("gtmsswq",
+                                     "gtmpiwq",
+                                     "gtmfmwq",
+                                     "gtmpcwq"),
+                          labels = c("San Sebastian",
+                                     "Pine Island",
+                                     "Fort Matanzas",
+                                     "Pellicer Creek"),
+                          ordered = F),
+         depth = depth + 1) %>% # convert PC level to depth to be able to compare sites
+  select(station, datetimestamp, depth) %>% 
+  ggplot(aes(x = datetimestamp, y = depth, color = station, group = station)) +
+  geom_vline(xintercept = as.POSIXct("2022-09-29 14:30:00"), color = "red", size = 1) +
+  geom_line() +
+  geom_point(size = 3) +
+  scale_color_okabeito(breaks = c("Pine Island", "San Sebastian", "Fort Matanzas", "Pellicer Creek")) +
+  scale_y_continuous(limits = c(0,9),
+                     breaks = seq(0, 8, by = 2),
+                     minor_breaks = seq(0,9, by = 1),
+                     expand = c(0,0)) +
+  scale_x_datetime(date_breaks = "1 day",
+                   date_minor_breaks = "6 hours",
+                   date_labels = "%b %d") +
+  # theme_classic() +
+  theme(legend.position = "bottom",
+        legend.direction = "horizontal",
+        axis.text = element_text(size = 12),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "gray"),
+        panel.grid.minor = element_line(color = "gray", linetype = "dotted"),
+        legend.key = element_rect(fill = NA),
+        axis.title = element_text(size = 12, face = "bold"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(face = "bold")) +
+  labs(x = "",
+       y = "Water Depth (m)",
+       color = "SWMP Station") +
+  annotate("text",
+           x = as.POSIXct("2022-09-29 13:00:00"),
+           y = 1,
+           label = "Ian 2022-09-29 14:30",
+           color = "red",
+           angle = 90)
+  # gganimate::transition_reveal(datetimestamp)
 ```
 
 ## Heavy rainfall
