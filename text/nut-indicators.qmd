@@ -29,7 +29,7 @@ By visiting https://www.flrules.org/gateway/ruleno.asp?id=62-302.530
 
 ## Dissolved Oxygen
 
-All stations experience seasonal patterns in dissolved oxygen with lower values in the warm, summer months (@fig-do).
+All stations experience seasonal patterns in dissolved oxygen with lower values in the warm, summer months (@fig-do). A distinctive jump in dissolved oxygen occurred at all sites during the storm period of Hurricane Ian (September 28 - October 1, 2022).
 
 ```{r}
 #| label: fig-do
@@ -56,7 +56,7 @@ pc |>
 
 ```
 
-Pellicer Creek is located within a waterbody with known impairments for dissolved oxygen, chlorophyll a, and fecal coliform bacteria. As such, this station frequently experiences low dissolved oxygen values, particularly in the summer months; this year has been no exception (@fig-do-pc).
+Pellicer Creek is located within a waterbody with known impairments for dissolved oxygen, chlorophyll a, and fecal coliform bacteria. As such, this station frequently experiences low dissolved oxygen values, particularly in the summer months; this year has been no exception (@fig-do-pc). In fact, the dissolved oxygen in late August was lower than values observed during the time of Hurricane Irma (@fig-do-pc-1). Values began to rise in September, but it is likely that the storm surge associated with Hurricane Ian in late September helped to bring in and further oxygenate this system (@fig-do-pc-2).
 
 ```{r}
 #| label: fig-do-pc
@@ -89,7 +89,9 @@ threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2022, 2022),
 
 ## Chlorophyll *a*
 
-So far, this year has seen elevated chlorophyll *a* levels at the three intracoastal waterway sites (@fig-chla-boxplots). The levels have been especially high at Pine Island since April (@fig-chla-boxplots-1). The highest observed chlorophyll in the time series was observed in April this year (18.5 $\mu$g/L). San Sebastian also had the highest chlorophyll observed in January and Feburary of this year compared to the same months in all previous years (6.85 and 5.6 $\mu$g/L, respectively; @fig-chla-boxplots-2).
+So far, this year has seen elevated chlorophyll *a* levels at the three intracoastal waterway sites (@fig-chla-boxplots). The levels have been especially high at Pine Island since April (@fig-chla-boxplots-1). The highest observed chlorophyll in the time series was observed in April this year (18.5 $\mu$g/L). San Sebastian also had the highest chlorophyll observed in January and Feburary of this year compared to the same months in all previous years (6.85 and 5.6 $\mu$g/L, respectively; @fig-chla-boxplots-2). 
+
+Interestingly, though much higher seasonal chlorophyll was observed at Fort Matanzas in the first quarter, August was much lower than average (@fig-chla-boxplots-3).
 
 ```{r}
 #| label: fig-chla-boxplots
