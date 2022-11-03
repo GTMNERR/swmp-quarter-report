@@ -28,6 +28,7 @@ book:
       - text/environmental.qmd
       - text/nut-indicators.qmd
       - text/hurricane-ian.qmd
+      - text/maintenance.qmd
   appendices: 
     - text/a1-cmecs.qmd
     
