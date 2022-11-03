@@ -5,6 +5,8 @@ editor_options:
 execute: 
   warning: false
   error: false
+link-external-icon: true
+link-external-newwindow: true
 filters: 
   - lightbox
 lightbox: auto
@@ -38,6 +40,7 @@ The winds picked up in northeast Florida the morning of Wednesday, September 28,
 #| fig.subcap:
 #|    - "Averaged hourly wind speeds"
 #|    - "Maximum wind gust recorded within each hour"
+#| layout-ncol: 2
 
 # helpful resources
 # https://stackoverflow.com/questions/47880918/how-to-plot-wind-direction-with-lat-lon-and-arrow-in-ggplot2 
@@ -177,13 +180,10 @@ hist_storms %>%
 rm(irma, matt, hist_storms)
 ```
 
-
 ```{r}
 #| label: fig-surge
 #| echo: false
 #| fig.cap: Continuous water depth at all four water quality stations of the GTMNERR during the time period of Hurricane Ian, September 28 - October 2, 2022. Red line indicates when the Hurricane was closest to the GTMNERR weather station in Pellicer Creek, based on barometric pressure readings.
-
-library(gganimate)
 
 d_animation <-
 WQ %>% 
@@ -238,12 +238,116 @@ WQ %>%
   gganimate::transition_reveal(datetimestamp)
 
 gganimate::animate(d_animation, height = 5, width = 8, units = "in", res = 120)
+
+rm(d_animation)
 ```
 
 ## Heavy rainfall
 
-```{r}
-
-```
+All the rainfall during the storm occurred within two days (September 28 - 29, 2022). After the storm passed into the Atlantic Ocean the night of September 29, 2022, an abrupt stop of all precipitation occurred and the system did not get any more rain until more than two weeks later on October 17, 2022. There was a total of 238mm (9.37in) of rain within those two days, the majority of which (67.5%) was on Thursday, September 29, 2022.
 
 ## Loaded freshwater system
+
+```{r}
+
+sal_animation <-
+WQ %>% 
+  filter(between(datetimestamp, 
+                 as.POSIXct("2022-09-28 00:00:00"), 
+                 as.POSIXct("2022-10-03 00:00:00"))) %>%
+  mutate(station = factor(station,
+                          levels = c("gtmsswq",
+                                     "gtmpiwq",
+                                     "gtmfmwq",
+                                     "gtmpcwq"),
+                          labels = c("San Sebastian",
+                                     "Pine Island",
+                                     "Fort Matanzas",
+                                     "Pellicer Creek"),
+                          ordered = F)) %>% 
+  select(station, datetimestamp, sal) %>% 
+  ggplot(aes(x = datetimestamp, y = sal, color = station, group = station)) +
+  geom_vline(xintercept = as.POSIXct("2022-09-29 14:30:00"), color = "red", size = 1) +
+  geom_line() +
+  geom_point(size = 3) +
+  scale_color_okabeito(breaks = c("Pine Island", "San Sebastian", "Fort Matanzas", "Pellicer Creek")) +
+  # scale_y_continuous(limits = c(0,9),
+  #                    breaks = seq(0, 8, by = 2),
+  #                    minor_breaks = seq(0,9, by = 1),
+  #                    expand = c(0,0)) +
+  scale_x_datetime(date_breaks = "1 day",
+                   date_minor_breaks = "6 hours",
+                   date_labels = "%b %d") +
+  theme(legend.position = "bottom",
+        legend.direction = "horizontal",
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "gray"),
+        panel.grid.minor = element_line(color = "gray", linetype = "dotted"),
+        legend.key = element_rect(fill = NA),
+        axis.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold")) +
+  labs(x = "",
+       y = "Salinity (psu)",
+       color = "SWMP Station") +
+  annotate("text",
+           x = as.POSIXct("2022-09-29 13:00:00"),
+           y = 1.5,
+           label = "Ian 2022-09-29 14:30 EST",
+           color = "red",
+           angle = 90,
+           size = 2.1) +
+  gganimate::transition_reveal(datetimestamp)
+
+# WQ %>% 
+#   filter(between(datetimestamp, 
+#                  as.POSIXct("2022-10-03 00:00:00"), 
+#                  as.POSIXct("2022-10-10 00:00:00"))) %>%
+#   mutate(depth = if_else(station == "gtmpcwq", 
+#                          level + 1.11427, 
+#                          depth),
+#          depth = depth + 1) %>% # convert PC level to depth to be able to compare sites
+#   filter(station == "gtmpcwq") %>% 
+#   select(station, datetimestamp, depth, sal) %>% 
+#   ggplot(aes(x = datetimestamp, y = depth)) +
+#   geom_vline(xintercept = as.POSIXct("2022-09-29 14:30:00"), color = "red", size = 1) +
+#   geom_line() +
+#   geom_point(size = 3) +
+#   geom_line(aes(y = sal)) +
+#   geom_point(aes(y = sal), size = 3) +
+#   # scale_color_okabeito() +
+#   scale_y_continuous(limits = c(0,9),
+#                      breaks = seq(0, 8, by = 2),
+#                      minor_breaks = seq(0,9, by = 1),
+#                      expand = c(0,0)) +
+#   scale_x_datetime(date_breaks = "1 day",
+#                    date_minor_breaks = "6 hours",
+#                    date_labels = "%b %d") +
+#   theme(legend.position = "bottom",
+#         legend.direction = "horizontal",
+#         panel.background = element_blank(),
+#         panel.grid.major = element_line(color = "gray"),
+#         panel.grid.minor = element_line(color = "gray", linetype = "dotted"),
+#         legend.key = element_rect(fill = NA),
+#         axis.title = element_text(face = "bold"),
+#         legend.title = element_text(face = "bold")) +
+#   labs(x = "",
+#        y = "Water Depth (m)",
+#        color = "SWMP Station") +
+#   annotate("text",
+#            x = as.POSIXct("2022-09-29 13:00:00"),
+#            y = 1.5,
+#            label = "Ian 2022-09-29 14:30 EST",
+#            color = "red",
+#            angle = 90,
+#            size = 2.1) +
+#   gganimate::transition_reveal(datetimestamp)
+
+
+
+gganimate::animate(sal_animation, height = 5, width = 8, units = "in", res = 120)
+
+# gganimate::animate(d_animation, height = 5, width = 8, units = "in", res = 120)
+
+
+rm(sal_animation)
+```
