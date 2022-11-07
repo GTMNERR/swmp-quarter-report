@@ -47,8 +47,7 @@ MET |>
                                    converted = F) + 
   theme(axis.text.x = element_text(angle = 45,
                                    vjust = 0.6),
-        axis.text = element_text(color = "black", size = 18),
-        axis.title.y = element_text(size = 20))
+        axis.text = element_text(color = "black"))
 
 MET |> 
   filter(datetimestamp > '2022-01-01 00:15') %>%
@@ -59,11 +58,11 @@ MET |>
   # summarise(mean = mean(sum)) %>%
   ggplot() +
   geom_col(aes(x = month, y = totprcp), fill = "#0075AC") +
-  geom_hline(yintercept = 122, size = 2, linetype = "dashed", color = "grey50") +
+  geom_hline(yintercept = 117, size = 2, linetype = "dashed", color = "grey50") +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
-  theme(axis.text = element_text(color = "black", size= 18),
-        axis.title.y = element_text(color = "black", size = 20)) +
+  theme(axis.text = element_text(color = "black"),
+        axis.title.y = element_text(color = "black")) +
   labs(x = '',
        y = 'Total Monthly Precipitation (mm)',
        caption = "Hortizontal line represents current year monthly average.")
@@ -87,13 +86,13 @@ MET |>
   ggplot(aes(x = date, y = totprcp)) +
   geom_segment(aes(x = date, xend = date, y = 0, yend = totprcp),
                size = 1) +
-  geom_point(aes(color = wet), size = 4, bg = 4) +
+  geom_point(aes(color = wet), size =2, bg = 4) +
   khroma::scale_color_okabeito() + # change color codes
   scale_y_continuous(expand = c(0,0), limits = c(0,170)) +
   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
   theme_classic() +
-  theme(axis.text = element_text(color = "black", size= 18),
-        axis.title.y = element_text(color = "black", size = 20)) +
+  theme(axis.text = element_text(color = "black"),
+        axis.title.y = element_text(color = "black")) +
   labs(x = '',
        y = 'Total Daily Precipitation (mm)',
        color = "Amount of Rain")
