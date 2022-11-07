@@ -15,11 +15,13 @@ source(here::here('R', '00_loadpackages.R'))
 source(here::here('R', '02.2_load_wrangle_WQ-and-MET.R'))
 ```
 
-The following include variables that establish the estuarine setting: rainfall, water temperature, and salinity. These variables are driven primarily by climatic patterns and largely influence water quality condition.
+The following includes variables that establish the estuarine setting: rainfall, water temperature, and salinity. These variables are driven primarily by climatic patterns and largely influence water quality condition.
 
 ## Rainfall
 
 The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). This year, the GTM Research Reserve weather station recorded much higher rainfall in the first quarter than the previous five years (@fig-rainfall-1). The majority of this rainfall occurred during the month of March with approximately 200 mm (7.87 in) of rain (@fig-rainfall-2).
+
+The summer months were rather dry with no "extremely wet" days of rainfall (>30mm) and very few "very wet" days (20-29mm). In fact, mid-July through mid-August saw almost a month with no rainfall (@fig-rainfall-3). Regular rain resumed in late August into September concluding with extreme rainfall during Hurricane Ian.
 
 ```{r}
 #| label: fig-rainfall
@@ -28,7 +30,8 @@ The simplest way to bin rainfall within a single year is to present the data by 
 #| fig.subcap:
 #|    - "Ongoing quarterly totals of precipitation."
 #|    - "Current year monthly total precipitation."
-#| layout-ncol: 2
+#|    - "Daily rainfall totals for days with more than 1mm of day."
+#| layout-ncol: 3
 
 MET |> 
   SWMPrExtension::seasonal_barplot(param = 'totprcp',
@@ -44,8 +47,7 @@ MET |>
                                    converted = F) + 
   theme(axis.text.x = element_text(angle = 45,
                                    vjust = 0.6),
-        axis.text = element_text(color = "black", size = 18),
-        axis.title.y = element_text(size = 20))
+        axis.text = element_text(color = "black"))
 
 MET |> 
   filter(datetimestamp > '2022-01-01 00:15') %>%
@@ -56,19 +58,50 @@ MET |>
   # summarise(mean = mean(sum)) %>%
   ggplot() +
   geom_col(aes(x = month, y = totprcp), fill = "#0075AC") +
-  geom_hline(yintercept = 92.8, size = 2, linetype = "dashed", color = "grey50") +
+  geom_hline(yintercept = 117, size = 2, linetype = "dashed", color = "grey50") +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
-  theme(axis.text = element_text(color = "black", size= 18),
-        axis.title.y = element_text(color = "black", size = 20)) +
+  theme(axis.text = element_text(color = "black"),
+        axis.title.y = element_text(color = "black")) +
   labs(x = '',
-       y = 'Total Precipitation (mm)',
+       y = 'Total Monthly Precipitation (mm)',
        caption = "Hortizontal line represents current year monthly average.")
+
+MET |> 
+  filter(datetimestamp > '2022-01-01 00:15') %>%
+  aggreswmp(by = "days", FUN = sum, params = "totprcp") %>% 
+  filter(totprcp >= 1) %>% 
+  mutate(date = as.Date(datetimestamp),
+         month = lubridate::month(date, label = T),
+         prcp_in = totprcp * 0.0393701,
+         prcp_in = round(prcp_in, digits = 1),
+         wet = case_when(totprcp < 10 ~ "Not Very Wet (<10mm)",
+                         totprcp >= 10 & totprcp < 20 ~ "Wet (10-19mm)",
+                         totprcp >= 20 & totprcp < 30 ~ "Very Wet (20-29mm)",
+                         totprcp > 30 ~ "Extremely Wet (>30mm)"),
+         wet = factor(wet, levels = c("Not Very Wet (<10mm)",
+                                      "Wet (10-19mm)",
+                                      "Very Wet (20-29mm)",
+                                      "Extremely Wet (>30mm)"))) %>% 
+  ggplot(aes(x = date, y = totprcp)) +
+  geom_segment(aes(x = date, xend = date, y = 0, yend = totprcp),
+               size = 1) +
+  geom_point(aes(color = wet), size =2, bg = 4) +
+  khroma::scale_color_okabeito() + # change color codes
+  scale_y_continuous(expand = c(0,0), limits = c(0,170)) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black"),
+        axis.title.y = element_text(color = "black")) +
+  labs(x = '',
+       y = 'Total Daily Precipitation (mm)',
+       color = "Amount of Rain")
 ```
 
 ## Temperature
 
-Water temperature daily range was quite variable in the first quarter of the year (January - March), where daily average temperatures were much lower than average in February, but the following month in March ended up being higher than average (@fig-range-temp). These higher than average daily values were likely driven up by the large amounts of rainfall this area experienced during this time (@fig-rainfall-2). Beginning in the latter part of May through the entire summer, waters were much warmer than average, particularly in the shallower sites (@fig-range-temp-1; @fig-range-temp-4)
+Water temperature daily range was quite variable in the first quarter of the year (January - March), where daily average temperatures were much lower than average in February, but the following month in March ended up being higher than average (@fig-range-temp). These higher than average daily values were likely driven up by the large amounts of rainfall this area experienced during this time (@fig-rainfall-2). Beginning in the latter part of May through the entire summer, waters were much warmer than average, particularly in the shallower sites (@fig-range-temp-1; @fig-range-temp-4).
+There was an observable drop in water temperatures at all sites during the time Hurricane Ian struck the Florida peninsula in late September, but temperatures climbed back into their "normal" range after the storm passed at all sites except Pellicer Creek (@fig-range-temp), which is a shallow creek and more influenced by upland runoff. At Pellicer Creek there was also an observable drop in water temperature later in October (@fig-range-temp-4).
 
 ```{r}
 #| label: fig-range-temp
@@ -92,7 +125,10 @@ historical_daily_range(pc, param = 'temp', target_yr = 2022)
 
 ## Salinity
 
-The heavy rainfall in March 2022 was evident in the salinity values at all stations, with the greatest impact occurring at the shallowest site, Pellicer Creek, which is also the most sensitive to runoff effects (@fig-range-sal-4). Salinity at Pine Island was much higher than average from June-July (@fig-range-sal-1). 
+The heavy rainfall in March 2022 and the rainfall associated with Hurricane Ian in late September 2022 was evident in the drastic drops in salinity at all stations (@fig-range-sal), with the greatest impact occurring at the shallowest site, Pellicer Creek, which is also the most sensitive to the effect of runoff (@fig-range-sal-4). Due to a lack of rain the late spring/early summer (only 12 days of rain between May 1 and July 1), many of the sites had very high salinities, particularly Pine Island (@fig-range-sal-1). 
+The rainy periods throughout the year are observable in the salinity data collected in Pellicer Creek with distinct drops in salinity observed during each rain period (March-April, May, early July, late Aug-October)(@fig-rainfall-3; @fig-range-sal-4).
+
+
 
 ```{r}
 #| label: fig-range-sal

@@ -1,0 +1,29 @@
+---
+title: "Maintenance Issues"
+link-external-icon: true
+link-external-newwindow: true
+execute:
+  warning: false
+  error: false
+filters:
+  - lightbox
+lightbox: auto
+---
+
+## Telemetry Station
+
+The telemetry feed at the Pellicer Creek water quality station went down on 07/16/2022 at 09:00:00 EST due to insufficient battery voltage needed to transmit data to the NOAA-HADS satellite. A site visit, completed on 08/05/2022, found that the solar regulator (which regulates the voltage from the solar panels into the system) was not maintaining adequate voltage to charge the battery. On 8/10/2022, the telemetry station was repaired by replacing the faulty solar regulator.
+
+## Sonde Failure in Field
+
+In July, a sonde failure occurred with the datasonde deployed at the Pellicer Creek site (7/12/2022 - 8/2/2022). This sonde was sent in to the Service Center for evaluation and repair.
+
+On 9/14/2022 we received service feedback regarding the sonde in which the Service Technician said that the power comm board needed replacement and was likely a result of excess voltage, but that the data file will be retrievable once the sonde is returned. Due to telemetry issues (faulty solar regulator) at this same time, it is likely this was associated with the power comm board failure in the data sonde as it was deployed during the time the telemetry went down (7/16/2022 - 8/5/2022).
+
+Received EXO2 datasonde on 10/19/2022 that was sent for service and repair back in August after a failed deployment in the field at Pellicer Creek. The data from the deployment was able to be retrieved once the sonde was hooked up to the computer. Since a post-calibration was able to be performed after the deployment by moving all the sensors to a new sonde body, this retrieved data was able to be uploaded to the NERRS Centralized Data Management Office portal and included in the quarterly QAQC submission for 2022 Q3.
+
+## Observable Depth Dropout at Pellicer Creek
+
+On 09/20/2022 a depth drop out (i.e., no reported depth data) at the Pellicer Creek WQ station was observed via the NOAA HADS satellite. Maintenance and an evaluation was performed at the site: disconnected and reconnected the telemetry cable and opened and closed the battery compartment on the data sonde. This reset the depth data and the station resumed reporting and transmission to NOAA HADS an hour after the maintenance was performed. Discussions occurred regarding whether this depth drop out (which has been observed sporadically before) could be caused by the telemetry connection, or the program not being able to accommodate non-SWMP tier 1 parameters/sensors: e.g. Total Algae and fDOM.
+
+

@@ -27,6 +27,8 @@ book:
       chapters:
       - text/environmental.qmd
       - text/nut-indicators.qmd
+      - text/hurricane-ian.qmd
+      - text/maintenance.qmd
   appendices: 
     - text/a1-cmecs.qmd
     
@@ -37,7 +39,7 @@ book:
 
   page-footer:
       left: |
-        The data used in this report was last updated on August 24, 2022.
+        The data used in this report was last updated on November 07, 2022.
       right: |
         Built with <a href="https://quarto.org/">Quarto</a>.
 

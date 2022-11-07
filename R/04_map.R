@@ -6,8 +6,9 @@ library(htmltools)
 library(sf)
 library(dplyr)
 library(janitor)
+library(here)
 
-station_info <- read.csv(here::here('data', '2001_2020_WQ_MET_NUT_FilesCDMO',
+station_info <- readr::read_csv(here::here('data', '2001_2020_WQ_MET_NUT_FilesCDMO',
                                'sampling_stations.csv')) %>% janitor::clean_names()
 glimpse(station_info)
 
