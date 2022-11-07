@@ -26,7 +26,7 @@ The State Thresholds used in the chlorophyll *a*, total nitrogen, and total phos
 ::: callout-note
 # Access the Standards
 
-By visiting https://www.flrules.org/gateway/ruleno.asp?id=62-302.530
+By visiting [Florida Rules](https://www.flrules.org/gateway/ruleno.asp?id=62-302.530)
 :::
 
 ## Dissolved Oxygen
