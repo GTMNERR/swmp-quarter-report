@@ -39,7 +39,7 @@ book:
 
   page-footer:
       left: |
-        The data used in this report was last updated on November XX, 2022.
+        The data used in this report was last updated on November 07, 2022.
       right: |
         Built with <a href="https://quarto.org/">Quarto</a>.
 
