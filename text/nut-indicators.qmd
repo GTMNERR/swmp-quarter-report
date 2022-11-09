@@ -160,7 +160,7 @@ Interpretation of patterns in annual geometric means (AGM) for chlorophyll at ea
 ```{r}
 #| label: fig-chla-agm
 #| echo: false
-#| fig.cap: Annual geometric means of monthly chlorophyll a at each SWMP water quality station. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530. Values exceeding the threshold are indicated in red. The 2022 value is based upon data to date and does not equal an entire year of data.
+#| fig.cap: Annual geometric means of monthly chlorophyll *a* at each SWMP water quality station. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530. Values exceeding the threshold are indicated in red. The 2022 value is based upon data to date and does not equal an entire year of data.
 #| fig.subcap:
 #|    - "Pine Island"
 #|    - "San Sebastian"
