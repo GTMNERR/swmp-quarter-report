@@ -107,6 +107,8 @@ MET_wind %>%
 
 Water levels began to rise in the St. Augustine area Wednesday, September 28, 2022. Unlike storms Matthew and Irma in the past (@fig-hist-storms), there was no observable singular storm surge event that occurred with Hurricane Ian, but increasing water levels over several tidal cycles (@fig-surge). It took three tide cycles until maximum water levels were reached when the storm was closest to the reserve. For most stations, the amount of water at the incoming tide was close to double what was receding at the outgoing tide. The greatest increase in water depth was observed in Pellicer Creek where there was an overall gain of 1.31m (4.3ft) in the creek. After the storm's passing, the water levels quickly dropped with each falling tide over the next two days (@fig-surge).
 
+*Unfortunately, due to suspected sensor drift on an aging data sonde and the depth reading at post deployment differing from depth offset for calibrations, the depth data for Pine Island was marked suspect during quarterly review between 09/27/2022 12:30 pm EST and 09/30/2022 11:45 pm EST (October data began a new quarter and has therefore not undergone review). For more information on the depth investigation, visit the Maintenance Issues section.*
+
 ```{r}
 #| label: fig-hist-storms
 #| echo: false
