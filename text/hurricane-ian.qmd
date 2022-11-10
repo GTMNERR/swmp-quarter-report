@@ -31,7 +31,7 @@ The effects of Hurricane Ian were observable at the GTM Research Reserve in nort
 
 ## Onset of winds
 
-The winds picked up in northeast Florida the morning of Wednesday, September 28, 2022 from the northeast direction. News reports of the region [experiencing a Nor'easter](https://floridapolitics.com/archives/559346-duval-ian/) began on September 28th and the weather station in Pellicer Creek supports the onset of predominating northeasterly winds midday on Tuesday, September 27th that extended until after the storm went off the coast the evening of Thursday, September 29th (@fig-winds). The station experienced sustained winds in excess of 30mph from 5am until almost 5pm on Thursday, September 29th when the storm moved offshore (@fig-winds-1). Maximum gusts during this same period of time were greater than 45 mph with the greatest gusts recorded at 48 mph (@fig-winds-2).
+The winds picked up in northeast Florida the morning of Wednesday, September 28, 2022 from the northeast direction. News reports of the region [experiencing a Nor'easter](https://floridapolitics.com/archives/559346-duval-ian/) began on September 28th and the weather station in Pellicer Creek supports the onset of predominating northeasterly winds midday on Tuesday, September 27th that extended until after the storm went off the coast the evening of Thursday, September 29th (@fig-winds). The station experienced sustained winds in excess of 30 mph from 5am until almost 5pm on Thursday, September 29th when the storm moved offshore (@fig-winds-1). Maximum gusts during this same period of time were greater than 45 mph with the greatest gusts recorded at 48 mph (@fig-winds-2).
 
 ```{r}
 #| label: fig-winds
