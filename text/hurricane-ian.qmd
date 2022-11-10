@@ -31,7 +31,7 @@ The effects of Hurricane Ian were observable at the GTM Research Reserve in nort
 
 ## Onset of winds
 
-The winds picked up in northeast Florida the morning of Wednesday, September 28, 2022 from the northeast direction. News reports of the region [experiencing a Nor'easter](https://floridapolitics.com/archives/559346-duval-ian/) began on September 28th and the weather station in Pellicer Creek supports the onset of predominating northeasterly winds midday on Tuesday, September 27th that extended until after the storm went off the coast the evening of Thursday, September 29th (@fig-winds). The station experienced sustained winds in excess of 30mph from 5am until almost 5pm on Thursday, September 29th when the storm moved offshore (@fig-winds-1). Maximum gusts during this same period of time were greater than 45 mph with the greatest gusts recorded at 48 mph (@fig-winds-2).
+The winds picked up in northeast Florida the morning of Wednesday, September 28, 2022 from the northeast direction. News reports of the region [experiencing a Nor'easter](https://floridapolitics.com/archives/559346-duval-ian/) began on September 28th and the weather station in Pellicer Creek supports the onset of predominating northeasterly winds midday on Tuesday, September 27th that extended until after the storm went off the coast the evening of Thursday, September 29th (@fig-winds). The station experienced sustained winds in excess of 30 mph from 5am until almost 5pm on Thursday, September 29th when the storm moved offshore (@fig-winds-1). Maximum gusts during this same period of time were greater than 45 mph with the greatest gusts recorded at 48 mph (@fig-winds-2).
 
 ```{r}
 #| label: fig-winds
@@ -106,6 +106,8 @@ MET_wind %>%
 ## Rising tides
 
 Water levels began to rise in the St. Augustine area Wednesday, September 28, 2022. Unlike storms Matthew and Irma in the past (@fig-hist-storms), there was no observable singular storm surge event that occurred with Hurricane Ian, but increasing water levels over several tidal cycles (@fig-surge). It took three tide cycles until maximum water levels were reached when the storm was closest to the reserve. For most stations, the amount of water at the incoming tide was close to double what was receding at the outgoing tide. The greatest increase in water depth was observed in Pellicer Creek where there was an overall gain of 1.31m (4.3ft) in the creek. After the storm's passing, the water levels quickly dropped with each falling tide over the next two days (@fig-surge).
+
+*Unfortunately, due to suspected sensor drift on an aging data sonde and the depth reading at post deployment differing from depth offset for calibrations, the depth data for Pine Island was marked suspect during quarterly review between 09/27/2022 12:30 pm EST and 09/30/2022 11:45 pm EST (October data began a new quarter and has therefore not undergone review). For more information on the depth investigation, visit the Maintenance Issues section.*
 
 ```{r}
 #| label: fig-hist-storms
