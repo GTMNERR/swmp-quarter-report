@@ -60,6 +60,7 @@ pc |>
 
 Pellicer Creek is located within a waterbody with known impairments for dissolved oxygen, chlorophyll *a*, and fecal coliform bacteria. As such, this station frequently experiences low dissolved oxygen values, particularly in the summer months; this year has been no exception (@fig-do-pc). In fact, the dissolved oxygen in late August was lower than values observed during the time of Hurricane Irma (@fig-do-pc-1). Values began to rise in September, but it is likely that the storm surge associated with Hurricane Ian in late September helped to bring in and further oxygenate this system (@fig-do-pc-2).
 
+
 ```{r}
 #| label: fig-do-pc
 #| echo: false
@@ -226,7 +227,7 @@ Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitro
 
 TN is a calculated value based on TKN and NO23.
 
-This year, quite a bit of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated. This was especially true at Pine Island which only has data in January and February (@fig-tn-boxplots-1) and the remaining sites are typically missing the March data.
+This year, quite a bit of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated and is missing for quite a few months in a several of the stations (@fig-tn-boxplots). This was especially true at Fort Matanzas which has the least amount of TN data (@fig-tn-boxplots-3).
 
 ```{r}
 #| label: fig-tn-boxplots
