@@ -226,7 +226,7 @@ Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitro
 
 TN is a calculated value based on TKN and NO23.
 
-This year, quite a bit of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated. This was especially true at Pine Island which only has data in January and February (@fig-tn-boxplots-1) and the remaining sites are typically missing the March data.
+This year, quite a bit of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated and is missing for quite a few months in a several of the stations (@fig-tn-boxplots). This was especially true at Fort Matanzas which has the least amount of TN data (@fig-tn-boxplots-3).
 
 ```{r}
 #| label: fig-tn-boxplots
