@@ -27,7 +27,7 @@ source(here::here('R', '03_graph_fxns.R'))
 
 Hurricane Ian (@fig-ian) made landfall near Cayo Costa in southwestern Florida at 3:05pm EDT on Wednesday, September 28, 2022 as a Category 4 storm. It then made it's way across the Florida peninsula to Cape Canaveral while downgrading to a Tropical Storm, before hitting the Atlantic Ocean in the early evening of Thursday, September 29, 2022 where it then strengthened to a Category 1 storm and headed towards the South Carolina coast. It made landfall south of Georgetown, South Carolina as a Category 1 storm the afternoon of Friday, September 30, 2022.
 
-The effects of Hurricane Ian were observable at the GTM Research Reserve in northeast Florida starting Wednesday, September 28, 2022 with the onset of northeasterly winds and rising tides. The storm was closest to the GTM Research Reserve at 2:30 EST as determined by the lowest barometric pressure recorded at the weather station in Pellicer Creek (1001 mb).
+The effects of Hurricane Ian were observable at the GTM Research Reserve in northeast Florida starting Wednesday, September 28, 2022 with the onset of northeasterly winds and rising tides. The storm was closest to the GTM Research Reserve at 2:30 pm EST as determined by the lowest barometric pressure recorded at the weather station in Pellicer Creek (1001 mb).
 
 ## Onset of winds
 
