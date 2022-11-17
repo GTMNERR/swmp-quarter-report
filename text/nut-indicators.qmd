@@ -114,7 +114,7 @@ boxplot_currentyear(station = "gtmpinut",
   labs(y = "Mean Monthly Chlorophyll-a (\U00B5g/L)") +
   annotate("text",
              x = "Mar",
-             y = 16,
+             y = 20,
              size = 3,
              color = "blue",
              label = "State Threshold 6.6 (\U00B5g/L)")
