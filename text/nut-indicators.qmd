@@ -92,9 +92,9 @@ threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2022, 2022),
 
 ## Chlorophyll *a*
 
-So far, this year has seen elevated chlorophyll *a* levels at the three intracoastal waterway sites (@fig-chla-boxplots). The levels have been especially high at Pine Island since April (@fig-chla-boxplots-1). The highest observed chlorophyll in the time series was observed in April this year (18.5 $\mu$g/L). San Sebastian also had the highest chlorophyll observed in January and Feburary of this year compared to the same months in all previous years (6.85 and 5.6 $\mu$g/L, respectively; @fig-chla-boxplots-2). 
+So far, this year has seen elevated chlorophyll *a* levels at the three intracoastal waterway sites (@fig-chla-boxplots). The levels have been especially high at Pine Island since April (@fig-chla-boxplots-1); the highest observed chlorophyll in the time series was observed in April this year (18.5 $\mu$g/L). San Sebastian also had the highest chlorophyll observed in January and Feburary of this year compared to the same months in all previous years (6.85 and 5.6 $\mu$g/L, respectively; @fig-chla-boxplots-2). High chlorophyll *a* at all stations in January are likely due to uncharacteristically high temperatures that month (@fig-range-temp).
 
-Interestingly, though much higher seasonal chlorophyll was observed at Fort Matanzas in the first quarter, August was much lower than average (@fig-chla-boxplots-3).
+Interestingly, though much higher seasonal chlorophyll was observed at Fort Matanzas in the first quarter, August was much lower than average (@fig-chla-boxplots-3). 
 
 ```{r}
 #| label: fig-chla-boxplots
