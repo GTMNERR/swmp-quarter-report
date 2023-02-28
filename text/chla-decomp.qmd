@@ -1,0 +1,445 @@
+---
+title: "Chlorophyll Decomposition"
+editor_options: 
+  chunk_output_type: console
+execute: 
+  warning: false
+  error: false
+link-external-icon: true
+link-external-newwindow: true
+filters: 
+  - lightbox
+lightbox: auto
+---
+
+```{r}
+#| label: data-load
+#| include: false
+library(here)
+
+source(here::here('R', '00_loadpackages.R'))
+source(here::here('R', '02.1_load_wrangle_NUT.R'))
+source(here::here('R', '03_graph_fxns.R'))
+```
+
+Dec
+
+```{r decomp-fxn, include = F}
+# function comes from Cloern and Jassby 2010 Supplemental Material
+
+decomp.mult <- function(x, startyr = NULL , endyr = NULL, event = T){
+#R2 .8.0 3/2/09 4:48 PM
+  if(class(x)[1]!='mts') dim(x)=c(length(x),1)
+  
+  if(is.null(startyr)) startyr <- start(x)[1]
+  
+  if(is.null(endyr)) endyr <- end(x)[1]
+  
+  d <- window(x, start = c(startyr,1), end = c(endyr,12), extend = T)
+  
+  results <- vector('list',dim(d)[2])
+  
+  names(results)= colnames(d)
+  
+  for(site in colnames (d)){
+    d1=d[,site]
+    
+    #long-term mean
+    grandmean = mean(d1, na.rm = T)
+    
+    # annual component
+    annualmean = aggregate(d1,1, mean, na.rm = T)
+    annualmeanreps = as.vector(t(matrix(rep(annualmean,12), 
+                                        ncol = 12)))
+    interann = ts(annualmeanreps,s=c(startyr,1),f = 12) / grandmean
+    # remaining components
+    if(event) {
+      # monthly component
+      d2 = matrix(d1, nrow = 12)
+      monthdev = sweep(d2,2, annualmean ,'/')
+      monthmean = apply(monthdev,1, mean , na.rm = T)
+      season = ts(rep(monthmean, endyr - startyr + 1), 
+                  s=c(startyr, 1), f = 12)
+      # events component
+      resids = sweep(monthdev, 1, monthmean , '/')
+      events = ts(as.vector(resids),
+                  s=c(startyr, 1),f = 12)
+    }
+    else {
+      # monthly component
+      season = d1/(grandmean * interann)
+    }
+    # prepare output
+    if(event) dcomp = ts.union(d1, grandmean, interann, season,
+      events) else dcomp =ts.union (d1, grandmean, interann,
+      season)
+    colnames(dcomp)[1]= 'original'
+    results[[site]]= dcomp
+    }
+    if(class(x)[1]!='mts') results[[1]] else results
+}
+```
+
+```{r ts, include = F}
+# 2005-01-01 is missing from all four sites, need to build in a placeholder for it
+mis <- tribble(
+  ~datetimestamp, ~chla_n,
+  "2005-01-01", NA
+) %>% mutate(datetimestamp = as.Date(datetimestamp),
+             chla_n = as.numeric(chla_n))
+
+# create timeseries objects of chlorophyll data
+chla_pi <- ts(as.data.frame(pi_nut_mo %>% 
+                              filter(datetimestamp > "2002-12-31" &
+                                       datetimestamp < "2022-01-01") %>%
+                              select(datetimestamp, chla_n) %>% 
+                              bind_rows(mis) %>% 
+                              arrange(datetimestamp) %>% 
+                              select(chla_n)),
+              start = c(2003,1), # sampling started 2002-05, but 2003 is first complete year
+              end = c(2022,12), # time period ended 2022, but 2021 is last complete year
+              frequency = 12) # monthly
+
+chla_ss <- ts(as.data.frame(ss_nut_mo %>% 
+                              filter(datetimestamp > "2002-12-31" &
+                                       datetimestamp < "2022-01-01") %>%
+                              select(datetimestamp, chla_n) %>% 
+                              bind_rows(mis) %>% 
+                              arrange(datetimestamp) %>% 
+                              select(chla_n)),
+              start = c(2003,1), # sampling started 2002-05, but 2003 is first complete year
+              end = c(2022,12), # time period ended 2022, but 2021 is last complete year
+              frequency = 12) # monthly
+
+chla_fm <- ts(as.data.frame(fm_nut_mo %>% 
+                              filter(datetimestamp > "2002-12-31" &
+                                       datetimestamp < "2022-01-01") %>%
+                              select(datetimestamp, chla_n) %>% 
+                              bind_rows(mis) %>% 
+                              arrange(datetimestamp) %>% 
+                              select(chla_n)),
+              start = c(2003,1), # sampling started 2002-05, but 2003 is first complete year
+              end = c(2021,12), # time period ended 2022, but 2021 is last complete year
+              frequency = 12) # monthly
+
+chla_pc <- ts(as.data.frame(pc_nut_mo %>% 
+                              filter(datetimestamp > "2002-12-31" &
+                                       datetimestamp < "2022-01-01") %>%
+                              select(datetimestamp, chla_n) %>% 
+                              bind_rows(mis) %>% 
+                              arrange(datetimestamp) %>% 
+                              select(chla_n)),
+              start = c(2003,1), # sampling started 2002-05, but 2003 is first complete year
+              end = c(2021,12), # time period ended 2022, but 2021 is last complete year
+              frequency = 12) # monthly
+
+rm(mis)
+```
+
+```{r decomp, include = F}
+decomp_pi <- data.frame(decomp.mult(chla_pi), 
+                        date = as.Date(time(decomp.mult(chla_pi))))
+summary(decomp.mult(chla_pi))
+
+decomp_ss <- data.frame(decomp.mult(chla_ss), 
+                        date = as.Date(time(decomp.mult(chla_ss))))
+summary(decomp.mult(chla_ss))
+
+decomp_fm <- data.frame(decomp.mult(chla_fm), 
+                        date = as.Date(time(decomp.mult(chla_fm))))
+summary(decomp.mult(chla_fm))
+
+decomp_pc <- data.frame(decomp.mult(chla_pc), 
+                        date = as.Date(time(decomp.mult(chla_pc))))
+summary(decomp.mult(chla_pc))
+```
+
+```{r plot-fxn, include = FALSE}
+mult_fig3 <- function(site){
+  if(site == "PI") {
+    a <- ggplot(decomp_pi) +
+            geom_line(aes(x = date, y = original), color = "blue") +
+            scale_x_date(date_breaks = "year", date_labels = "%Y") +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, "black", NA, NA)),
+                  panel.grid.minor = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Chl-a \u00b5g/L',
+                 title = "A. Pine Island")
+    b <- decomp_pi %>% 
+          mutate(year = year(date)) %>% 
+          select(year, interann) %>% 
+          unique() %>% 
+          ggplot() +
+            geom_col(aes(x = year, y = interann-1), fill = "red") +
+            geom_hline(yintercept = 0, color = "red") +
+            scale_x_continuous(breaks = seq(2000, 2022, by = 1)) +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, NA, "black", NA)),
+                  panel.grid = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Annual')
+    c <- ggplot(decomp_pi) +
+          geom_col(aes(x = date, y = events-1), fill = "purple") +
+          geom_hline(yintercept = 0, color = "purple") +
+          scale_x_date(date_breaks = "year", date_labels = "%Y") +
+          scale_y_continuous(limits = c(-1,2)) +
+          theme_bw() +
+          theme(axis.text.x = element_text(colour = c(NA, NA,"black", NA, NA)),
+                panel.grid = element_blank(),
+                axis.text = element_text(color = "black")) +
+          labs(x = '',
+               y = 'Residual')
+    d <- decomp_pi %>% 
+          mutate(month = month(date, label = T)) %>% 
+          select(month, season) %>% 
+          unique %>% 
+          ggplot() +
+            geom_col(aes(x = month, y = season-1), fill = "green") +
+            geom_hline(yintercept = 0, color = "green") +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text = element_text(color = "black"),
+                  panel.grid = element_blank()) +
+            labs(x = '',
+                 y = 'Season')
+    a/b/c/d
+  } else if(site == "SS") {
+     a <- ggplot(decomp_ss) +
+            geom_line(aes(x = date, y = original), color = "blue") +
+            scale_x_date(date_breaks = "year", date_labels = "%Y") +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, "black", NA, NA)),
+                  panel.grid.minor = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Chl-a \u00b5g/L',
+                 title = "B. San Sebastian")
+    b <- decomp_ss %>% 
+          mutate(year = year(date)) %>% 
+          select(year, interann) %>% 
+          unique() %>% 
+          ggplot() +
+            geom_col(aes(x = year, y = interann-1), fill = "red") +
+            geom_hline(yintercept = 0, color = "red") +
+            scale_x_continuous(breaks = seq(2000, 2022, by = 1)) +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, NA, "black", NA)),
+                  panel.grid = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Annual')
+    c <- ggplot(decomp_ss) +
+          geom_col(aes(x = date, y = events-1), fill = "purple") +
+          geom_hline(yintercept = 0, color = "purple") +
+          scale_x_date(date_breaks = "year", date_labels = "%Y") +
+          scale_y_continuous(limits = c(-1,2)) +
+          theme_bw() +
+          theme(axis.text.x = element_text(colour = c(NA, NA,"black", NA, NA)),
+                panel.grid = element_blank(),
+                axis.text = element_text(color = "black")) +
+          labs(x = '',
+               y = 'Residual')
+    d <- decomp_ss %>% 
+          mutate(month = month(date, label = T)) %>% 
+          select(month, season) %>% 
+          unique %>% 
+          ggplot() +
+            geom_col(aes(x = month, y = season-1), fill = "green") +
+            geom_hline(yintercept = 0, color = "green") +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text = element_text(color = "black"),
+                  panel.grid = element_blank()) +
+            labs(x = '',
+                 y = 'Season')
+    a/b/c/d
+  } else if(site == "FM"){
+    a <- ggplot(decomp_fm) +
+            geom_line(aes(x = date, y = original), color = "blue") +
+            scale_x_date(date_breaks = "year", date_labels = "%Y") +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, "black", NA, NA)),
+                  panel.grid.minor = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Chl-a \u00b5g/L',
+                 title = "C. Fort Matanzas")
+    b <- decomp_fm %>% 
+          mutate(year = year(date)) %>% 
+          select(year, interann) %>% 
+          unique() %>% 
+          ggplot() +
+            geom_col(aes(x = year, y = interann-1), fill = "red") +
+            geom_hline(yintercept = 0, color = "red") +
+            scale_x_continuous(breaks = seq(2000, 2022, by = 1)) +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, NA, "black", NA)),
+                  panel.grid = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Annual')
+    c <- ggplot(decomp_fm) +
+          geom_col(aes(x = date, y = events-1), fill = "purple") +
+          geom_hline(yintercept = 0, color = "purple") +
+          scale_x_date(date_breaks = "year", date_labels = "%Y") +
+          scale_y_continuous(limits = c(-1,2)) +
+          theme_bw() +
+          theme(axis.text.x = element_text(colour = c(NA, NA,"black", NA, NA)),
+                panel.grid = element_blank(),
+                axis.text = element_text(color = "black")) +
+          labs(x = '',
+               y = 'Residual')
+    d <- decomp_fm %>% 
+          mutate(month = month(date, label = T)) %>% 
+          select(month, season) %>% 
+          unique %>% 
+          ggplot() +
+            geom_col(aes(x = month, y = season-1), fill = "green") +
+            geom_hline(yintercept = 0, color = "green") +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text = element_text(color = "black"),
+                  panel.grid = element_blank()) +
+            labs(x = '',
+                 y = 'Season')
+    a/b/c/d
+  } else {
+    a <- ggplot(decomp_pc) +
+            geom_line(aes(x = date, y = original), color = "blue") +
+            scale_x_date(date_breaks = "year", date_labels = "%Y") +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, "black", NA, NA)),
+                  panel.grid.minor = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Chl-a \u00b5g/L',
+                 title = "D. Pellicer Creek")
+    b <- decomp_pc %>% 
+          mutate(year = year(date)) %>% 
+          select(year, interann) %>% 
+          unique() %>% 
+          ggplot() +
+            geom_col(aes(x = year, y = interann-1), fill = "red") +
+            geom_hline(yintercept = 0, color = "red") +
+            scale_x_continuous(breaks = seq(2000, 2022, by = 1)) +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, NA, "black", NA)),
+                  panel.grid = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Annual')
+    c <- ggplot(decomp_pc) +
+          geom_col(aes(x = date, y = events-1), fill = "purple") +
+          geom_hline(yintercept = 0, color = "purple") +
+          scale_x_date(date_breaks = "year", date_labels = "%Y") +
+          scale_y_continuous(limits = c(-1,2)) +
+          theme_bw() +
+          theme(axis.text.x = element_text(colour = c(NA, NA,"black", NA, NA)),
+                panel.grid = element_blank(),
+                axis.text = element_text(color = "black")) +
+          labs(x = '',
+               y = 'Residual')
+    d <- decomp_pc %>% 
+          mutate(month = month(date, label = T)) %>% 
+          select(month, season) %>% 
+          unique %>% 
+          ggplot() +
+            geom_col(aes(x = month, y = season-1), fill = "green") +
+            geom_hline(yintercept = 0, color = "green") +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text = element_text(color = "black"),
+                  panel.grid = element_blank()) +
+            labs(x = '',
+                 y = 'Season')
+    a/b/c/d
+  }
+}
+
+```
+
+## Background {.tabset .tabset-pills}
+
+Recreating Figure 3 from Cloern and Jassby 2010. Blue lines are monthly series of Chl-*a* concentration; red bars are annual components $y$ showing deviation from 1; purple lines are residual components $\epsilon$ showing deviation from 1, and green bars are standard seasonal patterns $m$ showing deviations from 1. Based on Equation 4 from Cloern and Jassby 2010:
+
+$$
+c_{ij}=Cy_im_j\epsilon_{ij}
+$$
+Where $c_{ij}$ is chlorophyll concentration in year $i$($i=1,...,N$) and month $j$($j=1,...12$); *C* is the long-term mean of the series; $y_i$ is the annual effect in the *i*th year; $m_j$ is the seasonal (monthly) effect in the *j*th month; and $\epsilon_{ij}$ is the residual.
+
++   If $y_i$ >1, indicates a year with above-average mean Chl-*a*.
++   If $m_j$ >1, indicates a mean monthly Chl-*a* greater than the annual mean.
++   If $\epsilon_{ij}$ >1, indicates an observation greater than the expected value for that month and year.
+
+
+```{r fig-3, echo = F, fig.height=8, fig.width=4}
+# inputPanel(
+#   selectInput("site", label = "Site",
+#               choices = c("PI", "SS", "FM", "PC"),
+#               selected = "PI")
+# )
+# 
+# renderPlot({
+#   mult_fig3(site = input$site)
+# })
+
+# 
+# mult_fig3(site = "PI")
+# mult_fig3(site = "SS")
+# mult_fig3(site = "FM")
+# mult_fig3(site = "PC")
+
+```
+
+### Pine Island
+
+```{r pi, echo = F, fig.height = 8, fig.width = 5}
+mult_fig3(site = "PI")
+```
+
+### San Sebastian
+
+```{r ss, echo = F, fig.height = 8, fig.width = 5}
+mult_fig3(site = "SS")
+```
+
+### Fort Matanzas
+```{r fm, echo = F, fig.height = 8, fig.width = 5}
+mult_fig3(site = "FM")
+```
+
+### Pellicer Creek
+```{r pc, echo = F, fig.height = 8, fig.width = 5}
+mult_fig3(site = "PC")
+```
+
+## Variability of phytoplankton patterns
+
+For individual Chl-*a* series, the standard deviations of $y$($SD_y$) and $m$($SD_m$) are measures of annual and seasonal variability, respectively. In Cloern and Jassby 2010, the 84 sites in their study typically fell within the range of 0.2-0.4 for $y$ and 0.1-0.6 for $m$. 
+
+The GTMNERR SWMP stations each fall within these ranges, also showing much higher seasonal variability than annual variability.
+
+```{r sd-table, echo = F}
+# sd(decomp_pc$events, na.rm = T)
+
+tribble(
+  ~site, ~SDy, ~SDm, ~SDe,
+  "PI", 0.198, 0.33, 0.349,
+  "SS", 0.232, 0.225, 0.349,
+  "FM", 0.251, 0.345, 0.419,
+  "PC", 0.359, 0.419, 0.504
+) %>% 
+  kbl(align = "c", caption = "Standard Deviations of variability at all four GTMNERR SWMP stations") %>% 
+  kable_styling(fixed_thead = T) %>% 
+  row_spec(0, bold = T) %>% 
+  column_spec(1, border_right = T) %>%
+  kable_classic(c('striped', 'hover'), html_font = "Open Sans", full_width = F)
+
+```
