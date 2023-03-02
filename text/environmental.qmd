@@ -19,9 +19,11 @@ The following includes variables that establish the estuarine setting: rainfall,
 
 ## Rainfall
 
-The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). This year, the GTM Research Reserve weather station recorded much higher rainfall in the first quarter than the previous five years (@fig-rainfall-1). The majority of this rainfall occurred during the month of March with approximately 200 mm (7.87 in) of rain (@fig-rainfall-2).
+The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). In 2022, the GTM Research Reserve weather station recorded much higher rainfall in the first quarter than the previous five years (@fig-rainfall-1). The majority of this rainfall occurred during the month of March with approximately 200 mm (7.87 in) of rain (@fig-rainfall-2).
 
-The summer months were rather dry with no "extremely wet" days of rainfall (>30mm) and very few "very wet" days (20-29mm). In fact, mid-July through mid-August saw almost a month with no rainfall (@fig-rainfall-3). Regular rain resumed in late August into September concluding with extreme rainfall during Hurricane Ian.
+The summer months were rather dry with no "extremely wet" days of rainfall (>30mm) and very few "very wet" days (20-29mm). In fact, mid-July through mid-August saw almost a month with no rainfall (@fig-rainfall-3). Regular rain resumed in late August into September concluding with extreme rainfall during Hurricane Ian, which resulted in the largest amount of monthly rainfall for 2022 occurring in September with 400 mm (15.7 in) of rain.  
+
+Even though another tropical cyclone event occurred in November (Hurricane Nicole), the fourth quarter rainfall levels were still within similar amounts to the previous few years (@fig-rainfall-1). The majority of the rainfall in November was associated with Hurricane Nicole and December had the least amount of rain all year, with only 3 days of very little rain (@fig-rainfall-3).
 
 ```{r}
 #| label: fig-rainfall
@@ -58,7 +60,7 @@ MET |>
   # summarise(mean = mean(sum)) %>%
   ggplot() +
   geom_col(aes(x = month, y = totprcp), fill = "#0075AC") +
-  geom_hline(yintercept = 117, size = 2, linetype = "dashed", color = "grey50") +
+  geom_hline(yintercept = 119, size = 2, linetype = "dashed", color = "grey50") +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
   theme(axis.text = element_text(color = "black"),
