@@ -6,6 +6,7 @@ execute:
 filters: 
   - lightbox
 lightbox: auto
+bibliography: references.bib
 ---
 
 ```{r}
@@ -21,7 +22,7 @@ The following includes variables that establish the estuarine setting: rainfall,
 
 The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). In 2022, the GTM Research Reserve weather station recorded much higher rainfall in the first quarter than the previous five years (@fig-rainfall-1). The majority of this rainfall occurred during the month of March with approximately 200 mm (7.87 in) of rain (@fig-rainfall-2).
 
-The summer months were rather dry with no "extremely wet" days of rainfall (>30mm) and very few "very wet" days (20-29mm). In fact, mid-July through mid-August saw almost a month with no rainfall (@fig-rainfall-3). Regular rain resumed in late August into September concluding with extreme rainfall during Hurricane Ian, which resulted in the largest amount of monthly rainfall for 2022 occurring in September with 400 mm (15.7 in) of rain.  
+The summer months were rather dry with no "extremely wet" days of rainfall (\>30mm) and very few "very wet" days (20-29mm). In fact, mid-July through mid-August saw almost a month with no rainfall (@fig-rainfall-3). Regular rain resumed in late August into September concluding with extreme rainfall during Hurricane Ian, which resulted in the largest amount of monthly rainfall for 2022 occurring in September with 400 mm (15.7 in) of rain.
 
 Even though another tropical cyclone event occurred in November (Hurricane Nicole), the fourth quarter rainfall levels were still within similar amounts to the previous few years (@fig-rainfall-1). The majority of the rainfall in November was associated with Hurricane Nicole and December had the least amount of rain all year, with only 3 days of very little rain (@fig-rainfall-3).
 
@@ -102,8 +103,21 @@ MET |>
 
 ## Temperature
 
-Water temperature daily range was quite variable in the first quarter of the year (January - March), where daily average temperatures were much lower than average in February, but the following month in March ended up being higher than average (@fig-range-temp). These higher than average daily values were likely driven up by the large amounts of rainfall this area experienced during this time (@fig-rainfall-2). Beginning in the latter part of May through the entire summer, waters were much warmer than average, particularly in the shallower sites (@fig-range-temp-1; @fig-range-temp-4).
-There was an observable drop in water temperatures at all sites during the time Hurricane Ian struck the Florida peninsula in late September, but temperatures climbed back into their "normal" range after the storm passed at all sites except Pellicer Creek (@fig-range-temp), which is a shallow creek and more influenced by upland runoff. At Pellicer Creek there was also an observable drop in water temperature later in October (@fig-range-temp-4).
+Freezing temperatures are of great interest in Northeast Florida because the region is a climatic transition zone experiencing a shift in foundational vegetation species associated with temperature. Salt marsh grasses are outcompeted by mangrove trees/shrubs in the absence of freezes, which limit mangrove persistence. @cavanaugh2013 observed an ecological threshold of -4 °C, where mangrove cover decreased in years that experienced temperatures below -4 °C. Prior to this year, temperatures at the weather station only fell below -4 °C on two days. The longest duration below this threshold (6.5 hours) occurred in 2003. It is not surprising then, that mangrove coverage has continued to increase throughout Northeast Florida from an estimated four acres in 1990 to almost 3,000 acres in 2014 (Dix et al. 2021).
+
+```{r}
+#| label: fig-range-atemp
+#| echo: false
+#| fig.cap: Historical daily range of air temperature at the SWMP weather station with current year daily average overlaid in blue.
+
+# historical_daily_range(MET, param = 'atemp', target_yr = 2022)
+# 
+# MET %>% 
+#   ggplot() +
+#   geom_point(aes(x = datetimestamp, y = atemp, color = atemp < -4))
+```
+
+Water temperature daily range was quite variable in the first quarter of the year (January - March), where daily average temperatures were much lower than average in February, but the following month in March ended up being higher than average (@fig-range-temp). These higher than average daily values were likely driven up by the large amounts of rainfall this area experienced during this time (@fig-rainfall-2). Beginning in the latter part of May through the entire summer, waters were much warmer than average, particularly in the shallower sites (@fig-range-temp-1; @fig-range-temp-4). There was an observable drop in water temperatures at all sites during the time Hurricane Ian struck the Florida peninsula in late September, but temperatures climbed back into their "normal" range after the storm passed at all sites except Pellicer Creek (@fig-range-temp), which is a shallow creek and more influenced by upland runoff. At Pellicer Creek there was also an observable drop in water temperature later in October (@fig-range-temp-4).
 
 ```{r}
 #| label: fig-range-temp
@@ -127,10 +141,7 @@ historical_daily_range(pc, param = 'temp', target_yr = 2022)
 
 ## Salinity
 
-The heavy rainfall in March 2022 and the rainfall associated with Hurricane Ian in late September 2022 was evident in the drastic drops in salinity at all stations (@fig-range-sal), with the greatest impact occurring at the shallowest site, Pellicer Creek, which is also the most sensitive to the effect of runoff (@fig-range-sal-4). Due to a lack of rain the late spring/early summer (only 12 days of rain between May 1 and July 1), many of the sites had very high salinities, particularly Pine Island (@fig-range-sal-1). 
-The rainy periods throughout the year are observable in the salinity data collected in Pellicer Creek with distinct drops in salinity observed during each rain period (March-April, May, early July, late Aug-October)(@fig-rainfall-3; @fig-range-sal-4).
-
-
+The heavy rainfall in March 2022 and the rainfall associated with Hurricane Ian in late September 2022 was evident in the drastic drops in salinity at all stations (@fig-range-sal), with the greatest impact occurring at the shallowest site, Pellicer Creek, which is also the most sensitive to the effect of runoff (@fig-range-sal-4). Due to a lack of rain the late spring/early summer (only 12 days of rain between May 1 and July 1), many of the sites had very high salinities, particularly Pine Island (@fig-range-sal-1). The rainy periods throughout the year are observable in the salinity data collected in Pellicer Creek with distinct drops in salinity observed during each rain period (March-April, May, early July, late Aug-October)(@fig-rainfall-3; @fig-range-sal-4).
 
 ```{r}
 #| label: fig-range-sal
