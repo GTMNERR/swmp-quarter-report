@@ -103,7 +103,7 @@ MET |>
 
 ## Temperature
 
-Freezing temperatures are of great interest in Northeast Florida because the region is a climatic transition zone experiencing a shift in foundational vegetation species associated with temperature. Salt marsh grasses are outcompeted by mangrove trees/shrubs in the absence of freezes, which limit mangrove persistence. @cavanaugh2013 observed an ecological threshold of -4 °C, where mangrove cover decreased in years that experienced temperatures below -4 °C. Prior to this year, temperatures at the weather station only fell below -4 °C on two days. The longest duration below this threshold (6.5 hours) occurred in 2003. It is not surprising then, that mangrove coverage has continued to increase throughout Northeast Florida from an estimated four acres in 1990 to almost 3,000 acres in 2014 (Dix et al. 2021).
+Freezing temperatures are of great interest in Northeast Florida because the region is a climatic transition zone experiencing a shift in foundational vegetation species associated with temperature. Salt marsh grasses are outcompeted by mangrove trees/shrubs in the absence of freezes, which limit mangrove persistence. Mangrove coverage has continued to increase throughout Northeast Florida from an estimated four acres in 1990 to almost 3,000 acres in 2014 (Dix et al. 2021). @cavanaugh2013 observed an ecological threshold of -4 °C, where mangrove cover decreased in years that experienced temperatures below -4 °C. Prior to this year, temperatures at the weather station only fell below -4 °C on two days. The longest duration below this threshold (6.5 hours) occurred in 2003.  
 
 ```{r}
 #| label: fig-range-atemp
