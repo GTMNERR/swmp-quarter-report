@@ -103,18 +103,19 @@ MET |>
 
 ## Temperature
 
-Freezing temperatures are of great interest in Northeast Florida because the region is a climatic transition zone experiencing a shift in foundational vegetation species associated with temperature. Salt marsh grasses are outcompeted by mangrove trees/shrubs in the absence of freezes, which limit mangrove persistence. Mangrove coverage has continued to increase throughout Northeast Florida from an estimated four acres in 1990 to almost 3,000 acres in 2014 (Dix et al. 2021). @cavanaugh2013 observed an ecological threshold of -4 °C, where mangrove cover decreased in years that experienced temperatures below -4 °C. Prior to this year, temperatures at the weather station only fell below -4 °C on two days. The longest duration below this threshold (6.5 hours) occurred in 2003.  
+Freezing temperatures are of great interest in Northeast Florida because the region is a climatic transition zone experiencing a shift in foundational vegetation species associated with temperature. Salt marsh grasses are outcompeted by mangrove trees/shrubs in the absence of freezes, which limit mangrove persistence. Mangrove coverage has continued to increase throughout Northeast Florida from an estimated four acres in 1990 to almost 3,000 acres in 2014 (Dix et al. 2021). @cavanaugh2013 observed an ecological threshold of -4 °C, where mangrove cover decreased in years that experienced temperatures below -4 °C. Prior to this year, temperatures at the weather station only fell below -4 °C on two days: January 24, 2003(for 6.5 hours, the longest duration below this threshold) and December 14, 2010. This year, temperatures fell below -4°C early on the morning of December 25th for 3 hours.
 
 ```{r}
 #| label: fig-range-atemp
 #| echo: false
 #| fig.cap: Historical daily range of air temperature at the SWMP weather station with current year daily average overlaid in blue.
 
-# historical_daily_range(MET, param = 'atemp', target_yr = 2022)
+historical_daily_range(MET, param = 'atemp', target_yr = 2022)
 # 
-# MET %>% 
-#   ggplot() +
-#   geom_point(aes(x = datetimestamp, y = atemp, color = atemp < -4))
+MET %>%
+filter(datetimestamp > '2022-01-01 00:15') %>%
+  ggplot() +
+  geom_point(aes(x = datetimestamp, y = atemp, color = atemp < -4))
 ```
 
 Water temperature daily range was quite variable in the first quarter of the year (January - March), where daily average temperatures were much lower than average in February, but the following month in March ended up being higher than average (@fig-range-temp). These higher than average daily values were likely driven up by the large amounts of rainfall this area experienced during this time (@fig-rainfall-2). Beginning in the latter part of May through the entire summer, waters were much warmer than average, particularly in the shallower sites (@fig-range-temp-1; @fig-range-temp-4). There was an observable drop in water temperatures at all sites during the time Hurricane Ian struck the Florida peninsula in late September, but temperatures climbed back into their "normal" range after the storm passed at all sites except Pellicer Creek (@fig-range-temp), which is a shallow creek and more influenced by upland runoff. At Pellicer Creek there was also an observable drop in water temperature later in October (@fig-range-temp-4).
