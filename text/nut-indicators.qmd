@@ -94,7 +94,7 @@ threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2022, 2022),
 
 Elevated chlorophyll *a* levels were observed at the three intracoastal waterway sites over several months this year (@fig-chla-boxplots). The levels were especially high at Pine Island from April through August (@fig-chla-boxplots-1); the highest observed chlorophyll in the entire time series was observed in April (18.5 $\mu$g/L). San Sebastian also had the highest chlorophyll observed in January and February of this year compared to the same months in all previous years (6.85 and 5.6 $\mu$g/L, respectively; @fig-chla-boxplots-2). High chlorophyll *a* at all stations in January are likely due to uncharacteristically high temperatures that month (@fig-range-temp).
 
-Interestingly, though much higher seasonal chlorophyll was observed at Fort Matanzas in the first quarter, August was much lower than average (@fig-chla-boxplots-3). 
+Interestingly, though much higher seasonal chlorophyll was observed at Fort Matanzas in the first quarter, August was much lower than average (@fig-chla-boxplots-3). Values were much lower (some even below threshold levels) at all sites in the last quarter of the year.
 
 ```{r}
 #| label: fig-chla-boxplots
@@ -156,7 +156,7 @@ boxplot_currentyear(station = "gtmpcnut",
            label = "State Threshold 4.3 (\U00B5g/L)")
 ```
 
-Interpretation of patterns in annual geometric means (AGM) for chlorophyll at each site is not available at this time since the 2022 value includes an incomplete record; however, several sites are elevated with current calculations (@fig-chla-agm).
+Pine Island experienced an AGM chlorophyll value above the state threshold for the second time in the 19 year data set (@fig-chla-agm-1). The unusually high levels of chlorophyll in five months of the year likely contributed to this pattern. San Sebastian and Pellicer Creek continued to see high chlorophyll at those sites (@fig-chla-agm-2; @fig-chla-agm-4) and Fort Matanzas did not have high chlorophyll (@fig-chla-agm-3).
 
 ```{r}
 #| label: fig-chla-agm
