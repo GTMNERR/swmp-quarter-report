@@ -12,7 +12,7 @@ bibliography: references.bib
 ---
 
 ```{r}
-#| label: met-data-load
+#| label: data-load
 #| include: false
 library(here)
 
@@ -606,13 +606,17 @@ mult_fig3(site = "PC")
 
 ## Nitrogen
 
-Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated (see below). However, total kjeldahl nitrogen (TKN) show distinctive patterns at all sites (@fig-tkn-boxplots). At Pine Island, there is a distinctive pattern of very low values between January-March and elevated levels from April-July (@fig-tkn-boxplots-1). This distinctive shift between March and April may likely be in response to the large levels of rainfall the system experienced in March (@fig-rainfall-2). This response was seen at all the other sites, especially Pellicer Creek, which is also a more brackish site and sensitive to upland freshwater deposition (@fig-tkn-boxplots-2).
+Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated (see below). However, there is a pattern in total kjeldahl nitrogen (TKN) at all sites (@fig-tkn-boxplots). At Pine Island, there are very low values between January-March and elevated levels from April-July (@fig-tkn-boxplots-1). This distinctive shift between March and April may likely be in response to the large amounts of rainfall the system experienced in March (@fig-rainfall-2). This response was seen at all the other sites, especially Pellicer Creek, which is also a more brackish site and sensitive to upland freshwater deposition (@fig-tkn-boxplots-2).
+
+There was enough data in the last quarter of the year at Pine Island to show high TN values in September, which exceeded the threshold, though fell within normal ranges for that month (@fig-tn-boxplots-1). High TN in April at Pellicer Creek, coupled with the high chlorophyll *a* values in this same time, could be a consequence of the large rain the area experienced during March (@fig-rainfall-2; @fig-tn-boxplots-4). 
+
+All DIN above detection limit were reported less than 0.1 (mg/L) at all sites for all months this year. The higher values appear to be in months following large rain events such as October at Pellicer Creek (@fig-din-boxplots-4) and in April at San Sebastian (@fig-din-boxplots-2) and Fort Matanzas (@fig-din-boxplots-3).
 
 ### Total Nitrogen
 
 TN is a calculated value based on TKN and NO23.
 
-This year, quite a bit of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated and is missing for quite a few months in a several of the stations (@fig-tn-boxplots). This was especially true at Fort Matanzas which has the least amount of TN data (@fig-tn-boxplots-3).
+This year, several of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated and is missing for quite a few months at all the stations (@fig-tn-boxplots). This was especially true at Fort Matanzas which has the least amount of TN data (@fig-tn-boxplots-3).
 
 ```{r}
 #| label: fig-tn-boxplots
@@ -676,7 +680,7 @@ boxplot_currentyear(station = "gtmpcnut",
 
 ### Dissolved Inorganic Nitrogen
 
-DIN is a calculated value based on NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information for this year (@fig-din-boxplots).
+DIN is a calculated value based on NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information for this year (@fig-din-boxplots). 
 
 ```{r}
 #| label: fig-din-boxplots
@@ -714,7 +718,7 @@ boxplot_currentyear(station = "gtmpcnut",
 
 ### Total Kjeldahl Nitrogen
 
-TKN is the total concentration of organic nitrogen and ammonia. It is directly measured in our samples.
+TKN is the total concentration of organic nitrogen and ammonia. It is directly measured in our samples. Elevated levels of TKN were recorded in April at all sites (@fig-tkn-boxplots). These elevated values continued through August at Pine Island (@fig-tkn-boxplots-1). Pellicer Creek appears to have more variability in TKN month-to-month than the other stations (@fig-tkn-boxplots-4).
 
 ```{r}
 #| label: fig-tkn-boxplots
