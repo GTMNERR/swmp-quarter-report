@@ -752,7 +752,7 @@ boxplot_currentyear(station = "gtmpcnut",
 
 ## Phosphorus
 
-Total phosphorus continues to fall below the state threshold for every station (@fig-tp-boxplots). Though below the state threshold, Pine Island experienced elevated TP levels April-July (@fig-tp-boxplots-1). Total phosphorus levels were typically much lower than average at the remaining sites during that same time period. In general, orthophosphate levels typically fell within the historical ranges at all sites; however, elevated amounts were observed in April at all four stations (@fig-po4-boxplots).
+Total phosphorus continues to fall below the state threshold for every station (@fig-tp-boxplots). Though below the state threshold, Pine Island experienced elevated TP levels April-July (@fig-tp-boxplots-1). Total phosphorus levels were typically much lower than average at the remaining sites during that same time period. Pellicer Creek recorded an elevated TP level in August 2022, quite close to the state threshold value. Although higher than all the other values recorded in 2022, it remains in the average range for what is recorded for this month (@fig-tp-boxplots-4). In general, orthophosphate levels typically fell within the historical ranges at all sites and mirrored patterns observed in TP; however, elevated amounts were observed in April and August at all four stations (@fig-po4-boxplots).
 
 ### Total Phosphorus
 
