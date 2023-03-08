@@ -1,5 +1,5 @@
 ---
-title: "Hurricane Ian"
+title: "Hurricane Nicole"
 editor_options: 
   chunk_output_type: console
 execute: 
@@ -100,6 +100,71 @@ MET_wind %>%
 ```
 
 ## Rising Tides
+
+```{r}
+#| label: fig-surge-nicole
+#| echo: false
+#| fig.cap: Continuous water depth at all four water quality stations of the GTMNERR during the time period of Hurricane Nicole, Tuesday, November 8 - Friday, November 11, 2022. Red line indicates when the Hurricane was closest to the GTMNERR weather station in Pellicer Creek, based on barometric pressure readings.
+
+d_animation <-
+WQ %>% 
+  filter(between(datetimestamp, 
+                 as.POSIXct("2022-11-08 00:00:00"), 
+                 as.POSIXct("2022-11-11 00:00:00"))) %>%
+  mutate(depth = if_else(station == "gtmpcwq", 
+                         level + 1.11427, 
+                         depth),
+         station = factor(station,
+                          levels = c("gtmsswq",
+                                     "gtmpiwq",
+                                     "gtmfmwq",
+                                     "gtmpcwq"),
+                          labels = c("San Sebastian",
+                                     "Pine Island",
+                                     "Fort Matanzas",
+                                     "Pellicer Creek"),
+                          ordered = F),
+         depth = depth + 1) %>% # convert PC level to depth to be able to compare sites
+  select(station, datetimestamp, depth) %>% 
+  ggplot(aes(x = datetimestamp, y = depth, color = station, group = station)) +
+  geom_vline(xintercept = as.POSIXct("2022-11-10 07:30:00"), color = "red", size = 1) +
+  geom_line(size = 1.5) +
+  geom_point(size = 3) +
+  scale_color_okabeito(breaks = c("Pine Island", "San Sebastian", "Fort Matanzas", "Pellicer Creek")) +
+  scale_y_continuous(limits = c(0,9),
+                     breaks = seq(0, 8, by = 2),
+                     minor_breaks = seq(0,9, by = 1),
+                     expand = c(0,0)) +
+  scale_x_datetime(date_breaks = "1 day",
+                   date_minor_breaks = "6 hours",
+                   date_labels = "%b %d") +
+  theme(legend.position = "bottom",
+        legend.direction = "horizontal",
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "gray"),
+        panel.grid.minor = element_line(color = "gray", linetype = "dotted"),
+        legend.key = element_rect(fill = NA),
+        axis.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold")) +
+  labs(x = "",
+       y = "Water Depth (m)",
+       color = "SWMP Station") +
+  annotate("text",
+           x = as.POSIXct("2022-11-10 06:00:00"),
+           y = 1.5,
+           label = "Nicole 2022-11-10 07:30 EST",
+           color = "red",
+           angle = 90,
+           size = 2.1) +
+  gganimate::transition_reveal(datetimestamp)
+
+gganimate::animate(d_animation, 
+                   height = 5, width = 8, units = "in", 
+                   res = 120,
+                   end_pause = 50)
+
+rm(d_animation)
+```
 
 ## Damage to Florida State Road A1A
 
