@@ -29,7 +29,7 @@ book:
       - text/nut-indicators.qmd
       - text/misc-bac.qmd
       - text/hurricane-ian.qmd
-      - text/hurriance-nicole.qmd
+      - text/hurricane-nicole.qmd
       - text/maintenance.qmd
   appendices: 
     - text/a1-cmecs.qmd
