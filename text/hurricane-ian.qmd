@@ -1,4 +1,5 @@
 ---
+title: "Hurricane Ian"
 editor_options: 
   chunk_output_type: console
 execute: 
@@ -21,8 +22,6 @@ source(here::here('R', '02.1_load_wrangle_NUT.R'))
 source(here::here('R', '02.2_load_wrangle_WQ-and-MET.R'))
 source(here::here('R', '03_graph_fxns.R'))
 ```
-
-# Hurricane Ian {#sec-hurricaneian}
 
 ![Hurricane Ian's full journey across the Caribbean, through the Gulf of Mexico, and into the Southeast U.S. 09/23/2022 00:00 UTC- 10/01/2022 00:00 UTC. GeoColor product from NOAA GOES-16 satellite. Accessed: https://satlib.cira.colostate.edu/event/hurricane-ian/](/data/hurricane-ian/202209230000-202210010010_g16_fd_geocolor_ianfulljourney_nolabels.mp4){#fig-ian}
 
