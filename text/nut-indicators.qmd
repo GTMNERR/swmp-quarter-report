@@ -593,6 +593,11 @@ Based on these methods, Pine Island has observed higher annual chlorophyll *a* i
 #| label: fig-chla-decomp
 #| echo: false
 #| fig-cap: Phytoplankton variability at each of the four SWMP water quality stations. Blue lines are monthly series of Chl-*a* concentration; red bars are annual components $y$ showing deviation from 1; purple lines are residual components $\epsilon$ showing deviation from 1, and green bars are standard seasonal patterns $m$ showing deviations from 1.
+#| fig-subcap: 
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
 
 mult_fig3(site = "PI")
 
