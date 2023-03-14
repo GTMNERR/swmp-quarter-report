@@ -8,10 +8,11 @@ link-external-newwindow: true
 filters: 
   - lightbox
 lightbox: auto
+bibliography: references.bib
 ---
 
 ```{r}
-#| label: met-data-load
+#| label: data-load
 #| include: false
 library(here)
 
@@ -31,7 +32,7 @@ By visiting [Florida Rules](https://www.flrules.org/gateway/ruleno.asp?id=62-302
 
 ## Dissolved Oxygen
 
-All stations experience seasonal patterns in dissolved oxygen with lower values in the warm, summer months (@fig-do). A distinctive jump in dissolved oxygen occurred at all sites during the storm period of Hurricane Ian (September 28 - October 1, 2022).
+All stations experience seasonal patterns in dissolved oxygen with lower values in the warm, summer months (@fig-do). A distinctive jump in dissolved oxygen occurred at all sites during the storm period of Hurricane Ian (September 28 - October 1, 2022) as well as Hurricane Nicole (November 9-11, 2022).
 
 ```{r}
 #| label: fig-do
@@ -59,7 +60,6 @@ pc |>
 ```
 
 Pellicer Creek is located within a waterbody with known impairments for dissolved oxygen, chlorophyll *a*, and fecal coliform bacteria. As such, this station frequently experiences low dissolved oxygen values, particularly in the summer months; this year has been no exception (@fig-do-pc). In fact, the dissolved oxygen in late August was lower than values observed during the time of Hurricane Irma (@fig-do-pc-1). Values began to rise in September, but it is likely that the storm surge associated with Hurricane Ian in late September helped to bring in and further oxygenate this system (@fig-do-pc-2).
-
 
 ```{r}
 #| label: fig-do-pc
@@ -92,9 +92,7 @@ threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2022, 2022),
 
 ## Chlorophyll *a*
 
-So far, this year has seen elevated chlorophyll *a* levels at the three intracoastal waterway sites (@fig-chla-boxplots). The levels have been especially high at Pine Island since April (@fig-chla-boxplots-1); the highest observed chlorophyll in the time series was observed in April this year (18.5 $\mu$g/L). San Sebastian also had the highest chlorophyll observed in January and Feburary of this year compared to the same months in all previous years (6.85 and 5.6 $\mu$g/L, respectively; @fig-chla-boxplots-2). High chlorophyll *a* at all stations in January are likely due to uncharacteristically high temperatures that month (@fig-range-temp).
-
-Interestingly, though much higher seasonal chlorophyll was observed at Fort Matanzas in the first quarter, August was much lower than average (@fig-chla-boxplots-3). 
+Elevated chlorophyll *a* levels were observed at the three intracoastal waterway sites over several months this year (@fig-chla-boxplots). The levels were especially high at Pine Island from April through August with each month seeing the highest value this year compared to all the data from previous years; the highest observed chlorophyll in the entire time series was observed in April (18.5 $\mu$g/L) (@fig-chla-boxplots-1). These extremely high monthly values resulted in an annual geometric mean (AGM) chlorophyll value above the state threshold for the second time in the 19 year data set at Pine Island (@fig-chla-agm-1).
 
 ```{r}
 #| label: fig-chla-boxplots
@@ -156,7 +154,9 @@ boxplot_currentyear(station = "gtmpcnut",
            label = "State Threshold 4.3 (\U00B5g/L)")
 ```
 
-Interpretation of patterns in annual geometric means (AGM) for chlorophyll at each site is not available at this time since the 2022 value includes an incomplete record; however, several sites are elevated with current calculations (@fig-chla-agm).
+San Sebastian also had the highest chlorophyll observed in January and February of this year compared to the same months in all previous years (6.85 and 5.6 $\mu$g/L, respectively; @fig-chla-boxplots-2). High chlorophyll *a* at all stations in January are likely due to uncharacteristically high temperatures that month (@fig-range-temp). San Sebastian and Pellicer Creek continued to see high chlorophyll at those sites (@fig-chla-agm-2; @fig-chla-agm-4).
+
+Interestingly, though much higher seasonal chlorophyll was observed at Fort Matanzas in the first quarter, August was much lower than average (@fig-chla-boxplots-3). Fort Matanzas also did not have high annual mean chlorophyll (@fig-chla-agm-3). It continues to be a station with observed regularly with low chlorophyll *a*. Values were much lower (some even below threshold levels) at all sites in the last quarter of the year.
 
 ```{r}
 #| label: fig-chla-agm
@@ -219,15 +219,404 @@ agm(station = "gtmpcnut",
 
 ```
 
+Using methods from @cloern2010, variability and patterns in the monthly chlorophyll *a* data were further extracted by decomposing the timeseries at each station using Equation 4 into an annual effect, mean seasonal pattern, and residual "events".
+
+::: callout-note
+### Equation 4 from @cloern2010:
+
+$$
+c_{ij}=Cy_im_j\epsilon_{ij}
+$$ Where $c_{ij}$ is chlorophyll concentration in year $i$($i=1,...,N$) and month $j$($j=1,...12$); *C* is the long-term mean of the series; $y_i$ is the annual effect in the *i*th year; $m_j$ is the seasonal (monthly) effect in the *j*th month; and $\epsilon_{ij}$ is the residual.
+
+-   If $y_i$ \>1, indicates a year with above-average mean Chl-*a*.
+-   If $m_j$ \>1, indicates a mean monthly Chl-*a* greater than the annual mean.
+-   If $\epsilon_{ij}$ \>1, indicates an observation greater than the expected value for that month and year.
+:::
+
+```{r}
+#| label: decomp-fxn
+#| include: false
+
+# function comes from Cloern and Jassby 2010 Supplemental Material
+
+decomp.mult <- function(x, startyr = NULL , endyr = NULL, event = T){
+#R2 .8.0 3/2/09 4:48 PM
+  if(class(x)[1]!='mts') dim(x)=c(length(x),1)
+  
+  if(is.null(startyr)) startyr <- start(x)[1]
+  
+  if(is.null(endyr)) endyr <- end(x)[1]
+  
+  d <- window(x, start = c(startyr,1), end = c(endyr,12), extend = T)
+  
+  results <- vector('list',dim(d)[2])
+  
+  names(results)= colnames(d)
+  
+  for(site in colnames (d)){
+    d1=d[,site]
+    
+    #long-term mean
+    grandmean = mean(d1, na.rm = T)
+    
+    # annual component
+    annualmean = aggregate(d1,1, mean, na.rm = T)
+    annualmeanreps = as.vector(t(matrix(rep(annualmean,12), 
+                                        ncol = 12)))
+    interann = ts(annualmeanreps,s=c(startyr,1),f = 12) / grandmean
+    # remaining components
+    if(event) {
+      # monthly component
+      d2 = matrix(d1, nrow = 12)
+      monthdev = sweep(d2,2, annualmean ,'/')
+      monthmean = apply(monthdev,1, mean , na.rm = T)
+      season = ts(rep(monthmean, endyr - startyr + 1), 
+                  s=c(startyr, 1), f = 12)
+      # events component
+      resids = sweep(monthdev, 1, monthmean , '/')
+      events = ts(as.vector(resids),
+                  s=c(startyr, 1),f = 12)
+    }
+    else {
+      # monthly component
+      season = d1/(grandmean * interann)
+    }
+    # prepare output
+    if(event) dcomp = ts.union(d1, grandmean, interann, season,
+      events) else dcomp =ts.union (d1, grandmean, interann,
+      season)
+    colnames(dcomp)[1]= 'original'
+    results[[site]]= dcomp
+    }
+    if(class(x)[1]!='mts') results[[1]] else results
+}
+```
+
+```{r}
+#| label: dat-ts
+#| include: false
+
+# 2005-01-01 is missing from all four sites, need to build in a placeholder for it
+mis <- tribble(
+  ~datetimestamp, ~chla_n,
+  "2005-01-01", NA
+) %>% mutate(datetimestamp = as.Date(datetimestamp),
+             chla_n = as.numeric(chla_n))
+
+# create timeseries objects of chlorophyll data
+chla_pi <- ts(as.data.frame(pi_nut_mo %>% 
+                              filter(datetimestamp > "2002-12-31" &
+                                       datetimestamp < "2022-01-01") %>%
+                              select(datetimestamp, chla_n) %>% 
+                              bind_rows(mis) %>% 
+                              arrange(datetimestamp) %>% 
+                              select(chla_n)),
+              start = c(2003,1), # sampling started 2002-05, but 2003 is first complete year
+              end = c(2022,12),
+              frequency = 12) # monthly
+
+chla_ss <- ts(as.data.frame(ss_nut_mo %>% 
+                              filter(datetimestamp > "2002-12-31" &
+                                       datetimestamp < "2022-01-01") %>%
+                              select(datetimestamp, chla_n) %>% 
+                              bind_rows(mis) %>% 
+                              arrange(datetimestamp) %>% 
+                              select(chla_n)),
+              start = c(2003,1), # sampling started 2002-05, but 2003 is first complete year
+              end = c(2022,12), # time period ended 2022, but 2021 is last complete year
+              frequency = 12) # monthly
+
+chla_fm <- ts(as.data.frame(fm_nut_mo %>% 
+                              filter(datetimestamp > "2002-12-31" &
+                                       datetimestamp < "2022-01-01") %>%
+                              select(datetimestamp, chla_n) %>% 
+                              bind_rows(mis) %>% 
+                              arrange(datetimestamp) %>% 
+                              select(chla_n)),
+              start = c(2003,1), # sampling started 2002-05, but 2003 is first complete year
+              end = c(2022,12), 
+              frequency = 12) # monthly
+
+chla_pc <- ts(as.data.frame(pc_nut_mo %>% 
+                              filter(datetimestamp > "2002-12-31" &
+                                       datetimestamp < "2022-01-01") %>%
+                              select(datetimestamp, chla_n) %>% 
+                              bind_rows(mis) %>% 
+                              arrange(datetimestamp) %>% 
+                              select(chla_n)),
+              start = c(2003,1), # sampling started 2002-05, but 2003 is first complete year
+              end = c(2022,12),
+              frequency = 12) # monthly
+
+rm(mis)
+```
+
+```{r}
+#| label: decomp
+#| include: false
+
+decomp_pi <- data.frame(decomp.mult(chla_pi), 
+                        date = as.Date(time(decomp.mult(chla_pi))))
+summary(decomp.mult(chla_pi))
+
+decomp_ss <- data.frame(decomp.mult(chla_ss), 
+                        date = as.Date(time(decomp.mult(chla_ss))))
+summary(decomp.mult(chla_ss))
+
+decomp_fm <- data.frame(decomp.mult(chla_fm), 
+                        date = as.Date(time(decomp.mult(chla_fm))))
+summary(decomp.mult(chla_fm))
+
+decomp_pc <- data.frame(decomp.mult(chla_pc), 
+                        date = as.Date(time(decomp.mult(chla_pc))))
+summary(decomp.mult(chla_pc))
+```
+
+```{r}
+#| label: plot-fxn
+#| include: false
+
+
+mult_fig3 <- function(site){
+  if(site == "PI") {
+    a <- ggplot(decomp_pi) +
+            geom_line(aes(x = date, y = original), color = "blue") +
+            scale_x_date(date_breaks = "year", date_labels = "%Y") +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, "black", NA, NA)),
+                  panel.grid.minor = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Chl-a \u00b5g/L',
+                 title = "A. Pine Island")
+    b <- decomp_pi %>% 
+          mutate(year = year(date)) %>% 
+          select(year, interann) %>% 
+          unique() %>% 
+          ggplot() +
+            geom_col(aes(x = year, y = interann-1), fill = "red") +
+            geom_hline(yintercept = 0, color = "red") +
+            scale_x_continuous(breaks = seq(2000, 2022, by = 1)) +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, NA, "black", NA)),
+                  panel.grid = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Annual')
+    c <- ggplot(decomp_pi) +
+          geom_col(aes(x = date, y = events-1), fill = "purple") +
+          geom_hline(yintercept = 0, color = "purple") +
+          scale_x_date(date_breaks = "year", date_labels = "%Y") +
+          scale_y_continuous(limits = c(-1,2)) +
+          theme_bw() +
+          theme(axis.text.x = element_text(colour = c(NA, NA,"black", NA, NA)),
+                panel.grid = element_blank(),
+                axis.text = element_text(color = "black")) +
+          labs(x = '',
+               y = 'Residual')
+    d <- decomp_pi %>% 
+          mutate(month = month(date, label = T)) %>% 
+          select(month, season) %>% 
+          unique %>% 
+          ggplot() +
+            geom_col(aes(x = month, y = season-1), fill = "green") +
+            geom_hline(yintercept = 0, color = "green") +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text = element_text(color = "black"),
+                  panel.grid = element_blank()) +
+            labs(x = '',
+                 y = 'Season')
+    a/b/c/d
+  } else if(site == "SS") {
+     a <- ggplot(decomp_ss) +
+            geom_line(aes(x = date, y = original), color = "blue") +
+            scale_x_date(date_breaks = "year", date_labels = "%Y") +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, "black", NA, NA)),
+                  panel.grid.minor = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Chl-a \u00b5g/L',
+                 title = "B. San Sebastian")
+    b <- decomp_ss %>% 
+          mutate(year = year(date)) %>% 
+          select(year, interann) %>% 
+          unique() %>% 
+          ggplot() +
+            geom_col(aes(x = year, y = interann-1), fill = "red") +
+            geom_hline(yintercept = 0, color = "red") +
+            scale_x_continuous(breaks = seq(2000, 2022, by = 1)) +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, NA, "black", NA)),
+                  panel.grid = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Annual')
+    c <- ggplot(decomp_ss) +
+          geom_col(aes(x = date, y = events-1), fill = "purple") +
+          geom_hline(yintercept = 0, color = "purple") +
+          scale_x_date(date_breaks = "year", date_labels = "%Y") +
+          scale_y_continuous(limits = c(-1,2)) +
+          theme_bw() +
+          theme(axis.text.x = element_text(colour = c(NA, NA,"black", NA, NA)),
+                panel.grid = element_blank(),
+                axis.text = element_text(color = "black")) +
+          labs(x = '',
+               y = 'Residual')
+    d <- decomp_ss %>% 
+          mutate(month = month(date, label = T)) %>% 
+          select(month, season) %>% 
+          unique %>% 
+          ggplot() +
+            geom_col(aes(x = month, y = season-1), fill = "green") +
+            geom_hline(yintercept = 0, color = "green") +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text = element_text(color = "black"),
+                  panel.grid = element_blank()) +
+            labs(x = '',
+                 y = 'Season')
+    a/b/c/d
+  } else if(site == "FM"){
+    a <- ggplot(decomp_fm) +
+            geom_line(aes(x = date, y = original), color = "blue") +
+            scale_x_date(date_breaks = "year", date_labels = "%Y") +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, "black", NA, NA)),
+                  panel.grid.minor = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Chl-a \u00b5g/L',
+                 title = "C. Fort Matanzas")
+    b <- decomp_fm %>% 
+          mutate(year = year(date)) %>% 
+          select(year, interann) %>% 
+          unique() %>% 
+          ggplot() +
+            geom_col(aes(x = year, y = interann-1), fill = "red") +
+            geom_hline(yintercept = 0, color = "red") +
+            scale_x_continuous(breaks = seq(2000, 2022, by = 1)) +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, NA, "black", NA)),
+                  panel.grid = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Annual')
+    c <- ggplot(decomp_fm) +
+          geom_col(aes(x = date, y = events-1), fill = "purple") +
+          geom_hline(yintercept = 0, color = "purple") +
+          scale_x_date(date_breaks = "year", date_labels = "%Y") +
+          scale_y_continuous(limits = c(-1,2)) +
+          theme_bw() +
+          theme(axis.text.x = element_text(colour = c(NA, NA,"black", NA, NA)),
+                panel.grid = element_blank(),
+                axis.text = element_text(color = "black")) +
+          labs(x = '',
+               y = 'Residual')
+    d <- decomp_fm %>% 
+          mutate(month = month(date, label = T)) %>% 
+          select(month, season) %>% 
+          unique %>% 
+          ggplot() +
+            geom_col(aes(x = month, y = season-1), fill = "green") +
+            geom_hline(yintercept = 0, color = "green") +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text = element_text(color = "black"),
+                  panel.grid = element_blank()) +
+            labs(x = '',
+                 y = 'Season')
+    a/b/c/d
+  } else {
+    a <- ggplot(decomp_pc) +
+            geom_line(aes(x = date, y = original), color = "blue") +
+            scale_x_date(date_breaks = "year", date_labels = "%Y") +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, "black", NA, NA)),
+                  panel.grid.minor = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Chl-a \u00b5g/L',
+                 title = "D. Pellicer Creek")
+    b <- decomp_pc %>% 
+          mutate(year = year(date)) %>% 
+          select(year, interann) %>% 
+          unique() %>% 
+          ggplot() +
+            geom_col(aes(x = year, y = interann-1), fill = "red") +
+            geom_hline(yintercept = 0, color = "red") +
+            scale_x_continuous(breaks = seq(2000, 2022, by = 1)) +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text.x = element_text(colour = c(NA, NA, NA, "black", NA)),
+                  panel.grid = element_blank(),
+                  axis.text = element_text(color = "black")) +
+            labs(x = '',
+                 y = 'Annual')
+    c <- ggplot(decomp_pc) +
+          geom_col(aes(x = date, y = events-1), fill = "purple") +
+          geom_hline(yintercept = 0, color = "purple") +
+          scale_x_date(date_breaks = "year", date_labels = "%Y") +
+          scale_y_continuous(limits = c(-1,2)) +
+          theme_bw() +
+          theme(axis.text.x = element_text(colour = c(NA, NA,"black", NA, NA)),
+                panel.grid = element_blank(),
+                axis.text = element_text(color = "black")) +
+          labs(x = '',
+               y = 'Residual')
+    d <- decomp_pc %>% 
+          mutate(month = month(date, label = T)) %>% 
+          select(month, season) %>% 
+          unique %>% 
+          ggplot() +
+            geom_col(aes(x = month, y = season-1), fill = "green") +
+            geom_hline(yintercept = 0, color = "green") +
+            scale_y_continuous(limits = c(-1,1)) +
+            theme_bw() +
+            theme(axis.text = element_text(color = "black"),
+                  panel.grid = element_blank()) +
+            labs(x = '',
+                 y = 'Season')
+    a/b/c/d
+  }
+}
+
+```
+
+Based on these methods, Pine Island has observed higher annual chlorophyll *a* in the past three years. Additionally, the five months in 2022 in which the highest monthly values of chlorophyll *a* were recorded were identified in the residual "events" that were high, they were not the highest deviations in the timeseries; that value occurred in 2015 (@fig-chla-decomp-1). All other stations observed lower annual variability in 2022 and each station shows a distinctive seasonal pattern with the highest values occurring from April through August, particularly at Pine Island and Pellicer Creek (@fig-chla-decomp). San Sebastian and Fort Matanzas, likely due to their proximity to inlets, appear to have a more protracted season which further extends into October (@fig-chla-decomp-2; @fig-chla-decomp-3). 
+
+```{r}
+#| label: fig-chla-decomp
+#| echo: false
+#| fig-cap: Phytoplankton variability at each of the four SWMP water quality stations. Blue lines are monthly series of Chl-*a* concentration; red bars are annual components $y$ showing deviation from 1; purple lines are residual components $\epsilon$ showing deviation from 1, and green bars are standard seasonal patterns $m$ showing deviations from 1.
+
+mult_fig3(site = "PI")
+
+mult_fig3(site = "SS")
+
+mult_fig3(site = "FM")
+
+mult_fig3(site = "PC")
+
+```
+
 ## Nitrogen
 
-Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated (see below). However, total kjeldahl nitrogen (TKN) show distinctive patterns at all sites (@fig-tkn-boxplots). At Pine Island, there is a distinctive pattern of very low values between January-March and elevated levels from April-July (@fig-tkn-boxplots-1). This distinctive shift between March and April may likely be in response to the large levels of rainfall the system experienced in March (@fig-rainfall-2). This response was seen at all the other sites, especially Pellicer Creek, which is also a more brackish site and sensitive to upland freshwater deposition (@fig-tkn-boxplots-2).
+Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated (see below). However, there is a pattern in total kjeldahl nitrogen (TKN) at all sites (@fig-tkn-boxplots). At Pine Island, there are very low values between January-March and elevated levels from April-July (@fig-tkn-boxplots-1). This distinctive shift between March and April may likely be in response to the large amounts of rainfall the system experienced in March (@fig-rainfall-2). This response was seen at all the other sites, especially Pellicer Creek, which is also a more brackish site and sensitive to upland freshwater deposition (@fig-tkn-boxplots-2).
+
+There was enough data in the last quarter of the year at Pine Island to show high TN values in September, which exceeded the threshold, though fell within normal ranges for that month (@fig-tn-boxplots-1). High TN in April at Pellicer Creek, coupled with the high chlorophyll *a* values in this same time, could be a consequence of the large rain the area experienced during March (@fig-rainfall-2; @fig-tn-boxplots-4). 
+
+All DIN above detection limit were reported less than 0.1 (mg/L) at all sites for all months this year. The higher values appear to be in months following large rain events such as October at Pellicer Creek (@fig-din-boxplots-4) and in April at San Sebastian (@fig-din-boxplots-2) and Fort Matanzas (@fig-din-boxplots-3).
 
 ### Total Nitrogen
 
 TN is a calculated value based on TKN and NO23.
 
-This year, quite a bit of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated and is missing for quite a few months in a several of the stations (@fig-tn-boxplots). This was especially true at Fort Matanzas which has the least amount of TN data (@fig-tn-boxplots-3).
+This year, several of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated and is missing for quite a few months at all the stations (@fig-tn-boxplots). This was especially true at Fort Matanzas which has the least amount of TN data (@fig-tn-boxplots-3).
 
 ```{r}
 #| label: fig-tn-boxplots
@@ -291,7 +680,7 @@ boxplot_currentyear(station = "gtmpcnut",
 
 ### Dissolved Inorganic Nitrogen
 
-DIN is a calculated value based on NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information for this year (@fig-din-boxplots).
+DIN is a calculated value based on NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information for this year (@fig-din-boxplots). 
 
 ```{r}
 #| label: fig-din-boxplots
@@ -329,7 +718,7 @@ boxplot_currentyear(station = "gtmpcnut",
 
 ### Total Kjeldahl Nitrogen
 
-TKN is the total concentration of organic nitrogen and ammonia. It is directly measured in our samples.
+TKN is the total concentration of organic nitrogen and ammonia. It is directly measured in our samples. Elevated levels of TKN were recorded in April at all sites (@fig-tkn-boxplots). These elevated values continued through August at Pine Island (@fig-tkn-boxplots-1). Pellicer Creek appears to have more variability in TKN month-to-month than the other stations (@fig-tkn-boxplots-4).
 
 ```{r}
 #| label: fig-tkn-boxplots
@@ -367,7 +756,7 @@ boxplot_currentyear(station = "gtmpcnut",
 
 ## Phosphorus
 
-Total phosphorus continues to fall below the state threshold for every station (@fig-tp-boxplots). Though below the state threshold, Pine Island experienced elevated TP levels April-July (@fig-tp-boxplots-1). Total phosphorus levels were typically much lower than average at the remaining sites during that same time period. In general, orthophosphate levels typically fell within the historical ranges at all sites; however, elevated amounts were observed in April at all four stations (@fig-po4-boxplots).
+Total phosphorus continues to fall below the state threshold for every station (@fig-tp-boxplots). Though below the state threshold, Pine Island experienced elevated TP levels April-July (@fig-tp-boxplots-1). Total phosphorus levels were typically much lower than average at the remaining sites during that same time period. Pellicer Creek recorded an elevated TP level in August 2022, quite close to the state threshold value. Although higher than all the other values recorded in 2022, it remains in the average range for what is recorded for this month (@fig-tp-boxplots-4). In general, orthophosphate levels typically fell within the historical ranges at all sites and mirrored patterns observed in TP; however, elevated amounts were observed in April and August at all four stations (@fig-po4-boxplots).
 
 ### Total Phosphorus
 

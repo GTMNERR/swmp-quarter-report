@@ -3,11 +3,9 @@ project:
   output-dir: docs
   
 book:
-  title:  2022 Quarterly System-Wide Monitoring Program (SWMP) Report
+  title:  2022 Annual System-Wide Monitoring Program (SWMP) Report
   subtitle: Guana Tolomato Matanzas National Estuarine Research Reserve
-  # cover-image:
   # image: 
-  # downloads: [pdf]
   author:
     - name: Shannon Dunnigan
       # affiliations:
@@ -28,23 +26,27 @@ book:
       chapters:
       - text/environmental.qmd
       - text/nut-indicators.qmd
+      - text/misc-bac.qmd
       - text/hurricane-ian.qmd
+      - text/hurricane-nicole.qmd
       - text/maintenance.qmd
   appendices: 
     - text/a1-cmecs.qmd
     
-  # site-url: https://GTMNERR.github.io/swmp-quarter-report
+  site-url: https://GTMNERR.github.io/swmp-quarter-report
   repo-url: https://github.com/GTMNERR/swmp-quarter-report
   repo-actions: [edit, source, issue]
   search: true
+  favicon: images/friends-logo.png
+  sharing: [twitter, facebook]
 
   page-footer:
       left: |
-        The data used in this report was last updated on November 07, 2022.
+        The data used in this report was last updated in February 2022.
       right: |
         Built with <a href="https://quarto.org/">Quarto</a>.
 
-# bibliography: references.bib
+bibliography: text/references.bib
 
 freeze: true
 
