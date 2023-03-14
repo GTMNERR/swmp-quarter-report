@@ -48,7 +48,7 @@ book:
 
 bibliography: text/references.bib
 
-freeze: true
+freeze: false
 
 filters: 
   - lightbox
