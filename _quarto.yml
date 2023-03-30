@@ -3,9 +3,8 @@ project:
   output-dir: docs
   
 book:
-  title:  2022 Annual System-Wide Monitoring Program (SWMP) Report
+  title:  2023 Quarterly System-Wide Monitoring Program (SWMP) Report
   subtitle: Guana Tolomato Matanzas National Estuarine Research Reserve
-  # image: 
   author:
     - name: Shannon Dunnigan
       # affiliations:
@@ -27,8 +26,6 @@ book:
       - text/environmental.qmd
       - text/nut-indicators.qmd
       - text/misc-bac.qmd
-      - text/hurricane-ian.qmd
-      - text/hurricane-nicole.qmd
       - text/maintenance.qmd
   appendices: 
     - text/a1-cmecs.qmd
