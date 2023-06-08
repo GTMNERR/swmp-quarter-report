@@ -12,7 +12,6 @@ book:
     - name: Kathryn Petrinec
       # affiliations:
       #   - name: Florida Department of Environmental Protection
-    - name: J. Silas Tanner
     - name: Nikki Dix
   chapters:
     - index.qmd
