@@ -1,5 +1,5 @@
 ---
-title: "Maintenance Issues"
+title: "Maintenance Notes"
 link-external-icon: true
 link-external-newwindow: true
 execute:
@@ -12,4 +12,12 @@ lightbox: auto
 
 ## Sonde Failure in Field
 
-One sonde failure ("Irma" SN: 20H100465) and multiple sensor failures (3 Wiped CT, 1 DO, 1 Turbidity, and 1 Central Wiper) occurred during this quarter. The datasonde will need to be sent in for repair as one of the sensor pins was sheared off in the bulkhead - likely due to excessive power draw from the Central Wiper, coupled with electrolysis. Sensors will all need to be either evaluated (turbidity, central wiper) or replaced (WCT, DO).
+One sonde failure ("Irma" SN: 20H100465) and multiple sensor failures (3 Wiped CT, 1 DO, 1 Turbidity, and 1 Central Wiper) occurred during the first quarter. The datasonde will need to be sent in for repair as one of the sensor pins was sheared off in the bulkhead - likely due to excessive power draw from the Central Wiper, coupled with electrolysis. Sensors will all need to be either evaluated (turbidity, central wiper) or replaced (WCT, DO).
+
+## Wiper Brush Fell Off
+
+The wiper brush fell off on the data sonde ("Matthew" SN: 20H100464) deployed at San Sebastian from May 2, 2023 - May 23, 2023.
+
+## Weather Station Battery Voltage and Telemetry Troubleshooting
+
+We began having signal issues with the telemetry dropping out at the SWMP weather station in mid-April. After troubleshooting on site on April 24, 2023 with a tech expert from another Reserve, we eliminated the possibility of issues with the data logger and the transmitter. On May 10, 2023, the battery (installed in 2016) was replaced on the station with a 2020 battery and all transmissions and power were successful and consistent.
