@@ -10,17 +10,40 @@ bibliography: references.bib
 ---
 
 ```{r}
-#| label: met-data-load
+#| label: data-load
 #| include: false
+library(here)
+
 source(here::here('R', '00_loadpackages.R'))
-source(here::here('R', '02.2_load_wrangle_WQ-and-MET.R'))
+# source(here::here('R', '02.2_load_wrangle_WQ-and-MET.R'))
+
+load(here('output','data', 'MET.Rdata'))
+
+load(here('output','data', 'pi_wq.Rdata'))
+load(here('output','data', 'ss_wq.Rdata'))
+load(here('output','data', 'fm_wq.Rdata'))
+load(here('output','data', 'pc_wq.Rdata'))
 ```
 
 The following includes variables that establish the estuarine setting: rainfall, water temperature, and salinity. These variables are driven primarily by climatic patterns and largely influence water quality condition.
 
-## Rainfall
+## Summary
 
-The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). 
+Overall, there has currently been much less rain this year compared to previous years (@fig-rainfall-1). April had the highest amount of monthly rainfall (134  mm) from a Nor'easter and an extremely wet day later in the month (@fig-rainfall-2; @fig-rainfall-3). There were only 6 days of rain through mid-May that exceeded 20 mm of rainfall ("Very Wet") (@fig-rainfall-3). Additionally, the temperatures for both air and water were highly variable during this time with distinctive drops in temperature associated with the two Extremely Wet rain days in March and the end of April (@fig-rainfall-3; @fig-range-atemp; @fig-range-temp). All temperatures were higher than average from February through mid-March. 
+
+Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023) and in [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/) which raised salinity at all sites (@fig-range-sal), but was especially pronounced at Pellicer Creek (@fig-range-sal-4). The April Nor'easter had strong winds from the N and NE directions for almost an entire week (@fig-winds). As a result of the strong winds, increases in water depths (or water level for Pellicer Creek) were observed at all sites (@fig-range-depth).
+
+![Weather Service Image from Flagler Live showing the wind speed predictions for the April Nor'easter](/images/weather-service-easter.jpg)
+
+
+
+Another Nor'easter occurred [June 4-10,2023]()
+
+## Data
+
+### Rainfall
+
+The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). Data is also presented as monthly totals and then daily totals as "rain days" which are categorized into Wet (<10 mm), Very Wet (20-29 mm), and Extremely Wet (>30 mm) days. All precipitation data uses data from 2002-2023.
 
 ```{r}
 #| label: fig-rainfall
@@ -97,15 +120,9 @@ MET |>
        color = "Amount of Rain")
 ```
 
-## Temperature
+### Temperature
 
-Temperature fluctuations were observed outside of normal ranges several times throughout the year (@fig-range-atemp-1). The most variable ranges occurred in the first quarter of the year and then several distinctive drops in average temperature were observed in the last quarter associated with storm events (Hurricane Ian, Hurricane Nicole, and nor'easters).
-
-Freezing temperatures are of great interest in Northeast Florida because the region is a climatic transition zone experiencing a shift in foundational vegetation species associated with temperature. Salt marsh grasses are outcompeted by mangrove trees/shrubs in the absence of freezes, which limit mangrove persistence. Mangrove coverage has continued to increase throughout Northeast Florida from an estimated four acres in 1990 to almost 3,000 acres in 2014 (Dix et al. 2021). Cavanaugh et al. [-@cavanaugh2013] observed an ecological threshold of -4 °C, where mangrove cover decreased in years that experienced temperatures below -4 °C. Prior to this year, temperatures at the weather station only fell below -4 °C on two days: January 24, 2003(for 6.5 hours, the longest duration below this threshold) and December 14, 2010. This year, temperatures fell below -4°C early on the morning of December 25th for 3 hours (@fig-range-atemp-2).
-
-::: callout-note
-Interestingly enough, every one of the freeze events (2003, 2010, and this year) occurred in the early morning hours between 4-8am.
-:::
+Air and water temperatures are presented as daily averages (blue line) with historic ranges (daily range and average daily range) provided in shades of gray. All temperature data uses data from 2002-2023.
 
 ```{r}
 #| label: fig-range-atemp
@@ -115,28 +132,10 @@ Interestingly enough, every one of the freeze events (2003, 2010, and this year)
 #|    - "Historical daily range of air temperature at the SWMP weather station with current year daily average overlaid in blue."
 #|    - "Continuous, 15-min air temperature values between December 23-27, 2022 with air temperature values recorded below -4 degrees Celsius, threshold provided with a dashed horizontal line, indicated in red."
 
-historical_daily_range(MET, param = 'atemp', target_yr = 2022)
+historical_daily_range(MET, param = 'atemp', target_yr = 2023)
 
-
-MET %>%
-filter(datetimestamp > '2022-12-23 00:00' & datetimestamp < '2022-12-27 00:00') %>%
-  ggplot(aes(x = datetimestamp, y = atemp)) +
-  geom_hline(yintercept = -4, linetype = "dashed") +
-  geom_point() +
-  geom_point(data = .%>% filter (atemp <= -4), color = "red", size = 3) +
-  theme_classic() +
-  theme(axis.text = element_text(color = "black")) +
-  labs(x = "",
-       y = "Air Temperature (\u00B0C)") +
-  annotate("text",
-           y = -3.5,
-           x = as.POSIXct('2022-12-23 05:00:00'),
-           label = "Threshold (-4 \u00B0C)")
 ```
 
-Similar to air temperature, water temperature was also quite variable in the first quarter of the year (January - March), where daily averages were much lower in February, but the following month in March ended up being higher than average (@fig-range-temp). Water temperatures do not experience the range in values that are observed in the air, however, similar observable drops in temperature in the early and late parts of the year are visible (@fig-range-temp).
-
-These higher than average daily values were likely driven up by the large amounts of rainfall this area experienced during this time (@fig-rainfall-2). Beginning in the latter part of May through the entire summer, waters were much warmer than average, particularly in the shallower sites (@fig-range-temp-1; @fig-range-temp-4). There was an observable drop in water temperatures at all sites during the time Hurricane Ian struck the Florida peninsula in late September, but temperatures climbed back into their "normal" range after the storm passed at all sites except Pellicer Creek (@fig-range-temp), which is a shallow creek and more influenced by upland runoff. At Pellicer Creek there was also an observable drop in water temperature later in October, November, and December (@fig-range-temp-4).
 
 ```{r}
 #| label: fig-range-temp
@@ -149,18 +148,16 @@ These higher than average daily values were likely driven up by the large amount
 #|    - "Pellicer Creek"
 #| layout-ncol: 2
 
-historical_daily_range(pi, param = 'temp', target_yr = 2022)
+historical_daily_range(pi, param = 'temp', target_yr = 2023)
 
-historical_daily_range(ss, param = 'temp', target_yr = 2022)
+historical_daily_range(ss, param = 'temp', target_yr = 2023)
 
-historical_daily_range(fm, param = 'temp', target_yr = 2022)
+historical_daily_range(fm, param = 'temp', target_yr = 2023)
 
-historical_daily_range(pc, param = 'temp', target_yr = 2022)
+historical_daily_range(pc, param = 'temp', target_yr = 2023)
 ```
 
-## Salinity
-
-The heavy rainfall in March 2022 and the rainfall associated with Hurricanes Ian and Nicole in late September and November 2022 was evident in the drastic drops in salinity at all stations (@fig-range-sal), with the greatest impact occurring at the shallowest site, Pellicer Creek, which is also the most sensitive to the effect of runoff (@fig-range-sal-4). Due to a lack of rain the late spring/early summer (only 12 days of rain between May 1 and July 1), many of the sites had very high salinities, particularly Pine Island (@fig-range-sal-1). The rainy periods throughout the year are observable in the salinity data collected in Pellicer Creek with distinct drops in salinity observed during each rain period (March-April, May, early July, late Aug-October)(@fig-rainfall-3; @fig-range-sal-4). 
+### Salinity
 
 ```{r}
 #| label: fig-range-sal
@@ -173,15 +170,106 @@ The heavy rainfall in March 2022 and the rainfall associated with Hurricanes Ian
 #|    - "Pellicer Creek"
 #| layout-ncol: 2
 
-historical_daily_range(pi, param = 'sal', target_yr = 2022)
+historical_daily_range(pi, param = 'sal', target_yr = 2023)
 
-historical_daily_range(ss, param = 'sal', target_yr = 2022)
+historical_daily_range(ss, param = 'sal', target_yr = 2023)
 
-historical_daily_range(fm, param = 'sal', target_yr = 2022)
+historical_daily_range(fm, param = 'sal', target_yr = 2023)
 
-historical_daily_range(pc, param = 'sal', target_yr = 2022)
+historical_daily_range(pc, param = 'sal', target_yr = 2023)
 ```
 
-## Water Depth
+### Wind Speed
 
-**Talk about noreaster over Easter weekend**
+Wind speeds associated from the Pellicer Creek weather station during the timeperiod of a Nor'easter within the state of Florida, USA (Friday, April 7 - Friday, April 14, 2023). All data is based on five-second readings taken at the weather station which is averaged for each 15-minute timeperiod. The maximum gust during the 15-minute time period is also recorded as "Max Wind Speed".
+
+```{r}
+#| label: fig-winds
+#| echo: false
+#| fig.cap: Hourly wind speed and direction from the Pellicer Creek weather station during the timeperiod of a Nor'easter within the state of Florida, USA (Friday, April 7 - Friday, April 14, 2023). The warmer the color, the higher the recorded wind speed. The arrows indicate the direction the wind was blowing towards and the length of the arrow reflects the wind speed information with longer meaning faster. All data is based upon 5 second readings at the weather station.
+#| fig.subcap:
+#|    - "Averaged hourly wind speeds"
+#|    - "Maximum wind gust recorded within each hour"
+#| layout-ncol: 2
+
+# helpful resources
+# https://stackoverflow.com/questions/47880918/how-to-plot-wind-direction-with-lat-lon-and-arrow-in-ggplot2 
+# https://stackoverflow.com/questions/49639881/how-to-get-a-legend-on-geom-spoke
+
+# create new df for just wspd and direction data with conversions to SI units
+MET_wind_April <- MET %>% 
+  filter(between(datetimestamp, 
+                 as.POSIXct("2023-04-08 00:00:00"), 
+                 as.POSIXct("2023-04-14 00:00:00"))) %>%
+  aggreswmp(by = "hours", params = c('wspd', 'maxwspd', 'wdir')) %>% 
+  mutate(day = lubridate::date(datetimestamp),
+         hour = lubridate::hour(datetimestamp),
+         wspd_mph = wspd * 2.23694,
+         maxwspd_mph = maxwspd * 2.23694,
+         wdir_x = ((wdir +180) * 0.0174533)) # angles are in radians not degrees, need to convert for plotting
+
+
+MET_wind_April %>% 
+  filter(day > as.Date("2023-04-07")) %>% 
+  ggplot(aes(x = hour, 
+             y = day, 
+             fill = wspd_mph, 
+             angle = wdir_x, 
+             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
+    geom_raster() +
+    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
+    scale_fill_distiller(palette = "RdYlBu") + 
+    coord_equal(expand = 0) +
+    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
+    theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12),
+        legend.position = 'top', 
+        legend.direction = 'horizontal') +
+  labs(x = "Hour of Day (24hr)",
+       y = "",
+       fill = "Wind Speed (mph)")
+
+
+MET_wind_April %>% 
+  filter(day > as.Date("2023-04-07")) %>% 
+  ggplot(aes(x = hour, 
+             y = day, 
+             fill = maxwspd_mph, 
+             angle = wdir_x, 
+             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
+    geom_raster() +
+    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
+    scale_fill_distiller(palette = "RdYlBu") + 
+    coord_equal(expand = 0) +
+    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
+    theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12),
+        legend.position = 'top', 
+        legend.direction = 'horizontal') +
+  labs(x = "Hour of Day (24hr)",
+       y = "",
+       fill = "Max Wind Gusts (mph)")
+
+```
+
+### Water Depth
+
+```{r}
+#| label: fig-range-depth
+#| echo: false
+#| fig.cap: Historical daily range of water depth at each SWMP water quality station with current year daily average overlaid in blue.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+historical_daily_range(pi, param = 'cdepth', target_yr = 2023)
+
+historical_daily_range(ss, param = 'cdepth', target_yr = 2023)
+
+historical_daily_range(fm, param = 'cdepth', target_yr = 2023)
+
+historical_daily_range(pc, param = 'clevel', target_yr = 2023)
+```
