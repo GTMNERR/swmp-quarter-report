@@ -23,9 +23,17 @@ source(here::here('R', '02.1_load_wrangle_NUT.R'))
 source(here::here('R', '03_graph_fxns.R'))
 ```
 
-## Dissolved Organic Carbon
+Other indicators includes dissolved organic carbon (DOC) and bacteria levels (fecal coliform and *Enterococcus*) that are collected at each site.
 
-The highest values in dissolved organic carbon (DOC) are observed at Pellicer Creek, particularly in April of this year, which was the highest reported DOC in the entire SWMP dataset for all combined sites (44.5 mg/L) (@fig-doc-boxplots-1). Elevated DOC levels in April were not unique to Pellicer Creek, as this was a pattern in all the sites (@fig-doc-boxplots). Values dropped in each subsequent month until August, where they rose again. They were then further elevated in October after the passage of Hurricane Ian. 
+The SWMP program began analyzing water samples at each SWMP station for fecal coliform bacteria in 2013. In 2019, collections for *Enterococcus* bacteria began and both are now collected at all four sites. Due to overnight shipping requirements, all bacteria samples are qualified by the DEP laboratory as out of hold times. For proper analyses, hold times for these samples are not to exceed 7 hours from collection. Therefore, the SWMP program uses this data to show general patterns and trends only. 
+
+## Summary
+
+DOC levels fell within historic range for most sites for the first quarter (@fig-doc-boxplots). Lower than average values were detected at San Sebastian in March (@fig-doc-boxplots-2) and below detection limit at Fort Matanzas for the same month (@fig-doc-boxplots-3).
+
+Bacteria is detected in water samples from Pellicer Creek more often and in higher quantities than the other three stations (@fig-bacteria-1; @fig-bacteria-2). Fecal coliforms are also often detected at San Sebastian (@fig-bacteria-2).
+
+## Dissolved Organic Carbon
 
 ```{r}
 #| label: fig-doc-boxplots
@@ -54,10 +62,6 @@ boxplot_currentyear(station = "gtmpcnut",
 ```
 
 ## Bacteria
-
-The SWMP program began analyzing water samples at each SWMP station for fecal coliform bacteria in 2013. In 2019, collections for *Enterococcus* bacteria began and both are now collected at all four sites. Due to overnight shipping requirements, all bacteria samples are qualified by the DEP laboratory as out of hold times. For proper analyses, hold times for these samples are not to exceed 7 hours from collection. Therefore, the SWMP program uses this data to show general patterns and trends only. 
-
-Bacteria is detected in water samples from Pellicer Creek more often and in higher quantities than the other three stations (@fig-bacteria-1; @fig-bacteria-2). Fecal coliforms are also often detected at San Sebastian (@fig-bacteria-2). 
 
 ```{r}
 #| label: fig-bacteria
