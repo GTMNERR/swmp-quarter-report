@@ -2,9 +2,11 @@
 
 This open source report provides a baseline summary of the three longest running components of the SWMP at the GTMNERR: continuous water quality, discrete water quality, and weather. This report is updated quarterly after the collected data has undergone the secondary quality assurance and quality control (QAQC) process. For more information on the SWMP QAQC process, please visit http://cdmo.baruch.sc.edu/data/qaqc.cfm.
 
+This was last updated on June 9, 2023.
+
 ## Suggested Citation
 
-Dunnigan, S., K. Petrinec, J.S. Tanner, and N. Dix. 2023. Guana Tolomato Matanzas National Estuarine Research Reserve Quarterly Weather and Water Quality Monitoring Summary Report. Guana Tolomato Matanzas National Estuarine Research Reserve, Ponte Vedra Beach, FL
+Dunnigan, S., K. Petrinec, and N. Dix. 2023. Guana Tolomato Matanzas National Estuarine Research Reserve 2023 Quarterly System-Wide Monitoring Program Report. Guana Tolomato Matanzas National Estuarine Research Reserve, Ponte Vedra Beach, FL
 
 ## LICENSE
 
