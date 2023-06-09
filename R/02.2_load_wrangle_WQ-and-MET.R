@@ -3,10 +3,7 @@
 # source('R/00_loadpackages.R')
 
 # 01 load data --------------------------------------------------
-## 01.1 load 2001-2020 WQ and MET files
-## 01.2 load 2021 WQ and MET files
 
-## 01.1 load 2001-2020 WQ and MET files ------------------------------------------
 ### import data with `SWMPr::import_local()` and then clean it with `SWMPr::qaqc()` to screen observations
 ### check what the flags mean used in the `SWMPr::qaqc()` fxn here:  https://cdmo.baruch.sc.edu/data/qaqc.cfm.
 ### add in station name (for combining)
@@ -53,9 +50,9 @@ rm(pi2, ss2, fm2, pc2)
 # 99 export as .RData -----------------------------------------------------
 
 ## uncomment below to export as .RData for use later.
-# save(WQ, file = here::here('output', 'data', 'WQ.RData'))
-# save(MET, file = here::here('output', 'data', 'MET.RData'))
-# save(pi, file = here::here('output', 'data', 'pi_wq.RData'))
-# save(ss, file = here::here('output', 'data', 'ss_wq.RData'))
-# save(fm, file = here::here('output', 'data', 'fm_wq.RData'))
-# save(pc, file = here::here('output', 'data', 'pc_wq.RData'))
+save(WQ, file = here::here('output', 'data', 'WQ.RData'))
+save(MET, file = here::here('output', 'data', 'MET.RData'))
+save(pi, file = here::here('output', 'data', 'pi_wq.RData'))
+save(ss, file = here::here('output', 'data', 'ss_wq.RData'))
+save(fm, file = here::here('output', 'data', 'fm_wq.RData'))
+save(pc, file = here::here('output', 'data', 'pc_wq.RData'))

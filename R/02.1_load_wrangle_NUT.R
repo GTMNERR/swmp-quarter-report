@@ -9,7 +9,7 @@
 nms <- names(read_excel(here::here('data',
                                    '2001_2020_WQ_MET_NUT_FilesCDMO',
                                    'All_inclusive_NUT',
-                                   'gtmnut2002-2022_QC_zeros-corrected.xlsx'), 
+                                   'gtmnut2002-2023_QC_zeros-corrected.xlsx'), 
                         n_max = 0)) # pull out all the column names in this file
 
 class <- ifelse(grepl("^F_", nms), "text", "numeric") # read everything with F_ as a character
@@ -18,7 +18,7 @@ class2 <- class[-(1:5)] # remove the first five elements of the vector because t
 NUT <- readxl::read_xlsx(here::here('data',
                                     '2001_2020_WQ_MET_NUT_FilesCDMO',
                                     'All_inclusive_NUT',
-                                    'gtmnut2002-2022_QC_zeros-corrected.xlsx'),
+                                    'gtmnut2002-2023_QC_zeros-corrected.xlsx'),
                          col_types = c("text", 
                                        "date", 
                                        "numeric", 

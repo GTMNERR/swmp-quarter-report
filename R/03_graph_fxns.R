@@ -8,17 +8,17 @@ boxplot_currentyear <- function(station, param, threshold, thres_val) {
   if (threshold == TRUE) {
     boxplot <- ggplot(data = NUT_monthly, 
                       aes(x = month_abb, y = {{param}})) +
-      geom_boxplot(data = filter(NUT_monthly, station_code == station & year < 2022), 
-                   aes(fill = "2002-2021")) +
-      geom_point(data = filter(NUT_monthly, station_code == station & year == 2022), 
-                 aes(color = "2022"),
+      geom_boxplot(data = filter(NUT_monthly, station_code == station & year < 2023), 
+                   aes(fill = "2002-2022")) +
+      geom_point(data = filter(NUT_monthly, station_code == station & year == 2023), 
+                 aes(color = "2023"),
                  size = 4) +
       geom_hline(yintercept = thres_val, color = "blue",
                  linetype = "dashed") +
       scale_color_manual(name = "", 
-                         values = c("2022" = "red")) +
+                         values = c("2023" = "red")) +
       scale_fill_manual(name = "",
-                        values = c("2002-2021" = "white")) +
+                        values = c("2002-2022" = "white")) +
       theme_classic() +
       theme(legend.position = "bottom",
             axis.text = element_text(color = "black")) +
@@ -27,15 +27,15 @@ boxplot_currentyear <- function(station, param, threshold, thres_val) {
   } else {
     boxplot <- ggplot(data = NUT_monthly, 
                       aes(x = month_abb, y = {{param}})) +
-      geom_boxplot(data = filter(NUT_monthly, station_code == station & year < 2022), 
-                   aes(fill = "2002-2021")) +
-      geom_point(data = filter(NUT_monthly, station_code == station & year == 2022), 
-                 aes(color = "2022"),
+      geom_boxplot(data = filter(NUT_monthly, station_code == station & year < 2023), 
+                   aes(fill = "2002-2022")) +
+      geom_point(data = filter(NUT_monthly, station_code == station & year == 2023), 
+                 aes(color = "2023"),
                  size = 4) +
       scale_color_manual(name = "", 
-                         values = c("2022" = "red")) +
+                         values = c("2023" = "red")) +
       scale_fill_manual(name = "",
-                        values = c("2002-2021" = "white")) +
+                        values = c("2002-2022" = "white")) +
       theme_classic() +
       theme(legend.position = "bottom",
             axis.text = element_text(color = "black")) +
