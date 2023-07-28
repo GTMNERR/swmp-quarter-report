@@ -1,3 +1,5 @@
+![example workflow](https://github.com/GTMNERR/swmp-quarter-report/actions/workflows/quarto-publish.yml/badge.svg)
+
 # System-Wide Monitoring Program (SWMP) Quarterly Report
 
 This open source report provides a baseline summary of the three longest running components of the SWMP at the GTMNERR: continuous water quality, discrete water quality, and weather. This report is updated quarterly after the collected data has undergone the secondary quality assurance and quality control (QAQC) process. For more information on the SWMP QAQC process, please visit http://cdmo.baruch.sc.edu/data/qaqc.cfm.
