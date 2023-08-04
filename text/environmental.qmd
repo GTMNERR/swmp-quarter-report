@@ -29,20 +29,19 @@ The following includes variables that establish the estuarine setting: rainfall,
 
 ## Summary
 
-Overall, there has currently been much less rain this year compared to previous years (@fig-rainfall-1). April had the highest amount of monthly rainfall (134  mm) from a Nor'easter and an extremely wet day later in the month (@fig-rainfall-2; @fig-rainfall-3). There were only 6 days of rain through mid-May that exceeded 20 mm of rainfall ("Very Wet") (@fig-rainfall-3). Additionally, the temperatures for both air and water were highly variable during this time with distinctive drops in temperature associated with the two Extremely Wet rain days in March and the end of April (@fig-rainfall-3; @fig-range-atemp; @fig-range-temp). All temperatures were higher than average from February through mid-March. 
+Overall, there has currently been much less rain this year compared to previous years (@fig-rainfall-1). April had the highest amount of monthly rainfall (134 mm) from a Nor'easter and an extremely wet day later in the month (@fig-rainfall-2; @fig-rainfall-3). There were only 6 days of rain through mid-May that exceeded 20 mm of rainfall ("Very Wet") (@fig-rainfall-3). Additionally, the temperatures for both air and water were highly variable during this time with distinctive drops in temperature associated with the two Extremely Wet rain days in March and the end of April (@fig-rainfall-3; @fig-range-atemp; @fig-range-temp). All temperatures were higher than average from February through mid-March.
 
 Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023) and in [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/) which raised salinity at all sites (@fig-range-sal), but was especially pronounced at Pellicer Creek (@fig-range-sal-4). The April Nor'easter had strong winds from the N and NE directions for almost an entire week (@fig-winds). As a result of the strong winds, increases in water depths (or water level for Pellicer Creek) were observed at all sites (@fig-range-depth).
 
-![Weather Service Image from Flagler Live showing the wind speed predictions for the April Nor'easter](/images/weather-service-easter.jpg)
-The conductivity sensor deployed at Fort Matanzas 04/04/2023-04/18/2023 had a conductivity sensor face issue (noted by Silas) with buildup and it looks like conductivity/salinity was affected. The observable drop in salinity in April at Fort Matanzas has not been quality checked and is likely due to the sensor failure (@fig-range-sal-3).
+![Weather Service Image from Flagler Live showing the wind speed predictions for the April Nor\'easter](/images/weather-service-easter.jpg) The conductivity sensor deployed at Fort Matanzas 04/04/2023-04/18/2023 had a conductivity sensor face issue (noted by Silas) with buildup and it looks like conductivity/salinity was affected. The observable drop in salinity in April at Fort Matanzas has not been quality checked and is likely due to the sensor failure (@fig-range-sal-3).
 
-Another Nor'easter occurred [June 4-10,2023](). 
+Another Nor'easter occurred [June 4-10,2023]().
 
 ## Data
 
 ### Rainfall
 
-The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). Data is also presented as monthly totals and then daily totals as "rain days" which are categorized into Wet (<10 mm), Very Wet (20-29 mm), and Extremely Wet (>30 mm) days. All precipitation data uses data from 2002-2023.
+The simplest way to bin rainfall within a single year is to present the data by quarter since the winter "season" in northeast Florida typically spans across years (December of the previous year through February of the following year). Data is also presented as monthly totals and then daily totals as "rain days" which are categorized into Wet (\<10 mm), Very Wet (20-29 mm), and Extremely Wet (\>30 mm) days. All precipitation data uses data from 2002-2023.
 
 ```{r}
 #| label: fig-rainfall
@@ -122,7 +121,7 @@ MET |>
 
 ### Temperature
 
-Air and water temperatures are presented as daily averages (blue line) with historic ranges (daily range and average daily range) provided in shades of gray. All temperature data uses data from 2002-2023.
+Air and water temperatures are presented as daily averages (blue line) with historic ranges (daily range and average daily range) provided in shades of gray. All temperature data uses data from 2002-2023. Additionally, due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°F) and average air temperature (&deg;F) with total monthly precipitation (in). The greater the dew point, the greater the moisture in the air. 
 
 ```{r}
 #| label: fig-range-atemp
@@ -130,12 +129,42 @@ Air and water temperatures are presented as daily averages (blue line) with hist
 #| fig.cap: Air temperature recoreded at the SWMP weather station.
 #| fig-subcap: 
 #|    - "Historical daily range of air temperature at the SWMP weather station with current year daily average overlaid in blue."
-#|    - "Continuous, 15-min air temperature values between December 23-27, 2022 with air temperature values recorded below -4 degrees Celsius, threshold provided with a dashed horizontal line, indicated in red."
+#|    - "Comparison of average dew point and air temperature with total monthly precipitation for the months of June and July."
 
 historical_daily_range(MET, param = 'atemp', target_yr = 2023)
 
-```
+fun_in <- function(x) sum(x, na.rm = TRUE)
 
+gtm_prcp <- SWMPr::aggreswmp(MET, FUN = fun_in, by = "months", params = c('totprcp')) %>% 
+  mutate(prcp_in = totprcp * 0.0393701)
+
+MET %>% 
+  SWMPr::aggreswmp(by = "months") %>%
+  select(datetimestamp, atemp, rh) %>% 
+  mutate(dew_pt = atemp - ((100-rh)/5.),
+         dew_pt_f = ((dew_pt*9/5) + 32),
+         atemp_f = ((atemp * 9/5) + 32)) %>% 
+  select(datetimestamp, dew_pt_f, atemp_f) %>% 
+  dplyr::left_join(gtm_prcp, by = "datetimestamp") %>% 
+  select(-totprcp) %>% 
+  mutate(year = lubridate::year(datetimestamp),
+         month = lubridate::month(datetimestamp, label = TRUE)) %>% 
+  filter(month %in% c("Jun", "Jul"))  %>%
+  filter(prcp_in > 0) %>% 
+    ggplot(aes(x = atemp_f, y = dew_pt_f)) +
+    geom_point(aes(size = prcp_in, color = year >= 2023), alpha = 0.5) +
+    scale_size(range = c(1, 24), name="Total Precipitation (in)") +
+    geom_text(aes(label = year), size = 2) +
+    facet_wrap(~month, ncol = 1) +
+    scale_color_manual(values = c("gray", "red")) +
+    theme_classic() +
+    labs(x = "Average Air Temperature (F)",
+         y = "Average Dew Point (F)") +
+    guides(color = "none")
+
+rm(fun_in, gtm_prcp)
+
+```
 
 ```{r}
 #| label: fig-range-temp
