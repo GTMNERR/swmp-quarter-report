@@ -29,15 +29,22 @@ The SWMP program began analyzing water samples at each SWMP station for fecal co
 
 ## Summary
 
-DOC levels fell within historic range for most sites for the first quarter (@fig-doc-boxplots). Lower than average values were detected at San Sebastian in March (@fig-doc-boxplots-2) and below detection limit at Fort Matanzas for the same month (@fig-doc-boxplots-3).
+DOC levels fell within or below historic range for most sites except for May at Pine Island and San Sebastian, which was elevated (@fig-doc-boxplots; @fig-doc-boxplots-1; @fig-doc-boxplots-2). 
 
-Bacteria is detected in water samples from Pellicer Creek more often and in higher quantities than the other three stations (@fig-bacteria-1; @fig-bacteria-2). Fecal coliforms are also often detected at San Sebastian (@fig-bacteria-2).
+Bacteria is detected in water samples from Pellicer Creek more often and in higher quantities than the other three stations (@fig-bacteria-1; @fig-bacteria-2). Fecal coliforms are also often detected at San Sebastian (@fig-bacteria-2). So far this year, bacteria samples were frequently reported at the minimum detection limit for all sites. 
 
 ## Dissolved Organic Carbon
 
 ```{r}
 #| label: fig-doc-boxplots
 #| echo: false
+#| fig-cap: Historical monthly dissolved organic carbon at each SWMP water quality station with current year monthly value overlaid in red.
+#| fig-subcap: 
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
 
 boxplot_currentyear(station = "gtmpinut", 
                      param = doc, 
@@ -109,6 +116,7 @@ ggplot(aes(x = date, y = entero_mpn)) +
 
 
 NUT %>% 
+  filter(monitoring_program == 1) %>%
             select(station_code, date_time_stamp, feccol_cfu, f_feccol_cfu) %>% 
             tidyr::drop_na() %>% 
             dplyr::filter(!grepl("<-4>", f_feccol_cfu)) %>% 
