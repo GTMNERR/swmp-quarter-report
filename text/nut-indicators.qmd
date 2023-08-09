@@ -36,13 +36,13 @@ By visiting [Florida Rules](https://www.flrules.org/gateway/ruleno.asp?id=62-302
 
 ## Summary
 
-Dissolved oxygen dropped and was lower than average from late January through mid-March at Pine Island and Pellicer Creek (@fig-do-1; @fig-do-2; @fig-do-pc). This pattern is likely correlated with the warmer than average temperatures this area experienced during this time (@fig-range-atemp; @fig-range-temp). Waters at all stations were oxygenated following rainfall events and Nor'easters (@fig-rainfall-3; @fig-do). 
+Dissolved oxygen dropped and was lower than average from late January through mid-March and again during the hot month of July at Pine Island and Pellicer Creek (@fig-do-1; @fig-do-2). This pattern is likely correlated with the warmer than average temperatures this area experienced during this time (@fig-range-atemp; @fig-range-temp). Waters at all stations were oxygenated following spring rainfall events and Nor'easters (@fig-rainfall-3; @fig-do). Pellicer Creek had daily average dissolved oxygen values that fell within normal ranges (@fig-do-4), however low dissolved oxygen values were still collected at the site in July (@fig-do-pc). Pine Island has experienced very low dissolved oxygen values (less than 2 mg/L) frequently in the past two years, which is uncharacteristically low for this station, particularly in the past five years (@fig-do-pi). 
 
-Chlorophyll *a* values were higher than average at all sites in the first quarter, particularly January and March (@fig-chla-boxplots). Although too soon to make inferences on the patterns in the annual geometric means (AGM), so far the data shows elevated AGM chlorophyll *a* at all sites except Fort Matanzas (@fig-chla-agm). 
+Chlorophyll *a* values were higher than average at all sites (@fig-chla-boxplots), frequently over the thresholds at each site, particularly at San Sebastian and Pellicer Creek (@fig-chla-boxplots-2, @fig-chla-boxplots-4). Although too soon to make inferences on the patterns in the annual geometric means (AGM), so far the data shows elevated AGM chlorophyll *a* at all sites except Fort Matanzas (@fig-chla-agm). 
 
-Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated. Total Kjeldahl Nitrogen (TKN) was lower than average for most sites except for Pine Island where values were elevated in March (@fig-tkn-boxplots; @fig-tkn-boxplots-1).
+Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated. Total Kjeldahl Nitrogen (TKN) was lower than average for most sites however all sites experienced higher levels in May (@fig-tkn-boxplots).
 
-Total phosphorus continues to fall below the state threshold for every station (@fig-tp-boxplots). Though below the state threshold, Pine Island experienced elevated TP levels in March (@fig-tp-boxplots-1). Total phosphorus and orthophosphate levels were typically much lower than average at the remaining sites during that same time period (@fig-po4-boxplots). Pine Island also had much higher orthophosphate levels for each month of the quarter than average at this site (@fig-po4-boxplots-1).
+Total phosphorus continues to fall below the state threshold for every station and similar to TKN, all sites experienced elevated values of total phosphorus and orthophosphate in May (@fig-tp-boxplots; @fig-po4-boxplots) except for Pine Island which had higher levels for almost every month (@fig-po4-boxplots-1). 
 
 ## Data
 
@@ -81,7 +81,7 @@ Pellicer Creek is located within a waterbody with known impairments for dissolve
 #| fig.cap: Continuous dissolved oxygen at Pellicer Creek with monthly average overlaid in solid gray line. Conditions are indicated as good when above 5 mg/L, fair between 2 and 5 mg/L, and poor if less than 2 mg/L.
 #| fig.subcap:
 #|     - "For the past five years"
-#|     - "For the current 2022 year"
+#|     - "For the current 2023 year"
 #| layout-ncol: 2
     
 threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2018, 2023), 
@@ -95,6 +95,35 @@ threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2018, 2023),
 
 
 threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2023, 2023), 
+                        thresholds = c(2,5),
+                        threshold_labs = c('Poor', 'Fair', 'Good'), 
+                        monthly_smooth = TRUE, 
+                        threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')) +
+  theme(axis.text = element_text(color = "black", size = 18),
+        axis.title.y = element_text(size = 20))
+
+```
+
+Dissolved oxygen at Pine Island has been uncharacteristically low in the past two years.
+
+```{r}
+#| label: fig-do-pi
+#| echo: false
+#| fig-cap: Continuous dissolved oxygen at Pine Island with monthly average overlaid in solid gray line. Conditions are indicated as good when above 5 mg/L, fair between 2 and 5 mg/L, and poor if less than 2 mg/L.
+#| fig.subcap:
+#|     - "For the past five years"
+#|     - "For the current 2023 year"
+#| layout-ncol: 2
+
+threshold_criteria_plot(pi, param = 'do_mgl', rng = c(2018, 2023), 
+                        thresholds = c(2,5),
+                        threshold_labs = c('Poor', 'Fair', 'Good'), 
+                        monthly_smooth = TRUE, 
+                        threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')) +
+  theme(axis.text = element_text(color = "black", size = 18),
+        axis.title.y = element_text(size = 20))
+
+threshold_criteria_plot(pi, param = 'do_mgl', rng = c(2023, 2023), 
                         thresholds = c(2,5),
                         threshold_labs = c('Poor', 'Fair', 'Good'), 
                         monthly_smooth = TRUE, 
