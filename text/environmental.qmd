@@ -78,12 +78,16 @@ MET |>
   # summarise(mean = mean(sum)) %>%
   ggplot(aes(x = month, y = sum)) +
   geom_col(fill = "#0075AC") +
-  geom_hline(yintercept = 84.4, linewidth = 2, linetype = "dashed", color = "grey50") +
+  geom_hline(yintercept = 86.5, linewidth = 2, linetype = "dashed", color = "grey50") +
   geom_text(aes(label = sum), vjust = 1.5, color = "white") +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
   theme(axis.text = element_text(color = "black"),
         axis.title.y = element_text(color = "black")) +
+  geom_text(aes(x = "Feb", y = 93), 
+            label = "Current annual average: 86.5",
+            size = 4.5,
+            color = "grey50") +
   labs(x = '',
        y = 'Total Monthly Precipitation (mm)',
        caption = "Hortizontal line represents current year monthly average.")
