@@ -127,7 +127,7 @@ MET |>
 
 ### Temperature
 
-Air and water temperatures are presented as daily averages (blue line) with historic ranges (daily range and average daily range) provided in shades of gray. All temperature data uses data from 2002-2023. Additionally, due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (&deg;F) with total monthly precipitation (mm). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red.
+Air and water temperatures are presented as daily averages (blue line) with historic ranges (daily range and average daily range) provided in shades of gray. All temperature data uses data from 2002-2023. Additionally, due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (°C) with total monthly precipitation (mm). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red.
 
 ```{r}
 #| label: fig-range-atemp
