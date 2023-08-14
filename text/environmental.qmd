@@ -33,7 +33,7 @@ There has been much less rain in the first quarter of the year compared to previ
 
 Though air temperature fell within average daily ranges for the station, water temperatures at most of the water quality stations have been on the higher end of the range (@fig-range-temp). All of the sites had increases in the month of May, likely associated to the very little precipitation the system experienced that month. Daily averages fell within "normal" ranges at the stations within June, but all sites saw much higher temperatures in July (@fig-range-temp).
 
-Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023) and in [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/) which raised salinity at all sites (@fig-range-sal), but was especially pronounced at Pellicer Creek (@fig-range-sal-4). The April Nor'easter had strong winds from the N and NE directions for almost an entire week (@fig-winds). 
+Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023) and in [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), however their strong winds initially raised salinity at all sites (@fig-range-sal), but was especially pronounced at Pellicer Creek (@fig-range-sal-4). The April Nor'easter had strong winds from the N and NE directions for almost an entire week (@fig-winds). After the winds died down, the effects of the heavy rainfall were evident in the drops in salinity following the storm events.
 
 ![Weather Service Image from Flagler Live showing the wind speed predictions for the April Nor\'easter](/images/weather-service-easter.jpg) 
 
@@ -127,7 +127,7 @@ MET |>
 
 ### Temperature
 
-Air and water temperatures are presented as daily averages (blue line) with historic ranges (daily range and average daily range) provided in shades of gray. All temperature data uses data from 2002-2023. Additionally, due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (&deg;F) with total monthly precipitation (mm). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red.
+Air and water temperatures are presented as daily averages (blue line) with historic ranges (daily range and average daily range) provided in shades of gray. All temperature data uses data from 2002-2023. Additionally, due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (°C) with total monthly precipitation (mm). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red.
 
 ```{r}
 #| label: fig-range-atemp
