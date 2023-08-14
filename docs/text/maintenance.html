@@ -219,6 +219,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#sonde-failure-in-field" id="toc-sonde-failure-in-field" class="nav-link active" data-scroll-target="#sonde-failure-in-field"><span class="header-section-number">7.1</span> Sonde Failure in Field</a></li>
   <li><a href="#wiper-brush-fell-off" id="toc-wiper-brush-fell-off" class="nav-link" data-scroll-target="#wiper-brush-fell-off"><span class="header-section-number">7.2</span> Wiper Brush Fell Off</a></li>
   <li><a href="#weather-station-battery-voltage-and-telemetry-troubleshooting" id="toc-weather-station-battery-voltage-and-telemetry-troubleshooting" class="nav-link" data-scroll-target="#weather-station-battery-voltage-and-telemetry-troubleshooting"><span class="header-section-number">7.3</span> Weather Station Battery Voltage and Telemetry Troubleshooting</a></li>
+  <li><a href="#bad-batch" id="toc-bad-batch" class="nav-link" data-scroll-target="#bad-batch"><span class="header-section-number">7.4</span> Bad Batch</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/GTMNERR/swmp-quarter-report/edit/main/text/maintenance.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/GTMNERR/swmp-quarter-report/blob/main/text/maintenance.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/GTMNERR/swmp-quarter-report/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -253,6 +254,10 @@ ul.task-list li input[type="checkbox"] {
 <section id="weather-station-battery-voltage-and-telemetry-troubleshooting" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="weather-station-battery-voltage-and-telemetry-troubleshooting"><span class="header-section-number">7.3</span> Weather Station Battery Voltage and Telemetry Troubleshooting</h2>
 <p>We began having signal issues with the telemetry dropping out at the SWMP weather station in mid-April. After troubleshooting on site on April 24, 2023 with a tech expert from another Reserve, we eliminated the possibility of issues with the data logger and the transmitter. On May 10, 2023, the battery (installed in 2016) was replaced on the station with a 2020 battery and all transmissions and power were successful and consistent.</p>
+</section>
+<section id="bad-batch" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="bad-batch"><span class="header-section-number">7.4</span> Bad Batch</h2>
+<p>Had a sonde (“Matthew” SN: 20H100464) die two days into it’s deployment on July 18, 2023. Investigating the data file revealed a steady and sharp decline in battery voltage with each measurement until insufficient voltage remained to power the sonde through a deployment. At post-calibration it gave “internal battery voltage is below 0.9V per cell” error and after replacing with alternative batteries, passed post-calibration checks. Evaluation revealed no issue with with the sensors or sonde itself. YSI Service Technicians recommended redeploying the sonde in the lab for a couple of days and check the data for rapid battery drain as it could have been faulty batteries. The sonde was deployed for a week in the lab with no data collection or battery power issues. Therefore, it appears it was a bad batch of batteries. In the future, before tossing the batteries into the junk bin, they will be evaluated with a volt meter. Unfortunately, they were tossed into the bin first this time and they could not be evaluated.</p>
 
 
 </section>
