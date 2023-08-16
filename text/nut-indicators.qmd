@@ -36,7 +36,7 @@ By visiting [Florida Rules](https://www.flrules.org/gateway/ruleno.asp?id=62-302
 
 ## Summary
 
-Dissolved oxygen dropped and was lower than average from late January through mid-March and again during the hot month of July at Pine Island and Pellicer Creek (@fig-do-1; @fig-do-2). This pattern is likely correlated with the warmer than average temperatures this area experienced during this time (@fig-range-atemp; @fig-range-temp). Waters at all stations were oxygenated following spring rainfall events and Nor'easters (@fig-rainfall-3; @fig-do). Pellicer Creek had daily average dissolved oxygen values that fell within normal ranges (@fig-do-4), however low dissolved oxygen values were still collected at the site in July (@fig-do-pc). Pine Island has experienced very low dissolved oxygen values (less than 2 mg/L) frequently in the past two years, which is uncharacteristically low for this station, particularly in the past five years (@fig-do-pi). 
+Dissolved oxygen dropped and was lower than average from late January through mid-March and again during the hot month of July at Pine Island and Pellicer Creek (@fig-do-1; @fig-do-2). This pattern is likely correlated with the warmer than average temperatures this area experienced during this time (@fig-range-atemp; @fig-range-temp). Waters at all stations were oxygenated following spring rainfall events and Nor'easters (@fig-rainfall-3; @fig-do). Pellicer Creek had daily average dissolved oxygen values that fell within normal ranges (@fig-do-4), however low dissolved oxygen values were still collected at the site in July (@fig-do-pc). Pine Island has experienced very low dissolved oxygen values (less than 2 mg/L) frequently in the past two years, which is uncharacteristically low for this station, particularly in the past five years (@fig-do-pi). Tables 5.1 and 5.2 show the hypoxia events and duration (more than 0.5 hrs) at Pine Island and Pellicer Creek for this year.
 
 Chlorophyll *a* values were higher than average at all sites (@fig-chla-boxplots), frequently over the thresholds at each site, particularly at San Sebastian and Pellicer Creek (@fig-chla-boxplots-2, @fig-chla-boxplots-4). Although too soon to make inferences on the patterns in the annual geometric means (AGM), so far the data shows elevated AGM chlorophyll *a* at all sites except Fort Matanzas (@fig-chla-agm). 
 
@@ -104,6 +104,28 @@ threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2023, 2023),
 
 ```
 
+```{r}
+#| label: pc-do-tbl
+#| echo: false
+
+pc %>% 
+  filter(datetimestamp > "2023-01-01 00:00") %>% 
+  setstep() %>% 
+  threshold_identification(param = c('do_mgl'),
+                           parameter_threshold = c(2),
+                           threshold_type = c('<'),
+                           time_threshold = 0.5) %>% 
+  select(-parameter, -thr_violation, -statement) %>% 
+  rename(Duration = duration,
+         `Start Time` = starttime,
+         `End Time` = endtime) %>% 
+  kbl(align = "c", caption = "Table 5.1 Identification and Duration of Hypoxia Events (< 2 mg/L for > 0.5 hrs) at Pellicer Creek") %>%
+  kable_styling(fixed_thead = T) %>% 
+  column_spec(3, border_left = T)
+  
+  
+```
+
 Dissolved oxygen at Pine Island has been uncharacteristically low in the past two years.
 
 ```{r}
@@ -131,6 +153,28 @@ threshold_criteria_plot(pi, param = 'do_mgl', rng = c(2023, 2023),
   theme(axis.text = element_text(color = "black", size = 18),
         axis.title.y = element_text(size = 20))
 
+```
+
+```{r}
+#| label: pi-do-tbl
+#| echo: false
+
+pi %>% 
+  filter(datetimestamp > "2023-01-01 00:00") %>% 
+  setstep() %>% 
+  threshold_identification(param = c('do_mgl'),
+                           parameter_threshold = c(2),
+                           threshold_type = c('<'),
+                           time_threshold = 0.5) %>% 
+  select(-parameter, -thr_violation, -statement) %>% 
+  rename(Duration = duration,
+         `Start Time` = starttime,
+         `End Time` = endtime) %>% 
+  kbl(align = "c", caption = "Table 5.2 Identification and Duration of Hypoxia Events (< 2 mg/L for > 0.5 hrs) at Pine Island") %>%
+  kable_styling(fixed_thead = T) %>% 
+  column_spec(3, border_left = T)
+  
+  
 ```
 
 ### Chlorophyll *a*
