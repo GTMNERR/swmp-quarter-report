@@ -1,5 +1,5 @@
 ---
-title: "Appendix 1 - CMECS Classifications"
+title: "Station Classifications"
 link-external-icon: true
 link-external-newwindow: true
 execute:
@@ -7,7 +7,7 @@ execute:
   error: false
 ---
 
-This information was compiled as part of a larger system-wide effort to combine the many factors that influence coastal water quality. For more information on the NERRS Characteristics of Land Use and Ecosystems (CLUE) project, visit <https://www.nerra.org/swmp-clue/>.
+This information was compiled as part of a larger system-wide effort to combine the many factors that influence coastal water quality using the Coastal and Marine Ecological Standard (CMECS) Classifications. For more information on the NERRS Characteristics of Land Use and Ecosystems (CLUE) project, visit <https://www.nerra.org/swmp-clue/>.
 
 ```{r}
 #| label: tbl-cmecs
