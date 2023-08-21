@@ -78,7 +78,7 @@ MET |>
 #| fig.subcap:
 #|    - "Current year monthly total precipitation."
 #|    - "Daily rainfall totals for days with more than 1mm of day."
-#| layout-ncol: 3
+#| layout-ncol: 2
 
 
 MET |> 
