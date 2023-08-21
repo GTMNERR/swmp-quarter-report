@@ -146,6 +146,7 @@ Air and water temperatures are presented as daily averages (blue line) with hist
 #| fig-subcap: 
 #|    - "Historical daily range of air temperature at the SWMP weather station with current year daily average overlaid in blue."
 #|    - "Comparison of average dew point and air temperature with total monthly precipitation for the months of June and July. This year is indicated in red."
+#|  layout-ncol: 2
 
 historical_daily_range(MET, param = 'atemp', target_yr = 2023)
 
