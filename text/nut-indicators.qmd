@@ -26,7 +26,7 @@ load(here('output','data', 'fm_wq.Rdata'))
 load(here('output','data', 'pc_wq.Rdata'))
 ```
 
-The State Thresholds used in the chlorophyll *a*, total nitrogen, and total phosphorus calculations come from Florida State Surface Water Quality Standards within the Florida Administrative Code.
+The state thresholds used in the chlorophyll *a*, total nitrogen, and total phosphorus visualizations come from Florida State Surface Water Quality Standards within the Florida Administrative Code.
 
 ::: callout-note
 # Access the Standards
@@ -36,13 +36,13 @@ By visiting [Florida Rules](https://www.flrules.org/gateway/ruleno.asp?id=62-302
 
 ## Summary
 
-Dissolved oxygen dropped and was lower than average from late January through mid-March and again during the hot month of July at Pine Island and Pellicer Creek (@fig-do-1; @fig-do-2). This pattern is likely correlated with the warmer than average temperatures this area experienced during this time (@fig-range-atemp; @fig-range-temp). Waters at all stations were oxygenated following spring rainfall events and Nor'easters (@fig-rainfall-3; @fig-do). Pellicer Creek had daily average dissolved oxygen values that fell within normal ranges (@fig-do-4), however low dissolved oxygen values were still collected at the site in July (@fig-do-pc). Pine Island has experienced very low dissolved oxygen values (less than 2 mg/L) frequently in the past two years, which is uncharacteristically low for this station, particularly in the past five years (@fig-do-pi). Tables 5.1 and 5.2 show the hypoxia events and duration (more than 0.5 hrs) at Pine Island and Pellicer Creek for this year.
+Waters at all stations were oxygenated following spring rainfall events and Nor'easters (@fig-rainfall-3; @fig-do); however, dissolved oxygen was lower than average from late January through mid-March at Pine Island and Pellicer Creek and again at the end July at Pine Island (@fig-do-1; @fig-do-2). This pattern is likely correlated with the warmer than average temperatures this area experienced during this time (@fig-range-atemp; @fig-range-temp). Pellicer Creek had daily average dissolved oxygen values that fell within normal ranges (@fig-do-4), however continuous data show low dissolved oxygen values in both June and July (@fig-do-pc). Pine Island has experienced very low dissolved oxygen values (less than 2 mg/L) frequently in the past two years, which is uncharacteristic for this station, particularly in the past five years (@fig-do-pi). Tables 5.1 and 5.2 show the hypoxia events and duration (more than 0.5 hrs) at Pine Island and Pellicer Creek for this year.  
 
-Chlorophyll *a* values were higher than average at all sites (@fig-chla-boxplots), frequently over the thresholds at each site, particularly at San Sebastian and Pellicer Creek (@fig-chla-boxplots-2, @fig-chla-boxplots-4). Although too soon to make inferences on the patterns in the annual geometric means (AGM), so far the data shows elevated AGM chlorophyll *a* at all sites except Fort Matanzas (@fig-chla-agm). 
+Chlorophyll *a* values were higher than average at all stations from January through May (@fig-chla-boxplots), frequently over the state thresholds. Although too soon to make inferences, so far the data shows elevated annual geometric means of chlorophyll *a* at all stations except Fort Matanzas (@fig-chla-agm). 
 
-Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated. Total Kjeldahl Nitrogen (TKN) was lower than average for most sites however all sites experienced higher levels in May (@fig-tkn-boxplots).
+Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated. Total Kjeldahl Nitrogen (TKN) was lower than average for most stations; however, all stations experienced higher levels in May (@fig-tkn-boxplots).
 
-Total phosphorus continues to fall below the state threshold for every station and similar to TKN, all sites experienced elevated values of total phosphorus and orthophosphate in May (@fig-tp-boxplots; @fig-po4-boxplots) except for Pine Island which had higher levels for almost every month (@fig-po4-boxplots-1). 
+Total phosphorus continues to fall below the state threshold for every station and similar to TKN, all stations experienced elevated values of total phosphorus and orthophosphate in May (@fig-tp-boxplots; @fig-po4-boxplots). Relatively high levels of orthophosphate were observed at Pine Island January through May (@fig-po4-boxplots). 
 
 ## Data
 
@@ -319,7 +319,7 @@ $$ Where $c_{ij}$ is chlorophyll concentration in year $i$($i=1,...,N$) and mont
 
 #### Total Nitrogen
 
-TN is a calculated value based on TKN and NO23.
+TN is calculated by adding TKN and NO23.
 
 Several of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated and is missing for quite a few months at all the stations (@fig-tn-boxplots). This was especially true at Fort Matanzas which has the least amount of TN data (@fig-tn-boxplots-3).
 
@@ -385,7 +385,7 @@ boxplot_currentyear(station = "gtmpcnut",
 
 #### Dissolved Inorganic Nitrogen
 
-DIN is a calculated value based on NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information (@fig-din-boxplots).
+DIN is calculated by adding NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information (@fig-din-boxplots).
 
 ```{r}
 #| label: fig-din-boxplots
