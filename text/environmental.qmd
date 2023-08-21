@@ -29,7 +29,7 @@ The following includes variables that establish the estuarine setting: rainfall,
 
 ## Summary
 
-Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023), [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), and June (@fig-rainfall-2; @fig-rainfall-3). In July, northeast Florida received consistent and large amounts of precipitation ((@fig-rainfall-2; @fig-rainfall-3). Almost 61% of days in July had detectable levels of rainfall (@fig-rainfall-3). 
+Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023), [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), and June (@fig-rainfall-1; @fig-rainfall-2). In July, northeast Florida received consistent and large amounts of precipitation ((@fig-rainfall-1; @fig-rainfall-2). Almost 61% of days in July had detectable levels of rainfall (@fig-rainfall-2). 
 
 Daily average air temperatures were high and variable during the first part of the year, but since May, daily averages have fallen within the historical range for the GTMNERR station (@fig-range-atemp-1). However, when comparing monthly averages in June and July to previous years, 2023 has been one of the hotter and wetter summers on record (@fig-range-atemp-2). 
 
@@ -45,17 +45,14 @@ As a result of strong N-NE winds, increases in water depths/levels were observed
 
 ### Rainfall
 
-The simplest way to bin rainfall within a single year is to present the data by quarter. Data is also presented as monthly totals and then daily totals as "rain days" which are categorized into Wet (\<10 mm), Very Wet (20-29 mm), and Extremely Wet (\>30 mm) days. 
+Data is  presented as monthly totals and then daily totals as "rain days" which are categorized into Wet (\<10 mm), Very Wet (20-29 mm), and Extremely Wet (\>30 mm) days. 
 
 ```{r}
-#| label: fig-rainfall
-#| echo: false
-#| fig.cap: Rainfall at the Pellicer Creek weather station.
-#| fig.subcap:
-#|    - "Ongoing quarterly totals of precipitation."
-#|    - "Current year monthly total precipitation."
-#|    - "Daily rainfall totals for days with more than 1mm of day."
-#| layout-ncol: 3
+#| label: fig-rainfall-totals
+#| include: false
+#| fig.cap: Ongoing quarterly totals of precipitation at the Pellicer Creek weather station
+
+# The simplest way to bin rainfall within a single year is to present the data by quarter.
 
 MET |> 
   SWMPrExtension::seasonal_barplot(param = 'totprcp',
@@ -72,6 +69,17 @@ MET |>
   theme(axis.text.x = element_text(angle = 45,
                                    vjust = 0.6),
         axis.text = element_text(color = "black"))
+```
+
+```{r}
+#| label: fig-rainfall
+#| echo: false
+#| fig.cap: Rainfall at the Pellicer Creek weather station.
+#| fig.subcap:
+#|    - "Current year monthly total precipitation."
+#|    - "Daily rainfall totals for days with more than 1mm of day."
+#| layout-ncol: 3
+
 
 MET |> 
   filter(datetimestamp > '2023-01-01 00:15') %>%
