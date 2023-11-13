@@ -16,7 +16,21 @@ One sonde failure ("Irma" SN: 20H100465) and multiple sensor failures (3 Wiped C
 
 ## Wiper Brush Fell Off
 
-The wiper brush fell off on the data sonde ("Matthew" SN: 20H100464) deployed at San Sebastian from May 2, 2023 - May 23, 2023.
+The wiper brush fell off on the following deployments:
+
+Pine Island:
+
+-   May 23 - June 14, 2023 ("Dorian" SN: 20H100466) central wiper SN: 13D102048
+
+San Sebastian:
+
+-   May 2 - May 23, 2023 ("Matthew" SN: 20H100464) central wiper SN: 22A106852
+-   August 1 - September 6, 2023 ("Triton" SN: 13K102679) central wiper SN: 13H102597
+
+Pellicer Creek
+
+-   May 16 - June 13, 2023 ("Egret" SN: 15E101700) central wiper SN: 16J100200 *no wiper brush was deployed during this deployment*
+-   June 27 - July 19, 2023 ("Egret" SN: 15E101700) central wiper SN: 16J100200
 
 ## Weather Station Battery Voltage and Telemetry Troubleshooting
 
