@@ -301,20 +301,6 @@ agm(station = "gtmpcnut",
 
 ```
 
-At the conclusion of 2023, variability and patterns in the monthly chlorophyll *a* data will be examined by decomposing the timeseries at each station using Equation 4 from @cloern2010 into an annual effect, mean seasonal pattern, and residual "events". 
-
-::: callout-note
-#### Equation 4 from @cloern2010:
-
-$$
-c_{ij}=Cy_im_j\epsilon_{ij}
-$$ Where $c_{ij}$ is chlorophyll concentration in year $i$($i=1,...,N$) and month $j$($j=1,...12$); *C* is the long-term mean of the series; $y_i$ is the annual effect in the *i*th year; $m_j$ is the seasonal (monthly) effect in the *j*th month; and $\epsilon_{ij}$ is the residual.
-
--   If $y_i$ \>1, indicates a year with above-average mean Chl-*a*.
--   If $m_j$ \>1, indicates a mean monthly Chl-*a* greater than the annual mean.
--   If $\epsilon_{ij}$ \>1, indicates an observation greater than the expected value for that month and year.
-:::
-
 ### Nitrogen
 
 #### Total Nitrogen
