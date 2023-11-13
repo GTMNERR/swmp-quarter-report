@@ -4,10 +4,10 @@
 # source('R/00_loadpackages.R')
 
 # 01 load data --------------------------------------------------
-## 01.1 load 2002-2022 Nutrient Data
+## 01.1 load 2002-2023 Nutrient Data
 
 nms <- names(read_excel(here::here('data',
-                                   '2001_2020_WQ_MET_NUT_FilesCDMO',
+                                   'swmp',
                                    'All_inclusive_NUT',
                                    'gtmnut2002-2023_QC_zeros-corrected.xlsx'), 
                         n_max = 0)) # pull out all the column names in this file
@@ -16,7 +16,7 @@ class <- ifelse(grepl("^F_", nms), "text", "numeric") # read everything with F_ 
 class2 <- class[-(1:5)] # remove the first five elements of the vector because they are different
 
 NUT <- readxl::read_xlsx(here::here('data',
-                                    '2001_2020_WQ_MET_NUT_FilesCDMO',
+                                    'swmp',
                                     'All_inclusive_NUT',
                                     'gtmnut2002-2023_QC_zeros-corrected.xlsx'),
                          col_types = c("text", 

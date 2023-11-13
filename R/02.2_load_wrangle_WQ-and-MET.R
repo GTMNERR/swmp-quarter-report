@@ -8,26 +8,26 @@
 ### check what the flags mean used in the `SWMPr::qaqc()` fxn here:  https://cdmo.baruch.sc.edu/data/qaqc.cfm.
 ### add in station name (for combining)
 pi <- SWMPr::import_local(path = here::here('data',
-                                                 '2001_2020_WQ_MET_NUT_FilesCDMO'), 
+                                                 'swmp'), 
                                station_code = 'gtmpiwq') %>% 
-  SWMPr::qaqc(qaqc_keep = c('0', '2', '3', '4', '5')) 
+  SWMPr::qaqc(qaqc_keep = c('0', '2', '3', '4', '5')) %>% filter(datetimestamp < '2023-11-01 00:15')
 ss <- SWMPr::import_local(path = here::here('data',
-                                                 '2001_2020_WQ_MET_NUT_FilesCDMO'), 
+                                                 'swmp'), 
                                station_code = 'gtmsswq') %>% 
-  SWMPr::qaqc(qaqc_keep = c('0', '2', '3', '4', '5'))
+  SWMPr::qaqc(qaqc_keep = c('0', '2', '3', '4', '5')) %>% filter(datetimestamp < '2023-11-01 00:15')
 fm <- SWMPr::import_local(path = here::here('data',
-                                                 '2001_2020_WQ_MET_NUT_FilesCDMO'), 
+                                                 'swmp'), 
                                station_code = 'gtmfmwq') %>% 
-  SWMPr::qaqc(qaqc_keep = c('0', '2', '3', '4', '5')) 
+  SWMPr::qaqc(qaqc_keep = c('0', '2', '3', '4', '5')) %>% filter(datetimestamp < '2023-11-01 00:15')
 pc <- SWMPr::import_local(path = here::here('data',
-                                                 '2001_2020_WQ_MET_NUT_FilesCDMO'), 
+                                                 'swmp'), 
                                station_code = 'gtmpcwq') %>% 
-  SWMPr::qaqc(qaqc_keep = c('0', '2', '3', '4', '5')) 
+  SWMPr::qaqc(qaqc_keep = c('0', '2', '3', '4', '5')) %>% filter(datetimestamp < '2023-11-01 00:15')
 
 MET <- SWMPr::import_local(path = here::here('data',
-                                             '2001_2020_WQ_MET_NUT_FilesCDMO'), 
+                                             'swmp'), 
                                 station_code = 'gtmpcmet') %>% 
-  SWMPr::qaqc(qaqc_keep = c('0', '2', '3', '4', '5')) 
+  SWMPr::qaqc(qaqc_keep = c('0', '2', '3', '4', '5')) %>% filter(datetimestamp < '2023-11-01 00:15')
 
 # 02 wrangle data for merging ------------------------------------------------
 

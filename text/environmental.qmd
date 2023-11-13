@@ -29,13 +29,13 @@ The following includes variables that establish the estuarine setting: rainfall,
 
 ## Summary
 
-Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023), [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), and June (@fig-rainfall-1; @fig-rainfall-2). In July, northeast Florida received consistent and large amounts of precipitation ((@fig-rainfall-1; @fig-rainfall-2). Almost 61% of days in July had detectable levels of rainfall (@fig-rainfall-2). 
+Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023), [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), and June (@fig-rainfall-1; @fig-rainfall-2). In July, northeast Florida received consistent and large amounts of precipitation ((@fig-rainfall-1; @fig-rainfall-2). Almost 61% of days in July had detectable levels of rainfall (@fig-rainfall-2). After the summer rains, however, early fall (September - October) was pretty minimal with very few rain days (rain greater than 1 mm) (@fig-rainfall-2).
 
-Daily average air temperatures were high and variable during the first part of the year, but since May, daily averages have fallen within the historical range for the GTMNERR station (@fig-range-atemp-1). However, when comparing monthly averages in June and July to previous years, 2023 has been one of the hotter and wetter summers on record (@fig-range-atemp-2). 
+Daily average air temperatures were high and variable during the first part of the year, but daily averages fell within the historical range for the GTMNERR station through October (@fig-range-atemp-1). However, when comparing monthly averages in June and July to previous years, 2023 has been one of the hotter and wetter summers on record (@fig-range-atemp-2). October also experienced a few temperature drops outside of the average range, but only for a short time as values returned to the higher end of the  range within a few days (@fig-range-atemp-1).
 
-Water temperatures have generally been on the higher end of the range throughout the year (@fig-range-temp). Temperatures have been most variable and lower at stations most influenced by freshwater runoff (Pine Island and Pellicer Creek). Daily averages fell within historical ranges at the stations within June, but all stations experienced higher temperatures in July (@fig-range-temp).
+Water temperatures have generally been on the higher end of the range throughout the year (@fig-range-temp). Temperatures have been most variable and lower at stations most influenced by freshwater runoff (Pine Island and Pellicer Creek). Daily averages fell within historical ranges at the stations within June, but all stations experienced higher temperatures in July and August (@fig-range-temp). The cooler weather in October also is evident in the water temperatures as clear drops in daily averages were observed at all four stations, though more pronounced at Pellicer Creek, the shallowest of the four stations (@fig-range-temp-4).
 
-The April Nor'easter had strong winds from the N and NE directions for four days (@fig-winds). Strong winds from all of the Nor'easters initially raised salinity at all stations (@fig-range-sal), and the effect was especially pronounced at Pellicer Creek (@fig-range-sal-4). After the winds died down, the effects of the heavy rainfall were evident in the drops in salinity following the storm events.
+The April Nor'easter had strong winds from the N and NE directions for four days (@fig-winds). Strong winds from all of the Nor'easters initially raised salinity at all stations (@fig-range-sal), and the effect was especially pronounced at Pellicer Creek (@fig-range-sal-4). After the winds died down, the effects of the heavy rainfall were evident in the drops in salinity following the storm events. Though not much rainfall was observed in October, the Nor'easters and seasonal "king tide" events did see higher water depths and lower salinities at all sites (@fig-range-sal; @fig-range-depth).
 
 ![Weather Service Image from Flagler Live showing the wind speed predictions for the April Nor\'easter](/images/weather-service-easter.jpg) 
 
@@ -90,14 +90,14 @@ MET |>
   # summarise(mean = mean(sum)) %>%
   ggplot(aes(x = month, y = sum)) +
   geom_col(fill = "#0075AC") +
-  geom_hline(yintercept = 86.5, linewidth = 2, linetype = "dashed", color = "grey50") +
+  geom_hline(yintercept = 81.4, linewidth = 2, linetype = "dashed", color = "grey50") +
   geom_text(aes(label = sum), vjust = 1.5, color = "white") +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
   theme(axis.text = element_text(color = "black"),
         axis.title.y = element_text(color = "black")) +
   geom_text(aes(x = "Feb", y = 93), 
-            label = "Current annual average: 86.5",
+            label = "Current annual average: 81.4",
             size = 4.5,
             color = "grey50") +
   labs(x = '',
@@ -142,7 +142,7 @@ Air and water temperatures are presented as daily averages (blue line) with hist
 ```{r}
 #| label: fig-range-atemp
 #| echo: false
-#| fig.cap: Air temperature recoreded at the SWMP weather station.
+#| fig.cap: Air temperature recorded at the SWMP weather station.
 #| fig-subcap: 
 #|    - "Historical daily range of air temperature at the SWMP weather station with current year daily average overlaid in blue."
 #|    - "Comparison of average dew point and air temperature with total monthly precipitation for the months of June and July. This year is indicated in red."

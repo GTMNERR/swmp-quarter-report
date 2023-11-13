@@ -29,9 +29,9 @@ The SWMP began analyzing water samples at each station for fecal coliform bacter
 
 ## Summary
 
-DOC levels fell within or below historic interquartile ranges for most stations except for in May at Pine Island and San Sebastian, which were elevated (@fig-doc-boxplots). 
+DOC levels fell within or below historic interquartile ranges for most stations except for in May at Pine Island and San Sebastian, which were elevated (@fig-doc-boxplots). All stations had higher DOC levels in the July-August period.
 
-Bacteria is detected in water samples from Pellicer Creek more often and in higher quantities than the other three stations (@fig-bacteria-1; @fig-bacteria-2). Fecal coliforms are also often detected at San Sebastian (@fig-bacteria-2). So far this year, bacteria samples were frequently reported at the minimum detection limit for all stations. 
+Bacteria is detected in water samples from Pellicer Creek more often and in higher quantities than the other three stations (@fig-bacteria-1; @fig-bacteria-2). Fecal coliforms are also often detected at San Sebastian (@fig-bacteria-2). So far this year, bacteria samples were frequently reported at the minimum detection limit for all stations except for July and September. 
 
 ## Dissolved Organic Carbon
 
