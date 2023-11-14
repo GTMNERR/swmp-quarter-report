@@ -90,14 +90,14 @@ MET |>
   # summarise(mean = mean(sum)) %>%
   ggplot(aes(x = month, y = sum)) +
   geom_col(fill = "#0075AC") +
-  geom_hline(yintercept = 81.4, linewidth = 2, linetype = "dashed", color = "grey50") +
+  geom_hline(yintercept = 81.4, linewidth = 1, linetype = "dashed", color = "grey50") +
   geom_text(aes(label = sum), vjust = 1.5, color = "white") +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
   theme(axis.text = element_text(color = "black"),
         axis.title.y = element_text(color = "black")) +
-  geom_text(aes(x = "Feb", y = 93), 
-            label = "Current annual average: 81.4",
+  geom_text(aes(x = "Oct", y = 90), 
+            label = "81.4 mm",
             size = 4.5,
             color = "grey50") +
   labs(x = '',
