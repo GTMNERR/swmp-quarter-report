@@ -36,13 +36,13 @@ By visiting [Florida Rules](https://www.flrules.org/gateway/ruleno.asp?id=62-302
 
 ## Summary
 
-Waters at all stations were oxygenated following spring rainfall events and Nor'easters (@fig-rainfall-2; @fig-do); however, dissolved oxygen was lower than average from late January through mid-March at Pine Island and Pellicer Creek and again at the end July at Pine Island (@fig-do-1; @fig-do-2). This pattern is likely correlated with the warmer than average temperatures this area experienced during this time (@fig-range-atemp; @fig-range-temp). Pellicer Creek had daily average dissolved oxygen values that fell within normal ranges (@fig-do-4), however continuous data show low dissolved oxygen values in several months: June, July, August, and September (@fig-do-pc). Pine Island has experienced very low dissolved oxygen values (less than 2 mg/L) frequently in the past two years, which is uncharacteristic for this station, particularly in the past five years (@fig-do-pi). This August was especially pronounced with prolonged periods in poor conditions (@fig-do-pi-2). Tables 5.1 and 5.2 show the hypoxia events and duration (more than 0.5 hrs) at Pine Island and Pellicer Creek for this year.  
+Waters at all stations were oxygenated following spring rainfall events and Nor'easters (@fig-rainfall-2; @fig-do); however, dissolved oxygen was lower than average from late January through mid-March at Pine Island and Pellicer Creek and again at the end July at Pine Island (@fig-do-1; @fig-do-2). This pattern is likely correlated with the warmer than average temperatures this area experienced during this time (@fig-range-atemp; @fig-range-temp). Pellicer Creek had daily average dissolved oxygen values that fell within normal ranges (@fig-do-4), however continuous data show low dissolved oxygen values in several months: June, July, August, and September (@fig-do-pc). Pine Island has experienced very low dissolved oxygen values (less than 2 mg/L) frequently in the past two years, which is uncharacteristic for this station, particularly in the past five years (@fig-do-pi). This August was especially pronounced with prolonged periods in poor conditions (@fig-do-pi-2). @tbl-pc-do and @tbl-pi-do show the hypoxia events and duration (more than 0.5 hrs) at Pine Island and Pellicer Creek for this year.
 
-Chlorophyll *a* values were higher than average at all stations from January through May (@fig-chla-boxplots), frequently over the state thresholds. Although too soon to make inferences, so far the data shows elevated annual geometric means of chlorophyll *a* at all stations except Fort Matanzas (@fig-chla-agm). Chlorophyll *a* at Pine Island continues to remain exceptionally high with this year seeing record monthly high values for January (7.0 \U00B5g/L), March (9.8 \U00B5g/L), and September (12 \U00B5g/L).
+Chlorophyll *a* values were higher than average at all stations from January through May (@fig-chla-boxplots), frequently over the state thresholds. Although too soon to make inferences, so far the data shows elevated annual geometric means of chlorophyll *a* at all stations except Fort Matanzas (@fig-chla-agm). Chlorophyll *a* at Pine Island continues to remain exceptionally high with this year seeing record monthly high values for January (7.0 $\mu$g/L), March (9.8 $\mu$g/L), and September (12 $\mu$g/L).
 
 Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated. At Pine Island and Pellicer Creek, however, high TN was observed in the high rainfall months of July and August (@fig-tn-boxplots). Total Kjeldahl Nitrogen (TKN) was lower than average for most stations; however, all stations experienced higher levels in May and August (@fig-tkn-boxplots).
 
-Total phosphorus continues to fall below the state threshold for every station and similar to TKN, all stations experienced elevated values of total phosphorus and orthophosphate in May (@fig-tp-boxplots; @fig-po4-boxplots). Relatively high levels of orthophosphate were observed at Pine Island January through May and again in August (@fig-po4-boxplots). 
+Total phosphorus continues to fall below the state threshold for every station and similar to TKN, all stations experienced elevated values of total phosphorus and orthophosphate in May (@fig-tp-boxplots; @fig-po4-boxplots). Relatively high levels of orthophosphate were observed at Pine Island January through May and again in August (@fig-po4-boxplots).
 
 ## Data
 
@@ -105,7 +105,7 @@ threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2023, 2023),
 ```
 
 ```{r}
-#| label: pc-do-tbl
+#| label: tbl-pc-do
 #| echo: false
 
 pc %>% 
@@ -156,7 +156,7 @@ threshold_criteria_plot(pi, param = 'do_mgl', rng = c(2023, 2023),
 ```
 
 ```{r}
-#| label: pi-do-tbl
+#| label: tbl-pi-do
 #| echo: false
 
 pi %>% 
@@ -238,7 +238,6 @@ boxplot_currentyear(station = "gtmpcnut",
            color = "blue",
            label = "State Threshold 4.3 (\U00B5g/L)")
 ```
-
 
 ```{r}
 #| label: fig-chla-agm
@@ -409,7 +408,7 @@ boxplot_currentyear(station = "gtmpcnut",
 
 #### Total Kjeldahl Nitrogen
 
-TKN is the total concentration of organic nitrogen and ammonia. It is directly measured in our samples. 
+TKN is the total concentration of organic nitrogen and ammonia. It is directly measured in our samples.
 
 ```{r}
 #| label: fig-tkn-boxplots
