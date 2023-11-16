@@ -333,14 +333,11 @@ Access the Standards
 <p></p><figcaption class="figure-caption">Figure&nbsp;5.2: Continuous dissolved oxygen at Pellicer Creek with monthly average overlaid in solid gray line. Conditions are indicated as good when above 5 mg/L, fair between 2 and 5 mg/L, and poor if less than 2 mg/L.</figcaption><p></p>
 </figure>
 </div>
-<div id="tbl-pc-do" class="cell tbl-parent quarto-layout-panel anchored">
-<div class="panel-caption table-caption">
-<p>Table&nbsp;5.1: <strong>?(caption)</strong></p>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div id="tbl-pc-do-1" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-pc-do" style="flex-basis: 100.0%;justify-content: center;">
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-pc-do" class="anchored">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>(a) Table 5.1 Identification and Duration of Hypoxia Events (&lt; 2 mg/L for &gt; 0.5 hrs) at Pellicer Creek</caption>
+<caption>Table&nbsp;5.1: Identification and Duration of Hypoxia Events (&lt; 2 mg/L for &gt; 0.5 hrs) at Pellicer Creek</caption>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: center; position: sticky; top: 0; background-color: #FFFFFF;">Start Time</th>
@@ -382,12 +379,8 @@ Access the Standards
 </tbody>
 </table>
 </div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 
 
-</div>
 </div>
 </div>
 <p>Dissolved oxygen at Pine Island has been uncharacteristically low in the past two years.</p>
@@ -410,14 +403,11 @@ Access the Standards
 <p></p><figcaption class="figure-caption">Figure&nbsp;5.3: Continuous dissolved oxygen at Pine Island with monthly average overlaid in solid gray line. Conditions are indicated as good when above 5 mg/L, fair between 2 and 5 mg/L, and poor if less than 2 mg/L.</figcaption><p></p>
 </figure>
 </div>
-<div id="tbl-pi-do" class="cell tbl-parent quarto-layout-panel anchored">
-<div class="panel-caption table-caption">
-<p>Table&nbsp;5.2: <strong>?(caption)</strong></p>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div id="tbl-pi-do-1" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-pi-do" style="flex-basis: 100.0%;justify-content: center;">
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-pi-do" class="anchored">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>(a) Table 5.2 Identification and Duration of Hypoxia Events (&lt; 2 mg/L for &gt; 0.5 hrs) at Pine Island</caption>
+<caption>Table&nbsp;5.2: Identification and Duration of Hypoxia Events (&lt; 2 mg/L for &gt; 0.5 hrs) at Pine Island</caption>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: center; position: sticky; top: 0; background-color: #FFFFFF;">Start Time</th>
@@ -599,12 +589,8 @@ Access the Standards
 </tbody>
 </table>
 </div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 
 
-</div>
 </div>
 </div>
 </section>
@@ -1103,22 +1089,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp("https:\/\/GTMNERR\.github\.io\/swmp-quarter-report");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          // default icon
-          link.classList.add("external");
-      }
-    }
 });
 </script>
 <nav class="page-navigation">
@@ -1143,7 +1113,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-right">Built with <a href="https://quarto.org/">Quarto</a>.</div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":true,"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox"});</script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":true});</script>
 
 
 
