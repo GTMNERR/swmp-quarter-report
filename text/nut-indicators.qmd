@@ -107,6 +107,7 @@ threshold_criteria_plot(pc, param = 'do_mgl', rng = c(2023, 2023),
 ```{r}
 #| label: tbl-pc-do
 #| echo: false
+#| tbl-cap: "Identification and Duration of Hypoxia Events (< 2 mg/L for > 0.5 hrs) at Pellicer Creek"
 
 pc %>% 
   filter(datetimestamp > "2023-01-01 00:00") %>% 
@@ -119,7 +120,7 @@ pc %>%
   rename(Duration = duration,
          `Start Time` = starttime,
          `End Time` = endtime) %>% 
-  kbl(align = "c", caption = "Table 5.1 Identification and Duration of Hypoxia Events (< 2 mg/L for > 0.5 hrs) at Pellicer Creek") %>%
+  kbl(align = "c") %>%
   kable_styling(fixed_thead = T) %>% 
   column_spec(3, border_left = T)
   
@@ -158,6 +159,7 @@ threshold_criteria_plot(pi, param = 'do_mgl', rng = c(2023, 2023),
 ```{r}
 #| label: tbl-pi-do
 #| echo: false
+#| tbl-cap: "Identification and Duration of Hypoxia Events (< 2 mg/L for > 0.5 hrs) at Pine Island"
 
 pi %>% 
   filter(datetimestamp > "2023-01-01 00:00") %>% 
@@ -170,7 +172,7 @@ pi %>%
   rename(Duration = duration,
          `Start Time` = starttime,
          `End Time` = endtime) %>% 
-  kbl(align = "c", caption = "Table 5.2 Identification and Duration of Hypoxia Events (< 2 mg/L for > 0.5 hrs) at Pine Island") %>%
+  kbl(align = "c") %>%
   kable_styling(fixed_thead = T) %>% 
   column_spec(3, border_left = T)
   
