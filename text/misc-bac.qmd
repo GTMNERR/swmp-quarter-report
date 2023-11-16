@@ -3,8 +3,8 @@ title: "Other Indicators"
 execute: 
   warning: false
   error: false
-link-external-icon: true
-link-external-newwindow: true
+# link-external-icon: true
+# link-external-newwindow: true
 filters: 
   - lightbox
 lightbox: auto
