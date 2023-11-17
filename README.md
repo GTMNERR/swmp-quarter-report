@@ -2,7 +2,7 @@
 
 This open source report provides a baseline summary of the three longest running components of the SWMP at the GTMNERR: continuous water quality, discrete water quality, and weather. This report is updated quarterly after the collected data has undergone the secondary quality assurance and quality control (QAQC) process. For more information on the SWMP QAQC process, please visit http://cdmo.baruch.sc.edu/data/qaqc.cfm.
 
-This was last updated on August 9, 2023.
+This was last updated on November 16, 2023.
 
 ## Suggested Citation
 

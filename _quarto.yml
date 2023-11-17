@@ -5,27 +5,28 @@ project:
 book:
   title:  2023 Quarterly System-Wide Monitoring Program (SWMP) Report
   subtitle: Guana Tolomato Matanzas National Estuarine Research Reserve
+  
   author:
     - name: Shannon Dunnigan
-      # affiliations:
-      #   - name: 
     - name: Kathryn Petrinec
-      # affiliations:
-      #   - name: Florida Department of Environmental Protection
     - name: Nikki Dix
+    
   chapters:
     - index.qmd
+    
     - part: text/background.qmd
       chapters:
       - text/sites.qmd
       - text/collection.qmd
       - text/qaqc.qmd
+      
     - part: text/results.qmd
       chapters:
       - text/environmental.qmd
       - text/nut-indicators.qmd
       - text/misc-bac.qmd
       - text/maintenance.qmd
+      
   appendices: 
     - text/a1-cmecs.qmd
     
@@ -58,7 +59,9 @@ execute:
   
 format:
   html:
-    theme: cosmo
+    theme: 
+      - cosmo
+      - swmp.scss
     toc: true
     toc-depth: 3
  # pdf:
