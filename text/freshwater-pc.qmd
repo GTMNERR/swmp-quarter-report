@@ -1,0 +1,38 @@
+---
+title: "Is there more freshwater in Pellicer Creek?"
+execute: 
+  warning: false
+  error: false
+bibliography: references.bib
+---
+
+# Background
+
+This summer, we had some internal discussions based on a question posed by colleagues at Florida Fish and Wildlife Conservation Commission (FWC) when a local resident of Palm Coast expressed concern about "major losses in Pellicer Creek since Hurricanes Matthew and Irma". Long story short, the conversation posed whether we have seen more freshwater in the system and subsequently if there was any habitat restoration that could be done. Our monitoring program, the SWMP, is not really best suited to answer the latter question, but regarding the former, let's do an investigation into the freshwater patterns in Pellicer Creek.
+
+## The Hurricanes
+
+Hurricanes Matthew and Irma were both highly influential on the GTM estuary and staff and other researchers have looked at their impacts in several ways: through linking water quality and emergent vegetation patterns [@dunnigan2018], investigating their impacts in nutrient export in Pellicer Creek [@schafer2020; @schafer2022; @brown2023], and simply looking at the variability in their effects and impacts [@dunnigan2017a; @dunnigan2017b]. Last year, we even compared impacts of Hurricane Ian on water levels at our continuous water quality stations with [Matthew and Irma](https://gtmnerr.github.io/2022-swmp-annual-report/text/hurricane-ian.html) [@dunnigan2023].
+
+Truly both of these storms had strong effects on the ecosystems and communities of the GTM estuary and a simple Google search of the storms reveals a plethora of images of damaged homes, downed trees, toppled sailboats, and more. Locally, these storms continue to serve as a relevant and recent reference point for several points of observation in our ecosystems. 
+
+::: column-margin
+![United States Geological Survey image of the Summer Haven River with an inlet remaining after Hurricane Matthew, source: https://www.usgs.gov/programs/cmhrp/news/and-after-photos-se-beach-dunes-lost-hurricane-matthew](/images/usgs-matthew-summerhaven.jpg){#fig-summerhaven}
+:::
+
+### Hurricane Matthew
+
+On October 7, 2016 the eye of Category 3 Hurricane Matthew came with 40 miles of St. Augustine, Florida. It traveled off the coast and passed northeast Florida at a high tide and had resulted in several record breaking storm surge levels in the southeastern coastal United States. Docks within the intracoastal waterways were destroyed with only the remnants of their pilings left poking out of the receding waters. The storm had even cut new inlets and striped away several meters of the large coastal dunes in the region (@fig-summerhaven).
+
+::: column-margin
+![United States Geological Survey image of the shoreline in South Ponte Vedra Beach in which three homes were destroyed, source: https://www.usgs.gov/media/images/location-4-photo-pair-shows-irma-destroyed-house-s-ponte-vedra-fl](/images/Loc4_HouseDestroyed_SPonteVedra_FL.jpg){#fig-spvb}
+:::
+
+### Hurricane Irma
+
+Irma was big. So big, in fact, that one reporter described the eye of the storm as [*"wide enough that peak winds could arrive at both sides of the Florida peninsula at the same time..."*](https://www.businessinsider.com/hurricane-irma-size-intensity-florida-2017-9). In early September in 2017, Hurricane Irma traveled straight up the Florida peninsula. While our colleagues on the west coast experienced [fascinating surge patterns](https://nerrdsonthewater.com/2017/09/25/the-dry-side-of-hurricane-irma/) with Irma, northeast Florida was once again hit with heavy winds and storm surge. Already sensitive and recovering from the previous year's impacts with Hurricane Matthew, several beach side homes even vanished within the course of a few hours, taken by the sea (@fig-spvb). Between the two storms, however, Irma certainly brought a lot more precipitation than Matthew [@dunnigan2018].
+
+## The current question
+
+Again, recently we were presented with an observation from a local resident that there have been major losses to oysters in Pellicer Creek since Irma. To help address this observation, it's probably best to start with a little bit of background on oysters...
+
