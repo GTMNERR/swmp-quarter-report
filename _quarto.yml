@@ -27,6 +27,8 @@ book:
       - text/misc-bac.qmd
       - text/maintenance.qmd
       
+    - part: text/freshwater-pc.qmd
+      
   appendices: 
     - text/a1-cmecs.qmd
     
