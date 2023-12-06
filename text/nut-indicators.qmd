@@ -304,7 +304,7 @@ agm(station = "gtmpcnut",
 
 #### Total Nitrogen
 
-TN is calculated by adding TKN and NO23.
+TN is calculated by adding TKN and NO23. It accounts for the inorganic nitrogen fraction as well as larger pools of organic bioavailable forms. 
 
 Several of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated and is missing for quite a few months at all the stations (@fig-tn-boxplots). This was especially true at Fort Matanzas which has the least amount of TN data (@fig-tn-boxplots-3).
 
@@ -368,14 +368,14 @@ boxplot_currentyear(station = "gtmpcnut",
            label = "State Threshold 1.10 (mg/L)")
 ```
 
-#### Dissolved Inorganic Nitrogen
+#### Ammonium
 
-DIN is calculated by adding NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information (@fig-din-boxplots).
+Ammonium is directly measured in our samples and is a key inorganic nutrient assimilated by phytoplankton in primary production. 
 
 ```{r}
-#| label: fig-din-boxplots
+#| label: fig-nh4-boxplots
 #| echo: false
-#| fig.cap: Historical monthly dissolved inorganic nitrogen at each SWMP water quality station with current year monthly value overlaid in red. 
+#| fig.cap: Historical monthly ammonium at each SWMP water quality station with current year monthly value overlaid in red. 
 #| fig.subcap:
 #|    - "Pine Island"
 #|    - "San Sebastian"
@@ -384,24 +384,24 @@ DIN is calculated by adding NO23 and ammonia (NH4). Due to the low or undetectab
 #| layout-ncol: 2
 
 boxplot_currentyear(station = "gtmpinut", 
-                     param = din, 
+                     param = nh4f, 
                      threshold = FALSE) +
- labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)") 
+ labs(y = "Mean Monthly Ammonium (mg/L)") 
 
 boxplot_currentyear(station = "gtmssnut", 
-                     param = din, 
+                     param = nh4f, 
                      threshold = FALSE) +
- labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)")
+ labs(y = "Mean Monthly Ammonium (mg/L)")
 
 boxplot_currentyear(station = "gtmfmnut", 
-                     param = din, 
+                     param = nh4f, 
                      threshold = FALSE) +
- labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)")
+ labs(y = "Mean Monthly Ammonium (mg/L)")
 
 boxplot_currentyear(station = "gtmpcnut", 
-                     param = din, 
+                     param = nh4f, 
                      threshold = FALSE) +
- labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)")
+ labs(y = "Mean Monthly Ammonium (mg/L)")
 
 
 ```
