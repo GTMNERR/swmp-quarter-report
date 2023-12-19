@@ -14,6 +14,8 @@ lightbox: auto
 
 One sonde failure ("Irma" SN: 20H100465) and multiple sensor failures (3 Wiped CT, 1 DO, 1 Turbidity, and 1 Central Wiper) occurred during the first quarter. The datasonde will need to be sent in for repair as one of the sensor pins was sheared off in the bulkhead - likely due to excessive power draw from the Central Wiper, coupled with electrolysis. Sensors will all need to be either evaluated (turbidity, central wiper) or replaced (WCT, DO).
 
+SD card failed during deployment of sonde at San Sebastian ("Triton" SN: 13K102679) 11/29/2023 12:00 - 12/12/2023 10:00 which was likely a result of a failing central wiper (SN: 13H102597). Downloaded data file was broken up a bunch of times and wiper kept showing up as 'NaN' in the chunks. Failed in the field after 12/05/2023 15:15. 
+
 ## Wiper Brush Fell Off
 
 The wiper brush fell off on the following deployments:
@@ -21,6 +23,7 @@ The wiper brush fell off on the following deployments:
 Pine Island:
 
 -   May 23 - June 14, 2023 ("Dorian" SN: 20H100466) central wiper SN: 13D102048
+-   November 14 - November 29, 2023 ("Oyster" SN: 17K103253) central wiper SN: 12L101282
 
 San Sebastian:
 
@@ -39,3 +42,13 @@ We began having signal issues with the telemetry dropping out at the SWMP weathe
 ## Bad Batch
 
 Had a sonde ("Matthew" SN: 20H100464) die two days into it's deployment on July 18, 2023. Investigating the data file revealed a steady and sharp decline in battery voltage with each measurement until insufficient voltage remained to power the sonde through a deployment. At post-calibration it gave “internal battery voltage is below 0.9V per cell” error and after replacing with alternative batteries, passed post-calibration checks. Evaluation revealed no issue with with the sensors or sonde itself. YSI Service Technicians recommended redeploying the sonde in the lab for a couple of days and check the data for rapid battery drain as it could have been faulty batteries. The sonde was deployed for a week in the lab with no data collection or battery power issues. Therefore, it appears it was a bad batch of batteries. In the future, before tossing the batteries into the junk bin, they will be evaluated with a volt meter. Unfortunately, they were tossed into the bin first this time and they could not be evaluated.
+
+## Depth dropout 
+
+The depth dropped out early in deployment of sonde ("Dorian" SN: 20H100466) from October 16 - November 14, 2023 and the depth sensor disconnected from the data sonde. No depth data was collected during deployment, nor was the depth sensor connected and readable during post-calibrations. AFter contacting YSI for tips on how to reconnect to the sensor (they are internal to the instruments), performed the suggested hard reset by removing the batteries from the compartment and reconnected to EXO Handheld - the depth sensor came back. 
+
+When attempted to calibrate the sonde for redeployment on November 27, the depth sensor failed to stabilize. The sonde was not used and was packed up for evaluation and repair.
+
+## Sticky wiper
+
+During the November 29 - December 12 deployment at Pine Island, the central wiper (SN: 13D102048) brush locked over Port 5 sensor position and the central wiper sensor lost connection to the data sonde. The sensor seemed to begin having issues 12/2/2023 21:30:47 and dropped entirely from the deployment/sonde 12/12/2023 11:45:47 upon retrieval.
