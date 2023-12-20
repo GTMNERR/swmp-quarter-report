@@ -115,7 +115,7 @@ pc %>%
                            threshold_type = c('<'),
                            time_threshold = 0.5) %>% 
   select(-parameter, -thr_violation, -statement) %>% 
-  rename(Duration = duration,
+  rename(`Duration (hrs)` = duration,
          `Start Time` = starttime,
          `End Time` = endtime) %>% 
   kbl(align = "c") %>%
@@ -167,7 +167,7 @@ pi %>%
                            threshold_type = c('<'),
                            time_threshold = 0.5) %>% 
   select(-parameter, -thr_violation, -statement) %>% 
-  rename(Duration = duration,
+  rename(`Duration (hrs)` = duration,
          `Start Time` = starttime,
          `End Time` = endtime) %>% 
   kbl(align = "c") %>%
