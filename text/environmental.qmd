@@ -39,6 +39,8 @@ The April Nor'easter had strong winds from the N and NE directions for four days
 
 ![Weather Service Image from Flagler Live showing the wind speed predictions for the April Nor\'easter](/images/weather-service-easter.jpg) 
 
+Using duration of wind directions between 0-100 degrees for greater than 24-hrs, several "Nor'easter" events were identified throughout the year from data at the Pellicer Creek weather station (@tbl-neer). Occasionally, localized wind directions result in values outside of this 0-100 degree window, which in turn affects the duration calculations, but it appears that there were at least 11 possible Nor'easter events identified in this way for 2023. The longest event occurred in the second half of the year from September 28 - October 06. This table does not identify strength of the winds during these events, just timeframes in which winds were originating in the 0-100 degree directions.
+
 As a result of strong N-NE winds, increases in water depths/levels were observed at all stations during the periods of the Nor'easters (@fig-range-depth).
 
 ## Data
@@ -91,14 +93,14 @@ MET |>
   # summarise(mean = mean(sum)) %>%
   ggplot(aes(x = month, y = sum)) +
   geom_col(fill = "#0075AC") +
-  geom_hline(yintercept = 81.4, linewidth = 1, linetype = "dashed", color = "grey50") +
+  geom_hline(yintercept = 86.6, linewidth = 1, linetype = "dashed", color = "grey50") +
   geom_text(aes(label = sum), vjust = 1.5, color = "white") +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
-  theme(axis.text = element_text(color = "black"),
-        axis.title.y = element_text(color = "black")) +
-  geom_text(aes(x = "Oct", y = 90), 
-            label = "81.4 mm",
+  theme(axis.text = element_text(color = "black", size = 12),
+        axis.title.y = element_text(color = "black", size = 12)) +
+  geom_text(aes(x = "Feb", y = 95), 
+            label = "86.6 mm",
             size = 4.5,
             color = "grey50") +
   labs(x = '',
@@ -131,8 +133,8 @@ MET |>
   scale_y_continuous(expand = c(0,0), limits = c(0,70)) +
   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
   theme_classic() +
-  theme(axis.text = element_text(color = "black"),
-        axis.title.y = element_text(color = "black")) +
+  theme(axis.text = element_text(color = "black", size = 12),
+        axis.title.y = element_text(color = "black", size = 12)) +
   labs(x = '',
        y = 'Total Daily Precipitation (mm)',
        color = "Amount of Rain")
@@ -142,22 +144,22 @@ MET |>
 # in mm/hr
 
 # MET |>
-#   filter(datetimestamp > '2023-01-01 00:15') %>% 
-#   aggreswmp(by = "hours", FUN = fun_in, params = "totprcp") %>% 
+#   filter(datetimestamp > '2023-01-01 00:15') %>%
+#   aggreswmp(by = "hours", FUN = fun_in, params = "totprcp") %>%
 #   rename(intensity = totprcp) %>%
-#   filter(intensity > 0) %>% 
+#   filter(intensity > 0) %>%
 #   ggplot() +
-#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"), 
-#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"), 
-#                 ymin = 2.5, ymax = 7.6), 
+#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"),
+#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"),
+#                 ymin = 2.5, ymax = 7.6),
 #             fill = "gray90", alpha = 0.5) +
-#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"), 
-#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"), 
-#                 ymin = 7.6, ymax = 50), 
+#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"),
+#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"),
+#                 ymin = 7.6, ymax = 50),
 #             fill = "gray60", alpha = 0.5) +
-#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"), 
-#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"), 
-#                 ymin = 50, ymax = Inf), 
+#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"),
+#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"),
+#                 ymin = 50, ymax = Inf),
 #             fill = "steelblue4", alpha = 0.5) +
 #   geom_hline(yintercept = 2.5, linetype = "dashed") +
 #   geom_hline(yintercept = 7.6, linetype = "dashed") +
@@ -167,7 +169,7 @@ MET |>
 #   scale_x_datetime(date_breaks = "1 month", date_labels = "%b") +
 #   theme_bw() +
 #   annotate("text",
-#            label = "Intense", 
+#            label = "Intense",
 #            angle = 90,
 #            x = as.POSIXct("2023-01-01 00:00"),
 #            y = 1)
@@ -190,8 +192,8 @@ MET |>
                                                           "Intense Rain (>50mm/hr)")
                                 )
          ) %>% 
-  # group_by(month, intensity_cat) %>% 
-  # count() %>% 
+  # group_by(month, intensity_cat) %>%
+  # count() %>%
   filter(intensity_cat != "No Rain (0 mm/hr)") %>% 
   ggplot() +
   geom_bar(aes(x = month, fill = intensity_cat),
@@ -199,8 +201,8 @@ MET |>
   ggthemes::scale_fill_colorblind() +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
-  theme(axis.text = element_text(color = "black"),
-        axis.title.y = element_text(color = "black")) +
+  theme(axis.text = element_text(color = "black", size = 12),
+        axis.title.y = element_text(color = "black", size = 12)) +
   labs(x = "",
        y = "Amount of Hours",
        fill = "Intensity Category")
@@ -246,8 +248,10 @@ MET %>%
     facet_wrap(~month, ncol = 1) +
     scale_color_manual(values = c("gray", "red")) +
     theme_classic() +
-    labs(x = "Average Air Temperature (C)",
-         y = "Average Dew Point (C)") +
+    theme(axis.text = element_text(size = 12, color = "black"),
+          axis.title = element_text(size = 12, color = "black")) +
+    labs(x = "Average Air Temperature (\u00b0C)",
+         y = "Average Dew Point (\u00b0C)") +
     guides(color = "none")
 
 rm(fun_in, gtm_prcp)
@@ -366,6 +370,31 @@ MET_wind_April %>%
   labs(x = "Hour of Day (24hr)",
        y = "",
        fill = "Max Wind Gusts (mph)")
+
+```
+
+### Identification of Nor'easter periods
+
+```{r}
+#| label: tbl-neer
+#| echo: false
+#| tbl-cap: "Identification and Duration of Wind from 0-100 degrees for periods greater than 24 hours"
+
+
+MET %>% 
+  filter(datetimestamp > "2023-01-01 00:00") %>% 
+  setstep() %>% 
+  threshold_identification(param = c('wdir'),
+                           parameter_threshold = c(100),
+                           threshold_type = c('<='),
+                           time_threshold = 24) %>% 
+  select(-parameter, -thr_violation, -statement) %>% 
+  rename(`Duration (hrs)` = duration,
+         `Start Time` = starttime,
+         `End Time` = endtime) %>% 
+  kbl(align = "c") %>%
+  kable_styling(fixed_thead = T) %>% 
+  column_spec(3, border_left = T)
 
 ```
 
