@@ -1,0 +1,186 @@
+---
+title: "Environmental Drivers"
+execute: 
+  warning: false
+  error: false
+filters: 
+  - lightbox
+lightbox: auto
+bibliography: references.bib
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| label: data-load
+#| include: false
+library(here)
+
+source(here::here('R', '00_loadpackages.R'))
+# source(here::here('R', '02.2_load_wrangle_WQ-and-MET.R'))
+
+load(here('output','data', 'MET.Rdata'))
+
+load(here('output','data', 'pi_wq.Rdata'))
+load(here('output','data', 'ss_wq.Rdata'))
+load(here('output','data', 'fm_wq.Rdata'))
+load(here('output','data', 'pc_wq.Rdata'))
+```
+
+This section includes drivers of environmental patterns such as significant weather events (e.g., tropical cyclones, Nor'easters, large rainfall events), anomalies, and other local events with impact.
+
+# Tropical cyclones
+
+There were no tropical cyclones that had direct impacts in the GTM estuary during this reporting year.
+
+# Nor'easters
+
+Typically, a Nor'easter is a storm along the East Coast of the United States with predominating winds from the northeast. [@callahan2022] even found that these events can produce surges just as severe as tropical cyclone events, and occur much more frequently. These events are often in the news associated with blizzards in the New England area of the US, however their impacts to northeast Florida are not insignificant. Often these storms bring higher water levels, heavy prevailing winds, and reduced tidal exchange.
+
+Using duration of wind directions between 0-100 degrees for greater than 24-hrs, several "Nor'easter" events were identified using data from the Pellicer Creek weather station (@tbl-neer). Occasionally, localized wind directions result in values outside of this 0-100 degree window, which in turn affects the duration calculations, but it appears that there were at least 11 possible Nor'easter events identified in this way for 2023. The longest event occurred in the second half of the year from September 28th - October 6th. This table does not identify strength of the winds during these events, just the time frames in which winds were originating and prevailing in the 0-100 degree directions.
+
+```{r}
+#| label: tbl-neer
+#| echo: false
+#| tbl-cap: "Identification and Duration of Wind from 0-100 degrees for periods greater than 24 hours"
+
+
+MET %>% 
+  filter(datetimestamp > "2023-01-01 00:00") %>% 
+  setstep() %>% 
+  threshold_identification(param = c('wdir'),
+                           parameter_threshold = c(100),
+                           threshold_type = c('<='),
+                           time_threshold = 24) %>% 
+  select(-parameter, -thr_violation, -statement) %>% 
+  rename(`Duration (hrs)` = duration,
+         `Start Time` = starttime,
+         `End Time` = endtime) %>% 
+  kbl(align = "c") %>%
+  kable_styling(fixed_thead = T) %>% 
+  column_spec(3, border_left = T)
+
+```
+
+# King Tides
+
+"King Tides" are the highest predicted tides of the year and in northeast Florida, these typically occur during the fall months. For the city of St. Augustine, these events often bring nuisance flooding in coastal and low-lying areas. For the estuary, this typically also means reduced tidal exchange, a lack of low tide events, and more and prolonged flooding in the intertidal wetlands. The city reports these events on their [website](https://www.citystaug.com/1032/King-Tide-Chart-Prediction).
+
+Predicted king tide events for 2023 were:
+
+-   September 26-30th
+
+-   October 1st-3rd
+
+-   October 27th-31st
+
+-   November 25-28th
+
+-   December 13-15th
+
+*Can we view these events in our SWMP data?*
+
+# Temperature anomalies
+
+Extreme temperatures, both high and low, have drastic impacts on environmental function. For black mangroves (*Avicennia germinans*), temperatures under -4°C have been found reduce mangrove cover [@cavanaugh2013]. Extreme high temperatures are often health risks as they often result in many [heat-related illnesses](https://www.weather.gov/safety/heat-illness).
+
+Due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (°C) with total monthly precipitation (mm) (@fig-dewpt). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red.
+
+```{r}
+#| label: fig-dewpt
+#| echo: false
+#| fig.cap: Comparison of average dew point and air temperature with total monthly precipitation for the months of June and July. This year is indicated in red.
+
+
+fun_in <- function(x) sum(x, na.rm = TRUE)
+
+gtm_prcp <- SWMPr::aggreswmp(MET, FUN = fun_in, by = "months", params = c('totprcp')) %>% 
+  mutate(prcp_in = totprcp * 0.0393701)
+
+MET %>% 
+  SWMPr::aggreswmp(by = "months") %>%
+  select(datetimestamp, atemp, rh) %>%
+  mutate(dew_pt = weathermetrics::humidity.to.dewpoint(rh = rh, t = atemp, temperature.metric = "celsius"),
+         dew_pt_f = weathermetrics::celsius.to.fahrenheit(dew_pt),
+         atemp_f = weathermetrics::celsius.to.fahrenheit(atemp)) %>% 
+  # mutate(dew_pt = atemp - ((100-rh)/5.),
+  #        dew_pt_f = ((dew_pt*9/5) + 32),
+  #        atemp_f = ((atemp * 9/5) + 32)) %>% 
+  # select(datetimestamp, dew_pt_f, atemp_f) %>% 
+  dplyr::left_join(gtm_prcp, by = "datetimestamp") %>% 
+  # select(-totprcp) %>% 
+  mutate(year = lubridate::year(datetimestamp),
+         month = lubridate::month(datetimestamp, label = TRUE)) %>% 
+  filter(month %in% c("Jun", "Jul"))  %>%
+  filter(totprcp > 0) %>% 
+    ggplot(aes(x = atemp, y = dew_pt)) +
+    geom_point(aes(size = totprcp, color = year >= 2023), alpha = 0.5) +
+    scale_size(range = c(1, 24), name="Total Precipitation (mm)") +
+    geom_text(aes(label = year), size = 2) +
+    facet_wrap(~month, ncol = 1) +
+    scale_color_manual(values = c("gray", "red")) +
+    theme_classic() +
+    theme(axis.text = element_text(size = 12, color = "black"),
+          axis.title = element_text(size = 12, color = "black")) +
+    labs(x = "Average Air Temperature (\u00b0C)",
+         y = "Average Dew Point (\u00b0C)") +
+    guides(color = "none")
+
+rm(fun_in, gtm_prcp)
+```
+
+Heat waves are periods of abnormally hot weather that extend for more than two days (https://www.weather.gov/safety/heat-during). But what makes a heat wave? https://www.stormgeo.com/weather/articles/what-constitutes-a-heat-wave-around-the-world/#:\~:text=In%20the%20Northeast%20United%20States,F%20(32.2%20%C2%B0C).
+
+Excessive heat warnings in Northeast Florida for August (https://www.jacksonville.com/story/weather/2023/08/08/florida-heat-excessive-heat-warning-watch-advisory-heat-index-hot-weather/70548546007/)
+
+Convert to 'heat index' from raw temperature. https://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml
+
+```{r}
+#| label: fig-heatindex
+#| echo: false
+#| fig-cap: Hourly averaged heat index values recorded at the Pellicer Creek weather station in 2023
+
+MET %>% 
+  filter(datetimestamp >= as.POSIXct("2023-01-01 00:00")) %>% 
+  aggreswmp(by = "hours") %>% 
+  select(datetimestamp, atemp, rh) %>% 
+  mutate(heat_index = weathermetrics::heat.index(t = atemp, rh = rh, temperature.metric = "celsius", 
+                                                 output.metric = "fahrenheit"),
+         atemp_f = weathermetrics::celsius.to.fahrenheit(atemp)) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = datetimestamp, y = heat_index)) +
+    geom_hline(yintercept = 110, linetype = "dashed", color = "gray") +
+    geom_point(aes(color = heat_index > 110)) +
+    scale_x_datetime(breaks = "months", date_labels = "%b") +
+    scale_color_manual(values = c("black", "tomato")) +
+    theme_classic() +
+    theme(axis.text = element_text(size = 12, color = "black"),
+          axis.title = element_text(size = 12, color = "black"),
+          legend.position = "none") +
+    labs(x = "",
+         y = "Heat Index (\u00b0F)")
+```
+
+```{r}
+#| label: tbl-high-temp-duration
+#| echo: false
+#| tbl-cal: Date and duration of temperatures over 90 degrees fahrenheit for greater than 2 hours at the Pellicer Creek weather station
+
+MET %>% 
+  filter(datetimestamp >= as.POSIXct("2023-01-01 00:00")) %>% 
+  setstep() %>% 
+  threshold_identification(param = c('atemp'),
+                           parameter_threshold = c(32.2),
+                           threshold_type = c('>='),
+                           time_threshold = 2) %>% 
+  mutate(date = as.Date(starttime)) %>% 
+  group_by(date) %>% 
+  summarize(sum = sum(duration)) %>% 
+  rename(Date = date,
+         `Duration (hrs)` = sum) %>% 
+  kbl(align = "c") %>%
+  kable_styling(fixed_thead = T) %>% 
+  column_spec(1, border_left = T)
+```
+
+# Precipitation patterns
