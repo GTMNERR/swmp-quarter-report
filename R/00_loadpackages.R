@@ -10,6 +10,7 @@ library(SWMPrExtension) # expanded plotting and analysis of SWMP data from NERRS
 # 02 tidy and wrangle ----
 library(tidyverse) # because...tidyverse (ggplot2, tidyr, dplyr)
 library(lubridate) # dates and times
+library(weathermetrics) # functions to convert between weather metrics
 
 # 03 pulling information and statistics ----
 # library(broom) # convert statistical analysis objects into tidy tibbles
