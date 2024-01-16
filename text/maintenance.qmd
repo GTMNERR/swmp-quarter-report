@@ -29,6 +29,7 @@ San Sebastian:
 
 -   May 2 - May 23, 2023 ("Matthew" SN: 20H100464) central wiper SN: 22A106852
 -   August 1 - September 6, 2023 ("Triton" SN: 13K102679) central wiper SN: 13H102597
+-   December 12, 2023 - January 10, 2024 ("Megalops" SN: 16J102351) central wiper SN: 22A106852
 
 Pellicer Creek
 
@@ -45,10 +46,14 @@ Had a sonde ("Matthew" SN: 20H100464) die two days into it's deployment on July 
 
 ## Depth dropout 
 
-The depth dropped out early in deployment of sonde ("Dorian" SN: 20H100466) from October 16 - November 14, 2023 and the depth sensor disconnected from the data sonde. No depth data was collected during deployment, nor was the depth sensor connected and readable during post-calibrations. AFter contacting YSI for tips on how to reconnect to the sensor (they are internal to the instruments), performed the suggested hard reset by removing the batteries from the compartment and reconnected to EXO Handheld - the depth sensor came back. 
+The depth dropped out early in deployment of sonde ("Dorian" SN: 20H100466) from October 16 - November 14, 2023 at Pine Island and the depth sensor disconnected from the data sonde. No depth data was collected during deployment, nor was the depth sensor connected and readable during post-calibrations. After contacting YSI for tips on how to reconnect to the sensor (they are internal to the instruments), performed the suggested hard reset by removing the batteries from the compartment and reconnected to EXO Handheld - the depth sensor came back. When attempted to calibrate the sonde for redeployment on November 27, the depth sensor failed to stabilize. The sonde was not used and was packed up for evaluation and repair.
 
-When attempted to calibrate the sonde for redeployment on November 27, the depth sensor failed to stabilize. The sonde was not used and was packed up for evaluation and repair.
+The depth sensor dropped from deployment of sonde ("Egret" SN: 15E101700) from December 12, 2023 - January 10, 2024 at Pellicer Creek. This resulted in a broken deployment file at 12/17/23 04:30 in which the depth sensor was completely missing from the second half of this split file. During post-calibrations, the battery compartment was reset (removed battery cap and replaced it) and the depth sensor was reconnected to the datasonde. Post-calibration values were able to be collected and a calibration test of the sensor showed that it was able to be stabilized. Therefore, this sensor and sonde will be redeployed.
 
 ## Sticky wiper
 
 During the November 29 - December 12 deployment at Pine Island, the central wiper (SN: 13D102048) brush locked over Port 5 sensor position and the central wiper sensor lost connection to the data sonde. The sensor seemed to begin having issues 12/2/2023 21:30:47 and dropped entirely from the deployment/sonde 12/12/2023 11:45:47 upon retrieval.
+
+## Data file broken up
+
+The data file downloaded from the November 29 - December 12 deployment at Fort Matanzas was broken into two sections split at 12/09/23 00:15 - 12/09/23 00:30. It is unclear as to the cause of this split.
