@@ -29,17 +29,13 @@ The following includes variables that establish the estuarine setting: rainfall,
 
 ## Summary
 
-Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023), [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), and June (@fig-rainfall-1; @fig-rainfall-2). In July, northeast Florida received consistent and large amounts of precipitation (@fig-rainfall). Almost 61% of days in July had detectable levels of rainfall (@fig-rainfall-2) and it also had the most amount of heavy rain (7.6 - 50 mm/hr) (@fig-rainfall-3). After the summer rains, however, early fall (September - October) was pretty minimal with very few rain days (rain greater than 1 mm) (@fig-rainfall-2). However, even though there were not many rainy days in October at the weather station, all the precipitation for the month was collected on one day: October 12, 2023 (@fig-rainfall-1) which had varying rainfall intensities throughout (@fig-rainfall-3). 
+Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023), [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), June, and December (@fig-rainfall-1; @fig-rainfall-2). These events are discussed 
+
+In July, northeast Florida received consistent and large amounts of precipitation (@fig-rainfall). Almost 61% of days in July had detectable levels of rainfall (@fig-rainfall-2) and it also had the most amount of heavy rain (7.6 - 50 mm/hr) (@fig-rainfall-3). After the summer rains, however, early fall (September - October) was pretty minimal with very few rain days (rain greater than 1 mm) (@fig-rainfall-2). However, even though there were not many rainy days in October at the weather station, all the precipitation for the month was collected on one day: October 12, 2023 (@fig-rainfall-1) which had varying rainfall intensities throughout (@fig-rainfall-3). 
 
 Daily average air temperatures were high and variable during the first part of the year, but daily averages fell within the historical range for the GTMNERR station through October (@fig-range-atemp-1). However, when comparing monthly averages in June and July to previous years, 2023 has been one of the hotter and wetter summers on record (@fig-range-atemp-2). October also experienced a few temperature drops outside of the average range, but only for a short time as values returned to the higher end of the  range within a few days (@fig-range-atemp-1).
 
 Water temperatures have generally been on the higher end of the range throughout the year (@fig-range-temp). Temperatures have been most variable and lower at stations most influenced by freshwater runoff (Pine Island and Pellicer Creek). Daily averages fell within historical ranges at the stations within June, but all stations experienced higher temperatures in July and August (@fig-range-temp). The cooler weather in October also is evident in the water temperatures as clear drops in daily averages were observed at all four stations, though more pronounced at Pellicer Creek, the shallowest of the four stations (@fig-range-temp-4).
-
-The April Nor'easter had strong winds from the N and NE directions for four days (@fig-winds). Strong winds from all of the Nor'easters initially raised salinity at all stations (@fig-range-sal), and the effect was especially pronounced at Pellicer Creek (@fig-range-sal-4). After the winds died down, the effects of the heavy rainfall were evident in the drops in salinity following the storm events. Though not much rainfall was observed in October, the Nor'easters and seasonal "king tide" events did see higher water depths and lower salinities at all sites (@fig-range-sal; @fig-range-depth).
-
-![Weather Service Image from Flagler Live showing the wind speed predictions for the April Nor\'easter](/images/weather-service-easter.jpg) 
-
-Using duration of wind directions between 0-100 degrees for greater than 24-hrs, several "Nor'easter" events were identified throughout the year from data at the Pellicer Creek weather station (@tbl-neer). Occasionally, localized wind directions result in values outside of this 0-100 degree window, which in turn affects the duration calculations, but it appears that there were at least 11 possible Nor'easter events identified in this way for 2023. The longest event occurred in the second half of the year from September 28 - October 06. This table does not identify strength of the winds during these events, just timeframes in which winds were originating in the 0-100 degree directions.
 
 As a result of strong N-NE winds, increases in water depths/levels were observed at all stations during the periods of the Nor'easters (@fig-range-depth).
 
@@ -182,7 +178,7 @@ MET |>
   mutate(date = lubridate::date(datetimestamp),
          month = lubridate::month(datetimestamp, label = TRUE),
          intensity_cat = case_when(intensity == 0 ~ "No Rain (0 mm/hr)",
-           intensity > 0 & intensity < 2.5 ~ "Light Rain (<2.5 mm/hr)",
+                                    intensity > 0 & intensity < 2.5 ~ "Light Rain (<2.5 mm/hr)",
                                     intensity >= 2.5 & intensity < 7.6 ~ "Moderate Rain (2.5-7.6 mm/hr)",
                                     intensity >= 7.6 & intensity < 50 ~ "Heavy Rain (7.6-50 mm/hr)",
                                     intensity > 30 ~ "Intense Rain (>50mm/hr)"),
@@ -197,8 +193,7 @@ MET |>
   # count() %>%
   filter(intensity_cat != "No Rain (0 mm/hr)") %>% 
   ggplot() +
-  geom_bar(aes(x = month, fill = intensity_cat),
-           position = "dodge") +
+  geom_bar(aes(x = month, fill = intensity_cat)) +
   ggthemes::scale_fill_colorblind() +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
@@ -299,104 +294,6 @@ historical_daily_range(ss, param = 'sal', target_yr = 2023)
 historical_daily_range(fm, param = 'sal', target_yr = 2023)
 
 historical_daily_range(pc, param = 'sal', target_yr = 2023)
-```
-
-### Wind Speed
-
-Wind speeds at the Pellicer Creek weather station during the timeperiod of a Nor'easter within the state of Florida, USA (Friday, April 7 - Friday, April 14, 2023). All data is based on five-second readings taken at the weather station which are averaged for each 15-minute timeperiod. The maximum gust during the 15-minute time period is also recorded as "Max Wind Speed".
-
-```{r}
-#| label: fig-winds
-#| echo: false
-#| fig.cap: Hourly wind speed and direction from the Pellicer Creek weather station during the timeperiod of a Nor'easter within the state of Florida, USA (Friday, April 7 - Friday, April 14, 2023). The warmer the color, the higher the recorded wind speed. The arrows indicate the direction the wind was blowing towards and the length of the arrow reflects the wind speed information with longer meaning faster. All data is based upon 5 second readings at the weather station.
-#| fig.subcap:
-#|    - "Averaged hourly wind speeds"
-#|    - "Maximum wind gust recorded within each hour"
-#| layout-ncol: 2
-
-# helpful resources
-# https://stackoverflow.com/questions/47880918/how-to-plot-wind-direction-with-lat-lon-and-arrow-in-ggplot2 
-# https://stackoverflow.com/questions/49639881/how-to-get-a-legend-on-geom-spoke
-
-# create new df for just wspd and direction data with conversions to SI units
-MET_wind_April <- MET %>% 
-  filter(between(datetimestamp, 
-                 as.POSIXct("2023-04-08 00:00:00"), 
-                 as.POSIXct("2023-04-14 00:00:00"))) %>%
-  aggreswmp(by = "hours", params = c('wspd', 'maxwspd', 'wdir')) %>% 
-  mutate(day = lubridate::date(datetimestamp),
-         hour = lubridate::hour(datetimestamp),
-         wspd_mph = wspd * 2.23694,
-         maxwspd_mph = maxwspd * 2.23694,
-         wdir_x = ((wdir +180) * 0.0174533)) # angles are in radians not degrees, need to convert for plotting
-
-
-MET_wind_April %>% 
-  filter(day > as.Date("2023-04-07")) %>% 
-  ggplot(aes(x = hour, 
-             y = day, 
-             fill = wspd_mph, 
-             angle = wdir_x, 
-             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
-    geom_raster() +
-    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
-    scale_fill_distiller(palette = "RdYlBu") + 
-    coord_equal(expand = 0) +
-    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
-    theme_classic() +
-  theme(axis.text = element_text(color = "black", size = 12),
-        legend.position = 'top', 
-        legend.direction = 'horizontal') +
-  labs(x = "Hour of Day (24hr)",
-       y = "",
-       fill = "Wind Speed (mph)")
-
-
-MET_wind_April %>% 
-  filter(day > as.Date("2023-04-07")) %>% 
-  ggplot(aes(x = hour, 
-             y = day, 
-             fill = maxwspd_mph, 
-             angle = wdir_x, 
-             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
-    geom_raster() +
-    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
-    scale_fill_distiller(palette = "RdYlBu") + 
-    coord_equal(expand = 0) +
-    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
-    theme_classic() +
-  theme(axis.text = element_text(color = "black", size = 12),
-        legend.position = 'top', 
-        legend.direction = 'horizontal') +
-  labs(x = "Hour of Day (24hr)",
-       y = "",
-       fill = "Max Wind Gusts (mph)")
-
-```
-
-### Identification of Nor'easter periods
-
-```{r}
-#| label: tbl-neer
-#| echo: false
-#| tbl-cap: "Identification and Duration of Wind from 0-100 degrees for periods greater than 24 hours"
-
-
-MET %>% 
-  filter(datetimestamp > "2023-01-01 00:00") %>% 
-  setstep() %>% 
-  threshold_identification(param = c('wdir'),
-                           parameter_threshold = c(100),
-                           threshold_type = c('<='),
-                           time_threshold = 24) %>% 
-  select(-parameter, -thr_violation, -statement) %>% 
-  rename(`Duration (hrs)` = duration,
-         `Start Time` = starttime,
-         `End Time` = endtime) %>% 
-  kbl(align = "c") %>%
-  kable_styling(fixed_thead = T) %>% 
-  column_spec(3, border_left = T)
-
 ```
 
 ### Water Depth
