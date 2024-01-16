@@ -27,17 +27,25 @@ load(here('output','data', 'fm_wq.Rdata'))
 load(here('output','data', 'pc_wq.Rdata'))
 ```
 
+{#sec-environmentaldrivers}
+
 This section includes drivers of environmental patterns such as significant weather events (e.g., tropical cyclones, Nor'easters, large rainfall events), anomalies, and other local events with impact.
 
-# Tropical cyclones
+# Tropical Cyclones
 
 There were no tropical cyclones that had direct impacts in the GTM estuary during this reporting year.
 
 # Nor'easters
 
-Typically, a Nor'easter is a storm along the East Coast of the United States with predominating winds from the northeast. [@callahan2022] even found that these events can produce surges just as severe as tropical cyclone events, and occur much more frequently. These events are often in the news associated with blizzards in the New England area of the US, however their impacts to northeast Florida are not insignificant. Often these storms bring higher water levels, heavy prevailing winds, and reduced tidal exchange.
+Typically, a Nor'easter is a storm along the East Coast of the United States with predominating winds from the northeast. These storms can last anywhere from a single day (24 hours) to several days or weeks. [@callahan2022] found that these events can produce surges just as severe as tropical cyclone events, and occur much more frequently. These events are often in the news associated with blizzards in the New England area of the US; however, their impacts to northeast Florida are not insignificant. Often these storms bring higher water levels, heavy prevailing winds, precipitation, and reduced tidal exchange.
 
-Using duration of wind directions between 0-100 degrees for greater than 24-hrs, several "Nor'easter" events were identified using data from the Pellicer Creek weather station (@tbl-neer). Occasionally, localized wind directions result in values outside of this 0-100 degree window, which in turn affects the duration calculations, but it appears that there were at least 11 possible Nor'easter events identified in this way for 2023. The longest event occurred in the second half of the year from September 28th - October 6th. This table does not identify strength of the winds during these events, just the time frames in which winds were originating and prevailing in the 0-100 degree directions.
+Using duration of wind directions between 0-100 degrees for greater than 24-hrs, several "Nor'easter" events were identified using data from the Pellicer Creek weather station (@tbl-neer). Occasionally, localized wind directions result in values outside of this 0-100 degree window, which in turn affects the duration calculations, but it appears that there were at least 14 possible Nor'easter events identified in this way for 2023. The longest event occurred in the second half of the year from September 28th - October 6th, approximately nine days. This table does not identify strength of the winds during these events, just the time frames in which winds were originating and prevailing in the 0-100 degree directions.
+
+Many of these events correspond to months with rainfall totals exceeding the annual monthly average (@fig-rainfall-totals), particularly months within the "drier" times of the year, such as April, November, and December. The heaviest rain (7.6-50 mm/hr) for April, June, and December were all associated with Nor'easter events (@fig-rainfall-3).
+
+The April Nor'easter had strong winds from the N and NE directions for four days (@fig-winds). Strong winds from all of the Nor'easters initially raised salinity at all stations (@fig-range-sal), and the effect was especially pronounced at Pellicer Creek (@fig-range-sal-4). After the winds died down, the effects of the heavy rainfall were evident in the drops in salinity following the storm events. Though not much rainfall was observed in October, the Nor'easters and seasonal "king tide" events did see higher water depths and lower salinities at all sites (@fig-range-sal; @fig-range-depth).
+
+![Weather Service Image from Flagler Live showing the wind speed predictions for the April Nor\'easter](/images/weather-service-easter.jpg) 
 
 ```{r}
 #| label: tbl-neer
@@ -59,6 +67,113 @@ MET %>%
   kbl(align = "c") %>%
   kable_styling(fixed_thead = T) %>% 
   column_spec(3, border_left = T)
+
+```
+
+## Wind Speed
+
+Wind speeds at the Pellicer Creek weather station during the timeperiod of a Nor'easter within the state of Florida, USA (Friday, April 7 - Friday, April 14, 2023). All data is based on five-second readings taken at the weather station which are averaged for each 15-minute timeperiod. The maximum gust during the 15-minute time period is also recorded as "Max Wind Speed".
+
+```{r}
+#| label: fig-winds
+#| echo: false
+#| fig.cap: Hourly wind speed and direction from the Pellicer Creek weather station during the timeperiod of a Nor'easter within the state of Florida, USA (Friday, April 7 - Friday, April 14, 2023). The warmer the color, the higher the recorded wind speed. The arrows indicate the direction the wind was blowing towards and the length of the arrow reflects the wind speed information with longer meaning faster. All data is based upon 5 second readings at the weather station.
+#| fig.subcap:
+#|    - "Averaged hourly wind speeds"
+#|    - "Maximum wind gust recorded within each hour"
+#| layout-ncol: 2
+
+# helpful resources
+# https://stackoverflow.com/questions/47880918/how-to-plot-wind-direction-with-lat-lon-and-arrow-in-ggplot2 
+# https://stackoverflow.com/questions/49639881/how-to-get-a-legend-on-geom-spoke
+
+# create new df for just wspd and direction data with conversions to SI units
+MET_wind_April <- MET %>% 
+  filter(between(datetimestamp, 
+                 as.POSIXct("2023-04-08 00:00:00"), 
+                 as.POSIXct("2023-04-14 00:00:00"))) %>%
+  aggreswmp(by = "hours", params = c('wspd', 'maxwspd', 'wdir')) %>% 
+  mutate(day = lubridate::date(datetimestamp),
+         hour = lubridate::hour(datetimestamp),
+         wspd_mph = wspd * 2.23694,
+         maxwspd_mph = maxwspd * 2.23694,
+         wdir_x = ((wdir +180) * 0.0174533)) # angles are in radians not degrees, need to convert for plotting
+
+
+MET_wind_April %>% 
+  filter(day > as.Date("2023-04-07")) %>% 
+  ggplot(aes(x = hour, 
+             y = day, 
+             fill = wspd_mph, 
+             angle = wdir_x, 
+             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
+    geom_raster() +
+    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
+    scale_fill_distiller(palette = "RdYlBu") + 
+    coord_equal(expand = 0) +
+    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
+    theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12),
+        legend.position = 'top', 
+        legend.direction = 'horizontal') +
+  labs(x = "Hour of Day (24hr)",
+       y = "",
+       fill = "Wind Speed (mph)")
+
+
+MET_wind_April %>% 
+  filter(day > as.Date("2023-04-07")) %>% 
+  ggplot(aes(x = hour, 
+             y = day, 
+             fill = maxwspd_mph, 
+             angle = wdir_x, 
+             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
+    geom_raster() +
+    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
+    scale_fill_distiller(palette = "RdYlBu") + 
+    coord_equal(expand = 0) +
+    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
+    theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12),
+        legend.position = 'top', 
+        legend.direction = 'horizontal') +
+  labs(x = "Hour of Day (24hr)",
+       y = "",
+       fill = "Max Wind Gusts (mph)")
+
+```
+
+```{r}
+
+fun_in <- function(x) median(x, na.rm = TRUE)
+
+a <- MET %>% 
+  filter(datetimestamp > '2023-01-01 00:15') %>% 
+  aggreswmp(by = "days", FUN = fun_in, params = c('wspd', 'maxwspd', 'wdir')) %>% 
+  mutate(compass = cimir::cimis_degrees_to_compass(wdir))
+
+# use linear model to determine 95% confidence interval of median wind speeds to determine lower limit of wind speed
+l.model <- lm(maxwspd ~ 1, a)
+confint(l.model, level = 0.95)
+
+MET %>% 
+  filter(datetimestamp > '2023-01-01 00:15') %>% 
+  aggreswmp(by = "days", FUN = fun_in, params = c('wspd', 'maxwspd', 'wdir')) %>% 
+  mutate(compass = cimir::cimis_degrees_to_compass(wdir)) %>% 
+  filter(wspd > 2.278 & maxwspd > 4.03469) %>%
+  ggplot(aes(x = datetimestamp)) +
+  # geom_line(aes(y = wspd), color = "gray60") +
+  geom_point(aes(y = maxwspd, color = compass), size = 2) +
+  # geom_segment(aes(y = wspd, yend = maxwspd, xend = datetimestamp, color = compass)) +
+  scale_x_date(date_breaks = "month", date_labels = "%b") +
+  ggthemes::scale_color_colorblind() +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black")) +
+  labs(x = "",
+       y = "(m/s)",
+       color = "Cardinal Direction")
+  
+
 
 ```
 
