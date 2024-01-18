@@ -149,8 +149,7 @@ fun_in <- function(x) median(x, na.rm = TRUE)
 
 a <- MET %>% 
   filter(datetimestamp > '2023-01-01 00:15') %>% 
-  aggreswmp(by = "days", FUN = fun_in, params = c('wspd', 'maxwspd', 'wdir')) %>% 
-  mutate(compass = cimir::cimis_degrees_to_compass(wdir))
+  aggreswmp(by = "days", FUN = fun_in, params = c('wspd', 'maxwspd', 'wdir'))
 
 # use linear model to determine 95% confidence interval of median wind speeds to determine lower limit of wind speed
 l.model <- lm(maxwspd ~ 1, a)
@@ -158,19 +157,34 @@ confint(l.model, level = 0.95)
 
 MET %>% 
   filter(datetimestamp > '2023-01-01 00:15') %>% 
-  aggreswmp(by = "days", FUN = fun_in, params = c('wspd', 'maxwspd', 'wdir')) %>% 
-  mutate(compass = cimir::cimis_degrees_to_compass(wdir)) %>% 
-  filter(wspd > 2.278 & maxwspd > 4.03469) %>%
-  ggplot(aes(x = datetimestamp)) +
-  # geom_line(aes(y = wspd), color = "gray60") +
-  geom_point(aes(y = maxwspd, color = compass), size = 2) +
-  # geom_segment(aes(y = wspd, yend = maxwspd, xend = datetimestamp, color = compass)) +
+  aggreswmp(by = "days", FUN = fun_in, params = c('wspd', 'maxwspd', 'wdir')) %>%
+  mutate(compass = cimir::cimis_degrees_to_compass(wdir)) %>%
+  # filter(wspd > 2.278 & maxwspd > 4.03469) %>%
+  ggplot(aes(x = datetimestamp, y = wspd, color = compass)) +
+  geom_point(size = 2) +
+  gghighlight(compass %in% c('NNE', 'ENE'), use_direct_label = FALSE) +
   scale_x_date(date_breaks = "month", date_labels = "%b") +
   ggthemes::scale_color_colorblind() +
   theme_classic() +
   theme(axis.text = element_text(color = "black")) +
   labs(x = "",
-       y = "(m/s)",
+       y = "Daily Median Wind Speed (m/s)",
+       color = "Cardinal Direction")
+
+MET %>% 
+  filter(datetimestamp > '2023-01-01 00:15') %>% 
+  aggreswmp(by = "days", params = c('wspd', 'maxwspd', 'wdir')) %>%
+  mutate(compass = cimir::cimis_degrees_to_compass(wdir)) %>%
+  # filter(wspd > 2.278 & maxwspd > 4.03469) %>%
+  ggplot(aes(x = datetimestamp, y = wspd, color = compass)) +
+  geom_point(size = 2) +
+  gghighlight(compass %in% c('NNE', 'ENE'), use_direct_label = FALSE) +
+  scale_x_date(date_breaks = "month", date_labels = "%b") +
+  ggthemes::scale_color_colorblind() +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black")) +
+  labs(x = "",
+       y = "Daily Average Wind Speed (m/s)",
        color = "Cardinal Direction")
   
 
