@@ -204,6 +204,47 @@ MET |>
        fill = "Intensity Category")
 ```
 
+### Daylight
+
+```{r}
+MET %>% 
+  filter(datetimestamp > '2023-01-01 00:15' ) %>% 
+  setstep() %>% 
+  threshold_identification(param = c('totpar'),
+                           parameter_threshold = c(0),
+                           threshold_type = c('>'),
+                           time_threshold = 0.25) %>% 
+  mutate(date = as.Date(starttime)) %>% 
+  filter(duration > 9) %>% 
+    # summarize(mean = mean(duration, na.rm = T),
+    #         max = max(duration, na.rm = T),
+    #         min = min(duration, na.rm = T))
+  ggplot(aes(x = date, y = duration)) +
+    geom_point() +
+  geom_segment(aes(x = date, xend = date, y = 8, yend = duration)) +
+  geom_hline(aes(yintercept = 14.75)) +
+  geom_hline(aes(yintercept = 12.6)) +
+  geom_hline(aes(yintercept = 9.25)) +
+  scale_x_date(date_breaks = "months", date_labels = '%b') +
+  scale_y_continuous(limits = c(8,15)) +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black")) +
+  labs(x = '',
+       y = 'Duration of daylight (hr)') +
+  annotate('text',
+           label = "12.6",
+           x = as.Date('2024-01-10'),
+           y = 12.6) +
+  annotate('text',
+           label = "14.75",
+           x = as.Date('2024-01-10'),
+           y = 14.75) +
+  annotate('text',
+           label = '9.25',
+           x = as.Date('2024-01-10'),
+           y = 9.25)
+```
+
 ### Temperature
 
 Air and water temperatures are presented as daily averages (blue line) with historic ranges (daily range and average daily range) provided in shades of gray. Additionally, due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (°C) with total monthly precipitation (mm). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red.
