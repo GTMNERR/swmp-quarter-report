@@ -29,9 +29,11 @@ The following includes variables that establish the estuarine setting: rainfall,
 
 ## Summary
 
-Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023), [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), June, and December (@fig-rainfall-1; @fig-rainfall-2). These events are discussed 
+Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023), [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), June, and December (@fig-rainfall-1; @fig-rainfall-2). These events are discussed in further detail in @sec-environmentaldrivers.
 
 In July, northeast Florida received consistent and large amounts of precipitation (@fig-rainfall). Almost 61% of days in July had detectable levels of rainfall (@fig-rainfall-2) and it also had the most amount of heavy rain (7.6 - 50 mm/hr) (@fig-rainfall-3). After the summer rains, however, early fall (September - October) was pretty minimal with very few rain days (rain greater than 1 mm) (@fig-rainfall-2). However, even though there were not many rainy days in October at the weather station, all the precipitation for the month was collected on one day: October 12, 2023 (@fig-rainfall-1) which had varying rainfall intensities throughout (@fig-rainfall-3). 
+
+In 2023, days ranged from 9.25 hours of daylight in the fall months (Nov-Dec) to 14.75 hours in the summer months (Jun-Aug) (@fig-daylight). Overall, the GTM weather station detected approximately 12.6 hours of daylight on average for the year. The switch on October 30, 2023 to a new type of photosynthetically active radiation (PAR) sensor on the station likely resulted in the more variable readings in the last quarter of 2023. This sensor is being looked into during annual quality checks.
 
 Daily average air temperatures were high and variable during the first part of the year, but daily averages fell within the historical range for the GTMNERR station through October (@fig-range-atemp-1). However, when comparing monthly averages in June and July to previous years, 2023 has been one of the hotter and wetter summers on record (@fig-range-atemp-2). October also experienced a few temperature drops outside of the average range, but only for a short time as values returned to the higher end of the  range within a few days (@fig-range-atemp-1).
 
@@ -43,14 +45,21 @@ As a result of strong N-NE winds, increases in water depths/levels were observed
 
 ### Rainfall
 
-Data is  presented as monthly totals and then daily totals as "rain days" which are categorized into Wet (\<10 mm), Very Wet (20-29 mm), and Extremely Wet (\>30 mm) days. 
+Data is  presented as quarterly totals, then monthly, and then daily totals as "rain days" which are categorized into Wet (\<10 mm), Very Wet (20-29 mm), and Extremely Wet (\>30 mm) days. 
 
 ```{r}
-#| label: fig-rainfall-totals
-#| include: false
-#| fig.cap: Ongoing quarterly totals of precipitation at the Pellicer Creek weather station
+#| label: fig-rainfall
+#| echo: false
+#| fig.cap: Rainfall at the Pellicer Creek weather station.
+#| fig.subcap:
+#|    - "Quarterly total precipitation for 2023."
+#|    - "Monthly total precipitation for 2023."
+#|    - "Daily rainfall totals for days with more than 1mm of day."
+#|    - "Hourly rainfall intensity counts by category per month."
+#| layout-ncol: 2
 
-# The simplest way to bin rainfall within a single year is to present the data by quarter.
+
+# QUARTERLY ----
 
 MET |> 
   SWMPrExtension::seasonal_barplot(param = 'totprcp',
@@ -68,18 +77,9 @@ MET |>
   theme(axis.text.x = element_text(angle = 45,
                                    vjust = 0.6),
         axis.text = element_text(color = "black"))
-```
 
-```{r}
-#| label: fig-rainfall
-#| echo: false
-#| fig.cap: Rainfall at the Pellicer Creek weather station.
-#| fig.subcap:
-#|    - "Current year monthly total precipitation."
-#|    - "Daily rainfall totals for days with more than 1mm of day."
-#|    - "Hourly rainfall intensity counts by category per month."
-#| layout-ncol: 2
 
+## MONTHLY ----
 
 MET |> 
   filter(datetimestamp > '2023-01-01 00:15') %>%
@@ -101,8 +101,10 @@ MET |>
             size = 4.5,
             color = "grey50") +
   labs(x = '',
-       y = 'Total Monthly Precipitation (mm)',
-       caption = "Hortizontal line represents current year monthly average.")
+       y = 'Precipitation (mm)',
+       caption = "Hortizontal line represents monthly average.")
+
+## DAILY ----
 
 fun_in <- function(x) sum(x, na.rm = TRUE)
 
@@ -136,40 +138,10 @@ MET |>
        y = 'Total Daily Precipitation (mm)',
        color = "Amount of Rain")
 
+## INTENSITY ----
 
 # rainfall intensity 
 # in mm/hr
-
-# MET |>
-#   filter(datetimestamp > '2023-01-01 00:15') %>%
-#   aggreswmp(by = "hours", FUN = fun_in, params = "totprcp") %>%
-#   rename(intensity = totprcp) %>%
-#   filter(intensity > 0) %>%
-#   ggplot() +
-#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"),
-#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"),
-#                 ymin = 2.5, ymax = 7.6),
-#             fill = "gray90", alpha = 0.5) +
-#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"),
-#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"),
-#                 ymin = 7.6, ymax = 50),
-#             fill = "gray60", alpha = 0.5) +
-#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"),
-#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"),
-#                 ymin = 50, ymax = Inf),
-#             fill = "steelblue4", alpha = 0.5) +
-#   geom_hline(yintercept = 2.5, linetype = "dashed") +
-#   geom_hline(yintercept = 7.6, linetype = "dashed") +
-#   geom_segment(aes(x = datetimestamp, xend = datetimestamp, y = 0, yend = intensity)) +
-#   geom_point(aes(x = datetimestamp, y = intensity))  +
-#   scale_y_continuous(expand = c(0,0), limits = c(0,50)) +
-#   scale_x_datetime(date_breaks = "1 month", date_labels = "%b") +
-#   theme_bw() +
-#   annotate("text",
-#            label = "Intense",
-#            angle = 90,
-#            x = as.POSIXct("2023-01-01 00:00"),
-#            y = 1)
 
 MET |>
   filter(datetimestamp > '2023-01-01 00:15') %>% 
@@ -207,6 +179,11 @@ MET |>
 ### Daylight
 
 ```{r}
+#| label: fig-daylight
+#| echo: false
+#| fig.cap: "Hours of daylight based on photosynthetically active radiation data over 0 mmol per square meter collected at the Pellicer Creek weather station."
+
+
 MET %>% 
   filter(datetimestamp > '2023-01-01 00:15' ) %>% 
   setstep() %>% 
@@ -220,29 +197,29 @@ MET %>%
     #         max = max(duration, na.rm = T),
     #         min = min(duration, na.rm = T))
   ggplot(aes(x = date, y = duration)) +
-    geom_point() +
-  geom_segment(aes(x = date, xend = date, y = 8, yend = duration)) +
-  geom_hline(aes(yintercept = 14.75)) +
+    geom_point(color = '#0075AC') +
+  # geom_segment(aes(x = date, xend = date, y = 8, yend = duration)) +
+  geom_hline(aes(yintercept = 14.75), linetype = "dashed") +
   geom_hline(aes(yintercept = 12.6)) +
-  geom_hline(aes(yintercept = 9.25)) +
+  geom_hline(aes(yintercept = 9.25), linetype = "dotted") +
   scale_x_date(date_breaks = "months", date_labels = '%b') +
   scale_y_continuous(limits = c(8,15)) +
   theme_classic() +
-  theme(axis.text = element_text(color = "black")) +
+  theme(axis.text = element_text(color = "black", size = 12)) +
   labs(x = '',
        y = 'Duration of daylight (hr)') +
   annotate('text',
-           label = "12.6",
-           x = as.Date('2024-01-10'),
-           y = 12.6) +
+           label = "Average: 12.6",
+           x = as.Date('2023-01-10'),
+           y = 12.75) +
   annotate('text',
-           label = "14.75",
-           x = as.Date('2024-01-10'),
-           y = 14.75) +
+           label = "Max: 14.75",
+           x = as.Date('2023-01-10'),
+           y = 15) +
   annotate('text',
-           label = '9.25',
-           x = as.Date('2024-01-10'),
-           y = 9.25)
+           label = 'Min: 9.25',
+           x = as.Date('2023-01-10'),
+           y = 9.5)
 ```
 
 ### Temperature
