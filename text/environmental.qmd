@@ -25,7 +25,7 @@ load(here('output','data', 'fm_wq.Rdata'))
 load(here('output','data', 'pc_wq.Rdata'))
 ```
 
-The following includes variables that establish the estuarine setting: rainfall, water temperature, and salinity. These variables are driven primarily by climatic patterns and largely influence water quality condition.
+The following includes variables that establish the estuarine setting: rainfall, light intensity, water temperature, and salinity. These variables are driven primarily by climatic patterns and largely influence water quality condition.
 
 ## Summary
 
@@ -33,11 +33,11 @@ In July, northeast Florida received consistent and large amounts of precipitatio
 
 In 2023, amount of light intensity on average for each month is shown in @fig-lightintensity. There was less intense light in the extreme months of the year (Jan, Feb, Nov, Dec) and more in the mid-months of the year. The most intense light was observed between April - August. 
 
-Daily average air temperatures were high and variable during the first part of the year, but daily averages fell within the historical range for the GTMNERR station through October (@fig-range-atemp-1). However, when comparing monthly averages in June and July to previous years, 2023 has been one of the hotter and wetter summers on record (@fig-range-atemp-2). October also experienced a few temperature drops outside of the average range, but only for a short time as values returned to the higher end of the  range within a few days (@fig-range-atemp-1).
+Daily average air temperatures were high and variable during the first part of the year, but fell within the historical range for the GTMNERR station through October (@fig-range-atemp). October also experienced a few temperature drops outside of the average range, but only for a short time as values returned to the higher end of the  range within a few days (@fig-range-atemp). More discussions on temperature anomalies can be found in the next chapter @sec-environmentaldrivers.
 
 Water temperatures have generally been on the higher end of the range throughout the year (@fig-range-temp). Temperatures have been most variable and lower at stations most influenced by freshwater runoff (Pine Island and Pellicer Creek). Daily averages fell within historical ranges at the stations within June, but all stations experienced higher temperatures in July and August (@fig-range-temp). The cooler weather in October also is evident in the water temperatures as clear drops in daily averages were observed at all four stations, though more pronounced at Pellicer Creek, the shallowest of the four stations (@fig-range-temp-4).
 
-As a result of strong N-NE winds, increases in water depths/levels were observed at all stations during the periods of the Nor'easters (@fig-range-depth).
+The heavy summer rains brought salinities at all stations much lower than their average daily ranges (@fig-range-sal), particularly at the stations farthest from the inlets (@fig-range-sal-1)(@fig-range-sal-4). Nor'easters and fall "King Tides" did help to raise salinities often at most sites, particularly April in Pellicer Creek (@fig-range-sal-4) and September-October at all sites.
 
 ## Data
 
@@ -264,24 +264,4 @@ historical_daily_range(fm, param = 'sal', target_yr = 2023)
 historical_daily_range(pc, param = 'sal', target_yr = 2023)
 ```
 
-### Water Depth
 
-```{r}
-#| label: fig-range-depth
-#| echo: false
-#| fig.cap: Historical daily range of water depth at each SWMP water quality station with current year daily average overlaid in blue.
-#| fig.subcap:
-#|    - "Pine Island"
-#|    - "San Sebastian"
-#|    - "Fort Matanzas"
-#|    - "Pellicer Creek"
-#| layout-ncol: 2
-
-historical_daily_range(pi, param = 'cdepth', target_yr = 2023)
-
-historical_daily_range(ss, param = 'cdepth', target_yr = 2023)
-
-historical_daily_range(fm, param = 'cdepth', target_yr = 2023)
-
-historical_daily_range(pc, param = 'clevel', target_yr = 2023)
-```
