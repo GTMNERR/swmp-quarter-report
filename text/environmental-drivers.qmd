@@ -213,7 +213,7 @@ Predicted king tide events for 2023 were:
 
 Extreme temperatures, both high and low, have drastic impacts on environmental function. For black mangroves (*Avicennia germinans*), temperatures under -4°C have been found reduce mangrove cover [@cavanaugh2013]. Extreme high temperatures are often health risks as they often result in many [heat-related illnesses](https://www.weather.gov/safety/heat-illness).
 
-Due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (°C) with total monthly precipitation (mm) (@fig-dewpt). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red.
+Due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (°C) with total monthly precipitation (mm) (@fig-dewpt). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red. This year, 2023, has been one of the hotter and wetter summers on record (@fig-dewpt).
 
 ```{r}
 #| label: fig-dewpt
