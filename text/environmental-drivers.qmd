@@ -68,8 +68,6 @@ MET %>%
 
 ```
 
-## Wind Speed
-
 ```{r}
 #| label: fig-medianwspd
 #| echo: false
@@ -102,7 +100,6 @@ MET %>%
        color = "Cardinal Direction")
 ```
 
-Wind speeds at the Pellicer Creek weather station during the timeperiod of a Nor'easter within the state of Florida, USA (Friday, April 7 - Friday, April 14, 2023). All data is based on five-second readings taken at the weather station which are averaged for each 15-minute timeperiod. The maximum gust during the 15-minute time period is also recorded as "Max Wind Speed".
 
 ```{r}
 #| label: fig-winds-april
@@ -172,8 +169,6 @@ MET_wind_April %>%
        fill = "Max Wind Gusts (mph)")
 
 ```
-
-Wind speeds at the Pellicer Creek weather station during the timeperiod of the longest Nor'easter observed at the station (Thursday, September 28 - Friday, October 6, 2023). All data is based on five-second readings taken at the weather station which are averaged for each 15-minute timeperiod. The maximum gust during the 15-minute time period is also recorded as "Max Wind Speed".
 
 ```{r}
 #| label: fig-winds-long
@@ -260,9 +255,11 @@ Predicted king tide events for 2023 were:
 
 -   December 13-15th
 
-*Can we view these events in our SWMP data?*
+The effect of the King Tides on daily average water depths at all the stations is observable in the steady climb of the water beginning in mid-September (@fig-range-depth); however, the individual "events" are not quite as clear outside of the Pellicer Creek station (@fig-range-depth-4) where clear increases in water levels are closely aligned with these periods. Unfortunately, September King Tide, which was coupled with a Nor'easter, was not captured at this station due to equipment maintenance issues.
 
 ## Water Depth
+
+Note that the water level data at Pellicer Creek only includes data from 2021-2023, which is due to this station switching from reporting depth to reporting level (NAVD88) in 2021 (@fig-range-depth-4).
 
 ```{r}
 #| label: fig-range-depth
@@ -286,9 +283,57 @@ historical_daily_range(pc, param = 'clevel', target_yr = 2023)
 
 # Temperature anomalies
 
-Extreme temperatures, both high and low, have drastic impacts on environmental function. For black mangroves (*Avicennia germinans*), temperatures under -4°C have been found reduce mangrove cover [@cavanaugh2013]. Extreme high temperatures are often health risks as they often result in many [heat-related illnesses](https://www.weather.gov/safety/heat-illness).
+Extreme temperatures, both high and low, have drastic impacts on environmental function. For black mangroves (*Avicennia germinans*), temperatures under -4°C have been found to reduce mangrove cover [@cavanaugh2013]. Extreme high temperatures are often health risks as they result in many [heat-related illnesses](https://www.weather.gov/safety/heat-illness).
+
+Overall, examining monthly temperature anomalies this year, the first part of the year (January - April) and August were higher than "normal" (@fig-temp-anomalies). With February of this year almost setting a record on the time series (2018 had the hottest February). May, June, and October were "cooler" than normal.  
 
 Due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (°C) with total monthly precipitation (mm) (@fig-dewpt). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red. This year, 2023, has been one of the hotter and wetter summers on record (@fig-dewpt).
+
+In Florida, excessive heat warnings are issued with the heat index (what the temperature "feels like", which takes relative humidity into consideration) exceeds 113 degrees. The Pellicer Creek station recorded several times when the hourly average heat index exceeded this threshold (@fig-heatindex), particularly in [August](https://www.jacksonville.com/story/weather/2023/08/08/florida-heat-excessive-heat-warning-watch-advisory-heat-index-hot-weather/70548546007/).
+
+Heat waves are periods of abnormally hot weather that extend for more than two days (https://www.weather.gov/safety/heat-during). But what makes a heat wave? https://www.stormgeo.com/weather/articles/what-constitutes-a-heat-wave-around-the-world/#:\~:text=In%20the%20Northeast%20United%20States,F%20(32.2%20%C2%B0C). For the purposes here, periods of time where temperatures were in excess of 90 degrees fahrenheit for greater than 2 hours were examined (@tbl-high-temp-duration) and most of these periods were observed daily from August 7 - August 15, 2023, the longest of which was approximately 9.25 hours on August 10, 2023.
+
+No freezing events were recorded in this recording year.
+
+```{r}
+#| label: fig-temp-anomalies
+#| echo: false
+#| fig.cap: Monthly temperature anomalies at GTMNERR Pellicer Creek weather station from 2002-2023
+
+# refmean <-   MET %>% 
+#   aggreswmp(by = "days", params = c('atemp')) %>% # daily averages
+#   summarize(mean = mean(atemp, na.rm = T))
+
+monthly_means <- MET %>% 
+  aggreswmp(by = "months", params = c('atemp')) %>% # daily averages
+  mutate(year = lubridate::year(datetimestamp),
+         month = lubridate::month(datetimestamp, label = T)) %>% 
+  group_by(month) %>% 
+  summarize(monthly_mean = mean(atemp, na.rm = T))
+
+ggplotly(
+  MET %>% 
+  aggreswmp(by = "months", params = c('atemp')) %>% # daily averages
+  mutate(year = lubridate::year(datetimestamp),
+         month = lubridate::month(datetimestamp, label = T)) %>%
+  left_join(monthly_means, by = "month") %>% 
+  mutate(anomaly = atemp - monthly_mean) %>% 
+  ggplot(aes(x = month, y = anomaly, group = year)) +
+  geom_line(aes(color = year == 2023, size = year == 2023), show.legend = F) +
+  geom_hline(yintercept = 0, color = "gray30") +
+  scale_color_manual(values = c('gray', '#0075AC')) +
+  scale_size_manual(values = c(1, 1.5)) +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12)) +
+  labs(x = "",
+       y = "Monthly temperature anomaly (\u00b0C)") +
+  annotate("text",
+           label = "2023",
+           x = 'Feb',
+           y = 4,
+           color = '#0075AC')
+)
+```
 
 ```{r}
 #| label: fig-dewpt
@@ -333,16 +378,12 @@ MET %>%
 rm(fun_in, gtm_prcp)
 ```
 
-Heat waves are periods of abnormally hot weather that extend for more than two days (https://www.weather.gov/safety/heat-during). But what makes a heat wave? https://www.stormgeo.com/weather/articles/what-constitutes-a-heat-wave-around-the-world/#:\~:text=In%20the%20Northeast%20United%20States,F%20(32.2%20%C2%B0C).
-
-Excessive heat warnings in Northeast Florida for August (https://www.jacksonville.com/story/weather/2023/08/08/florida-heat-excessive-heat-warning-watch-advisory-heat-index-hot-weather/70548546007/)
-
-Convert to 'heat index' from raw temperature. https://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml
-
 ```{r}
 #| label: fig-heatindex
 #| echo: false
-#| fig-cap: Hourly averaged heat index values recorded at the Pellicer Creek weather station in 2023
+#| fig-cap: Hourly averaged heat index values recorded at the Pellicer Creek weather station in 2023 with values in excess of 113 degrees colored in red.
+
+# Convert to 'heat index' from raw temperature. https://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml
 
 MET %>% 
   filter(datetimestamp >= as.POSIXct("2023-01-01 00:00")) %>% 
@@ -353,8 +394,8 @@ MET %>%
          atemp_f = weathermetrics::celsius.to.fahrenheit(atemp)) %>% 
   drop_na() %>% 
   ggplot(aes(x = datetimestamp, y = heat_index)) +
-    geom_hline(yintercept = 110, linetype = "dashed", color = "gray") +
-    geom_point(aes(color = heat_index > 110)) +
+    geom_hline(yintercept = 113, linetype = "dashed", color = "gray") +
+    geom_point(aes(color = heat_index > 113)) +
     scale_x_datetime(breaks = "months", date_labels = "%b") +
     scale_color_manual(values = c("black", "tomato")) +
     theme_classic() +
@@ -363,45 +404,6 @@ MET %>%
           legend.position = "none") +
     labs(x = "",
          y = "Heat Index (\u00b0F)")
-```
-
-```{r}
-#| label: fig-temp-anomalies
-#| echo: false
-#| fig.cap: "Monthly temperature anomalies at GTMNERR Pellicer Creek weather station from 2002-2023"
-
-refmean <-   MET %>% 
-  aggreswmp(by = "days", params = c('atemp')) %>% # daily averages
-  summarize(mean = mean(atemp, na.rm = T))
-
-monthly_means <- MET %>% 
-  aggreswmp(by = "months", params = c('atemp')) %>% # daily averages
-  mutate(year = lubridate::year(datetimestamp),
-         month = lubridate::month(datetimestamp, label = T)) %>% 
-  group_by(month) %>% 
-  summarize(monthly_mean = mean(atemp, na.rm = T))
-
-MET %>% 
-  aggreswmp(by = "months", params = c('atemp')) %>% # daily averages
-  mutate(year = lubridate::year(datetimestamp),
-         month = lubridate::month(datetimestamp, label = T)) %>%
-  left_join(monthly_means, by = "month") %>% 
-  mutate(anomaly = atemp - monthly_mean) %>% 
-  ggplot(aes(x = month, y = anomaly, group = year)) +
-  geom_line(aes(color = year == 2023, size = year == 2023), show.legend = F) +
-  geom_hline(yintercept = 0, color = "gray30") +
-  scale_color_manual(values = c('gray', '#0075AC')) +
-  scale_size_manual(values = c(1, 1.5)) +
-  theme_classic() +
-  theme(axis.text = element_text(color = "black", size = 12)) +
-  labs(x = "",
-       y = "Monthly temperature anomaly (C)") +
-  annotate("text",
-           label = "2023",
-           x = 'Feb',
-           y = 4,
-           color = '#0075AC')
-
 ```
 
 ```{r}
@@ -426,4 +428,3 @@ MET %>%
   column_spec(1, border_left = T)
 ```
 
-# Precipitation patterns
