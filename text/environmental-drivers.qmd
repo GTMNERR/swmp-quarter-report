@@ -291,6 +291,45 @@ MET %>%
 ```
 
 ```{r}
+#| label: fig-temp-anomalies
+#| echo: false
+#| fig.cap: "Monthly temperature anomalies at GTMNERR Pellicer Creek weather station from 2002-2023"
+
+refmean <-   MET %>% 
+  aggreswmp(by = "days", params = c('atemp')) %>% # daily averages
+  summarize(mean = mean(atemp, na.rm = T))
+
+monthly_means <- MET %>% 
+  aggreswmp(by = "months", params = c('atemp')) %>% # daily averages
+  mutate(year = lubridate::year(datetimestamp),
+         month = lubridate::month(datetimestamp, label = T)) %>% 
+  group_by(month) %>% 
+  summarize(monthly_mean = mean(atemp, na.rm = T))
+
+MET %>% 
+  aggreswmp(by = "months", params = c('atemp')) %>% # daily averages
+  mutate(year = lubridate::year(datetimestamp),
+         month = lubridate::month(datetimestamp, label = T)) %>%
+  left_join(monthly_means, by = "month") %>% 
+  mutate(anomaly = atemp - monthly_mean) %>% 
+  ggplot(aes(x = month, y = anomaly, group = year)) +
+  geom_line(aes(color = year == 2023, size = year == 2023), show.legend = F) +
+  geom_hline(yintercept = 0, color = "gray30") +
+  scale_color_manual(values = c('gray', '#0075AC')) +
+  scale_size_manual(values = c(1, 1.5)) +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12)) +
+  labs(x = "",
+       y = "Monthly temperature anomaly (C)") +
+  annotate("text",
+           label = "2023",
+           x = 'Feb',
+           y = 4,
+           color = '#0075AC')
+
+```
+
+```{r}
 #| label: tbl-high-temp-duration
 #| echo: false
 #| tbl-cal: Date and duration of temperatures over 90 degrees fahrenheit for greater than 2 hours at the Pellicer Creek weather station
