@@ -205,7 +205,7 @@ MET %>%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5),
         axis.text = element_text(color = "black")) +
   labs(x = "Time of Day (HH:MM)",
-       y = "Intensity (mMol/m-2)")
+       y = "Intensity of Photosynthetically Active Radiation (mMol/m-2)")
 )
 ```
 
