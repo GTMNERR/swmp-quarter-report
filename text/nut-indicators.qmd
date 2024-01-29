@@ -34,11 +34,13 @@ By visiting [Florida Rules](https://www.flrules.org/gateway/ruleno.asp?id=62-302
 
 ## Summary
 
-Waters at all stations were oxygenated following spring rainfall events and Nor'easters (@fig-rainfall-2; @fig-do); however, dissolved oxygen was lower than average from late January through mid-March at Pine Island and Pellicer Creek and again at the end July at Pine Island (@fig-do-1; @fig-do-2). This pattern is likely correlated with the warmer than average temperatures this area experienced during this time (@fig-range-atemp; @fig-range-temp). Pellicer Creek had daily average dissolved oxygen values that fell within normal ranges (@fig-do-4), however continuous data show low dissolved oxygen values in several months: June, July, August, and September (@fig-do-pc). Pine Island has experienced very low dissolved oxygen values (less than 2 mg/L) frequently in the past two years, which is uncharacteristic for this station, particularly in the past five years (@fig-do-pi). This August was especially pronounced with prolonged periods in poor conditions (@fig-do-pi-2). @tbl-pc-do and @tbl-pi-do show the hypoxia events and duration (more than 0.5 hrs) at Pine Island and Pellicer Creek for this year.
+Most of the stations reported daily average dissolved oxygen values on the lower end of their average ranges in the first quarter of the year (@fig-do), generally coinciding with the higher temperatures observed during the same period of time (@fig-range-temp). Daily averages fell outside average ranges at Pine Island several times throughout the year (@fig-do-1). When temperatures were warmer (Jan-Mar, Aug), the values were lower than the average limit. After the cooler weather in October and the various weather events in the fall (Nor'easters and King Tides), the daily dissolved oxygen values increased above the average range. This year saw some of the lowest and most prolonged periods of dissolved oxygen at Pine Island in the last five years (@fig-do-pi). Values fell below the 2 mg/L hypoxia threshold several times a day and for multiple days in August (@fig-do-pi-2; @tbl-do-pi). 
 
-Chlorophyll *a* values were higher than average at all stations from January through May (@fig-chla-boxplots), frequently over the state thresholds. Although too soon to make inferences, so far the data shows elevated annual geometric means of chlorophyll *a* at all stations except Fort Matanzas (@fig-chla-agm). Chlorophyll *a* at Pine Island continues to remain exceptionally high with this year seeing record monthly high values for January (7.0 $\mu$g/L), March (9.8 $\mu$g/L), and September (12 $\mu$g/L).
+Pellicer Creek frequently experiences low dissolved oxygen events annually (@fig-do-pc-1) and this year was no exception. Though daily averages were relatively within the average daily range (@fig-do-4), closer inspection of the continuous data show several low dissolved oxygen events in July and August, in particular (@fig-do-pc-2). The duration of these events were often not long and not as frequent as Pine Island (@tbl-do-pc).
 
-Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) are difficult this year since quite a bit of the values were not able to be calculated. At Pine Island and Pellicer Creek, however, high TN was observed in the high rainfall months of July and August (@fig-tn-boxplots). Total Kjeldahl Nitrogen (TKN) was lower than average for most stations; however, all stations experienced higher levels in May and August (@fig-tkn-boxplots).
+Chlorophyll *a* values were often higher than average at all stations this year (@fig-chla-boxplots). Chlorophyll *a* at Pine Island more often fell above the state threshold (6.6 $\mu$g/L) than below and record monthly high values were observed in January (7.0 $\mu$g/L), March (9.8 $\mu$g/L), and September (12 $\mu$g/L) (@fig-chla-boxplots-1). San Sebastian also saw high chlorophyll *a* for every month except November and December (data of which is not included in this report at this time) with a record high in January of 7.3 $\mu$g/L. November, however, was much lower than normal at this station (@fig-chla-boxplots-2). Elevated chlorophyll *a* was observed from May through July at Fort Matanzas (@fig-chla-boxplots-3). Pellicer Creek was consistently high for most of the year, with a record value in March (14.5 $\mu$g/L), but experienced lower than normal ranges in October and November (@fig-chla-boxplots-4). Annual geometric mean (AGM) chlorophyll *a* values were high and above the state threshold levels at all sites except for Fort Matanzas (@fig-chla-agm). These values do not include data from December 2023 as that data has not been received from the laboratory as of the current edition of this report. Therefore, these values are likely to change following the addition of the final month of the year.
+
+Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) were difficult this year since quite a bit of the values were not able to be calculated. At Pine Island and Pellicer Creek, however, high TN was observed in the high rainfall months of July and August and also in November (@fig-tn-boxplots). Total Kjeldahl Nitrogen (TKN) was lower than average for most stations; however, all stations experienced higher levels in May, August, and November (@fig-tkn-boxplots).
 
 Total phosphorus continues to fall below the state threshold for every station and similar to TKN, all stations experienced elevated values of total phosphorus and orthophosphate in May (@fig-tp-boxplots; @fig-po4-boxplots). Relatively high levels of orthophosphate were observed at Pine Island January through May and again in August (@fig-po4-boxplots).
 
@@ -69,6 +71,58 @@ pc |>
   filter(do_mgl < 20 & do_mgl > 0) |> 
   historical_daily_range(param = 'do_mgl', target_yr = 2023, criteria = 2)
 
+```
+
+Dissolved oxygen at Pine Island has been uncharacteristically low in the past two years.
+
+```{r}
+#| label: fig-do-pi
+#| echo: false
+#| fig-cap: Continuous dissolved oxygen at Pine Island with monthly average overlaid in solid gray line. Conditions are indicated as good when above 5 mg/L, fair between 2 and 5 mg/L, and poor if less than 2 mg/L.
+#| fig.subcap:
+#|     - "For the past five years"
+#|     - "For the current 2023 year"
+#| layout-ncol: 2
+
+threshold_criteria_plot(pi, param = 'do_mgl', rng = c(2018, 2023), 
+                        thresholds = c(2,5),
+                        threshold_labs = c('Poor', 'Fair', 'Good'), 
+                        monthly_smooth = TRUE, 
+                        threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')) +
+  theme(axis.text = element_text(color = "black", size = 18),
+        axis.title.y = element_text(size = 20))
+
+threshold_criteria_plot(pi, param = 'do_mgl', rng = c(2023, 2023), 
+                        thresholds = c(2,5),
+                        threshold_labs = c('Poor', 'Fair', 'Good'), 
+                        monthly_smooth = TRUE, 
+                        threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')) +
+  theme(axis.text = element_text(color = "black", size = 18),
+        axis.title.y = element_text(size = 20))
+
+```
+
+```{r}
+#| label: tbl-pi-do
+#| echo: false
+#| tbl-cap: "Identification and Duration of Hypoxia Events (< 2 mg/L for > 0.5 hrs) at Pine Island"
+
+pi %>% 
+  filter(datetimestamp > "2023-01-01 00:00") %>% 
+  setstep() %>% 
+  threshold_identification(param = c('do_mgl'),
+                           parameter_threshold = c(2),
+                           threshold_type = c('<'),
+                           time_threshold = 0.5) %>% 
+  select(-parameter, -thr_violation, -statement) %>% 
+  rename(`Duration (hrs)` = duration,
+         `Start Time` = starttime,
+         `End Time` = endtime) %>% 
+  kbl(align = "c") %>%
+  kable_styling(fixed_thead = T) %>% 
+  column_spec(3, border_left = T)
+  
+  
 ```
 
 Pellicer Creek is located within a waterbody with known impairments for dissolved oxygen, chlorophyll *a*, and fecal coliform bacteria. As such, this station frequently experiences low dissolved oxygen values, particularly in the summer months (@fig-do-pc).
@@ -115,7 +169,7 @@ pc %>%
                            threshold_type = c('<'),
                            time_threshold = 0.5) %>% 
   select(-parameter, -thr_violation, -statement) %>% 
-  rename(Duration = duration,
+  rename(`Duration (hrs)` = duration,
          `Start Time` = starttime,
          `End Time` = endtime) %>% 
   kbl(align = "c") %>%
@@ -125,57 +179,7 @@ pc %>%
   
 ```
 
-Dissolved oxygen at Pine Island has been uncharacteristically low in the past two years.
 
-```{r}
-#| label: fig-do-pi
-#| echo: false
-#| fig-cap: Continuous dissolved oxygen at Pine Island with monthly average overlaid in solid gray line. Conditions are indicated as good when above 5 mg/L, fair between 2 and 5 mg/L, and poor if less than 2 mg/L.
-#| fig.subcap:
-#|     - "For the past five years"
-#|     - "For the current 2023 year"
-#| layout-ncol: 2
-
-threshold_criteria_plot(pi, param = 'do_mgl', rng = c(2018, 2023), 
-                        thresholds = c(2,5),
-                        threshold_labs = c('Poor', 'Fair', 'Good'), 
-                        monthly_smooth = TRUE, 
-                        threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')) +
-  theme(axis.text = element_text(color = "black", size = 18),
-        axis.title.y = element_text(size = 20))
-
-threshold_criteria_plot(pi, param = 'do_mgl', rng = c(2023, 2023), 
-                        thresholds = c(2,5),
-                        threshold_labs = c('Poor', 'Fair', 'Good'), 
-                        monthly_smooth = TRUE, 
-                        threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')) +
-  theme(axis.text = element_text(color = "black", size = 18),
-        axis.title.y = element_text(size = 20))
-
-```
-
-```{r}
-#| label: tbl-pi-do
-#| echo: false
-#| tbl-cap: "Identification and Duration of Hypoxia Events (< 2 mg/L for > 0.5 hrs) at Pine Island"
-
-pi %>% 
-  filter(datetimestamp > "2023-01-01 00:00") %>% 
-  setstep() %>% 
-  threshold_identification(param = c('do_mgl'),
-                           parameter_threshold = c(2),
-                           threshold_type = c('<'),
-                           time_threshold = 0.5) %>% 
-  select(-parameter, -thr_violation, -statement) %>% 
-  rename(Duration = duration,
-         `Start Time` = starttime,
-         `End Time` = endtime) %>% 
-  kbl(align = "c") %>%
-  kable_styling(fixed_thead = T) %>% 
-  column_spec(3, border_left = T)
-  
-  
-```
 
 ### Chlorophyll *a*
 
@@ -304,7 +308,7 @@ agm(station = "gtmpcnut",
 
 #### Total Nitrogen
 
-TN is calculated by adding TKN and NO23.
+TN is calculated by adding TKN and NO23. It accounts for the inorganic nitrogen fraction as well as larger pools of organic bioavailable forms. 
 
 Several of the NO23 values fell below the Florida Department of Environmental Protection Central Lab's minimum detection limit and therefore TN was not able to be calculated and is missing for quite a few months at all the stations (@fig-tn-boxplots). This was especially true at Fort Matanzas which has the least amount of TN data (@fig-tn-boxplots-3).
 
@@ -368,14 +372,14 @@ boxplot_currentyear(station = "gtmpcnut",
            label = "State Threshold 1.10 (mg/L)")
 ```
 
-#### Dissolved Inorganic Nitrogen
+#### Ammonium
 
-DIN is calculated by adding NO23 and ammonia (NH4). Due to the low or undetectable levels of NO23, DIN is also missing quite a bit of information (@fig-din-boxplots).
+Ammonium is directly measured in our samples and is a key inorganic nutrient assimilated by phytoplankton in primary production. 
 
 ```{r}
-#| label: fig-din-boxplots
+#| label: fig-nh4-boxplots
 #| echo: false
-#| fig.cap: Historical monthly dissolved inorganic nitrogen at each SWMP water quality station with current year monthly value overlaid in red. 
+#| fig.cap: Historical monthly ammonium at each SWMP water quality station with current year monthly value overlaid in red. 
 #| fig.subcap:
 #|    - "Pine Island"
 #|    - "San Sebastian"
@@ -384,24 +388,24 @@ DIN is calculated by adding NO23 and ammonia (NH4). Due to the low or undetectab
 #| layout-ncol: 2
 
 boxplot_currentyear(station = "gtmpinut", 
-                     param = din, 
+                     param = nh4f, 
                      threshold = FALSE) +
- labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)") 
+ labs(y = "Mean Monthly Ammonium (mg/L)") 
 
 boxplot_currentyear(station = "gtmssnut", 
-                     param = din, 
+                     param = nh4f, 
                      threshold = FALSE) +
- labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)")
+ labs(y = "Mean Monthly Ammonium (mg/L)")
 
 boxplot_currentyear(station = "gtmfmnut", 
-                     param = din, 
+                     param = nh4f, 
                      threshold = FALSE) +
- labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)")
+ labs(y = "Mean Monthly Ammonium (mg/L)")
 
 boxplot_currentyear(station = "gtmpcnut", 
-                     param = din, 
+                     param = nh4f, 
                      threshold = FALSE) +
- labs(y = "Mean Monthly Dissolved Inorganic Nitrogen (mg/L)")
+ labs(y = "Mean Monthly Ammonium (mg/L)")
 
 
 ```

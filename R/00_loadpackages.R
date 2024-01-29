@@ -10,6 +10,8 @@ library(SWMPrExtension) # expanded plotting and analysis of SWMP data from NERRS
 # 02 tidy and wrangle ----
 library(tidyverse) # because...tidyverse (ggplot2, tidyr, dplyr)
 library(lubridate) # dates and times
+library(weathermetrics) # functions to convert between weather metrics
+library(cimir) # to convert wind direction degrees to cardinal directions/compass
 
 # 03 pulling information and statistics ----
 # library(broom) # convert statistical analysis objects into tidy tibbles
@@ -27,6 +29,8 @@ library(scales) # scale functions for visualization
 library(plotly) # create interactive web graphics - use for html output files
 library(gganimate) # create animated web graphics
 library(dygraphs) # create dynamic graphics
+library(gghighlight) # allows for highlighting flexibility in ggplot2
+library(ggthemes) # colorblind palettes
 
 # 06 mapping ---------------------------------------------------------------
 # library(leaflet)

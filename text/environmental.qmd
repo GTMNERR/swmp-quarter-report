@@ -25,34 +25,39 @@ load(here('output','data', 'fm_wq.Rdata'))
 load(here('output','data', 'pc_wq.Rdata'))
 ```
 
-The following includes variables that establish the estuarine setting: rainfall, water temperature, and salinity. These variables are driven primarily by climatic patterns and largely influence water quality condition.
+The following includes variables that establish the estuarine setting: rainfall, light intensity, water temperature, and salinity. These variables are driven primarily by climatic patterns and largely influence water quality condition.
 
 ## Summary
 
-Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023), [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), and June (@fig-rainfall-1; @fig-rainfall-2). In July, northeast Florida received consistent and large amounts of precipitation (@fig-rainfall). Almost 61% of days in July had detectable levels of rainfall (@fig-rainfall-2) and it also had the most amount of heavy rain (7.6 - 50 mm/hr) (@fig-rainfall-3). After the summer rains, however, early fall (September - October) was pretty minimal with very few rain days (rain greater than 1 mm) (@fig-rainfall-2). However, even though there were not many rainy days in October at the weather station, all the precipitation for the month was collected on one day: October 12, 2023 (@fig-rainfall-1) which had varying rainfall intensities throughout (@fig-rainfall-3). 
+In July, northeast Florida received consistent and large amounts of precipitation (@fig-rainfall). Almost 61% of days in July had detectable levels of rainfall (@fig-rainfall-2) and it also had the most amount of heavy rain (7.6 - 50 mm/hr) (@fig-rainfall-3). After the summer rains, however, early fall (September - October) was pretty minimal with very few rain days (rain greater than 1 mm) (@fig-rainfall-2). However, even though there were not many rainy days in October at the weather station, all the rainfall for the month was collected on one day: October 12, 2023 (@fig-rainfall-1). Nor'easters brought heavy rainfall in [March](https://www.weather.gov/bgm/pastWinterMarch142023), [April](https://flaglerlive.com/strong-noreaster-conditions-and-erosion-expected-on-easter-sunday-and-monday/), June, and December (@fig-rainfall-1; @fig-rainfall-2). These events are discussed in further detail in the next chapter.
 
-Daily average air temperatures were high and variable during the first part of the year, but daily averages fell within the historical range for the GTMNERR station through October (@fig-range-atemp-1). However, when comparing monthly averages in June and July to previous years, 2023 has been one of the hotter and wetter summers on record (@fig-range-atemp-2). October also experienced a few temperature drops outside of the average range, but only for a short time as values returned to the higher end of the  range within a few days (@fig-range-atemp-1).
+In 2023, the average daily amount of light intensity for each month is shown in @fig-lightintensity. There was less intense light in the extreme months of the year (Jan, Feb, Nov, Dec) and more in the mid-months of the year. The most intense light was observed between April - August. 
+
+Daily average air temperatures were high and variable during the first part of the year, particularly in February, but fell within the historical range for the GTMNERR station through October (@fig-range-atemp). October also experienced a few temperature drops outside of the average range (@fig-range-atemp). More discussions on temperature anomalies can be found in the next chapter.
 
 Water temperatures have generally been on the higher end of the range throughout the year (@fig-range-temp). Temperatures have been most variable and lower at stations most influenced by freshwater runoff (Pine Island and Pellicer Creek). Daily averages fell within historical ranges at the stations within June, but all stations experienced higher temperatures in July and August (@fig-range-temp). The cooler weather in October also is evident in the water temperatures as clear drops in daily averages were observed at all four stations, though more pronounced at Pellicer Creek, the shallowest of the four stations (@fig-range-temp-4).
 
-The April Nor'easter had strong winds from the N and NE directions for four days (@fig-winds). Strong winds from all of the Nor'easters initially raised salinity at all stations (@fig-range-sal), and the effect was especially pronounced at Pellicer Creek (@fig-range-sal-4). After the winds died down, the effects of the heavy rainfall were evident in the drops in salinity following the storm events. Though not much rainfall was observed in October, the Nor'easters and seasonal "king tide" events did see higher water depths and lower salinities at all sites (@fig-range-sal; @fig-range-depth).
-
-![Weather Service Image from Flagler Live showing the wind speed predictions for the April Nor\'easter](/images/weather-service-easter.jpg) 
-
-As a result of strong N-NE winds, increases in water depths/levels were observed at all stations during the periods of the Nor'easters (@fig-range-depth).
+The heavy summer rains brought salinities at all stations much lower than their average daily ranges (@fig-range-sal), particularly at the stations farthest from the inlets (@fig-range-sal-1; @fig-range-sal-4). Nor'easters and fall "King Tides" did help to raise salinities often at most sites, particularly April in Pellicer Creek (@fig-range-sal-4) and September-October at all sites.
 
 ## Data
 
 ### Rainfall
 
-Data is  presented as monthly totals and then daily totals as "rain days" which are categorized into Wet (\<10 mm), Very Wet (20-29 mm), and Extremely Wet (\>30 mm) days. 
+Data is  presented as quarterly totals, then monthly, and then daily totals as "rain days" which are categorized into Wet (\<10 mm), Very Wet (20-29 mm), and Extremely Wet (\>30 mm) days. 
 
 ```{r}
-#| label: fig-rainfall-totals
-#| include: false
-#| fig.cap: Ongoing quarterly totals of precipitation at the Pellicer Creek weather station
+#| label: fig-rainfall
+#| echo: false
+#| fig.cap: Rainfall at the Pellicer Creek weather station.
+#| fig.subcap:
+#|    - "Quarterly total precipitation for 2023."
+#|    - "Monthly total precipitation for 2023."
+#|    - "Daily rainfall totals for days with more than 1mm of day."
+#|    - "Hourly rainfall intensity counts by category per month."
+#| layout-ncol: 2
 
-# The simplest way to bin rainfall within a single year is to present the data by quarter.
+
+# QUARTERLY ----
 
 MET |> 
   SWMPrExtension::seasonal_barplot(param = 'totprcp',
@@ -64,23 +69,15 @@ MET |>
                                                     'Apr-Jun', 
                                                     'Jul-Sep', 
                                                     'Oct-Dec'),
+                                   hist_rng = c(2003,2023),
                                    hist_avg = TRUE,
                                    converted = F) + 
   theme(axis.text.x = element_text(angle = 45,
                                    vjust = 0.6),
         axis.text = element_text(color = "black"))
-```
 
-```{r}
-#| label: fig-rainfall
-#| echo: false
-#| fig.cap: Rainfall at the Pellicer Creek weather station.
-#| fig.subcap:
-#|    - "Current year monthly total precipitation."
-#|    - "Daily rainfall totals for days with more than 1mm of day."
-#|    - "Hourly rainfall intensity counts by category per month."
-#| layout-ncol: 2
 
+## MONTHLY ----
 
 MET |> 
   filter(datetimestamp > '2023-01-01 00:15') %>%
@@ -91,19 +88,21 @@ MET |>
   # summarise(mean = mean(sum)) %>%
   ggplot(aes(x = month, y = sum)) +
   geom_col(fill = "#0075AC") +
-  geom_hline(yintercept = 81.4, linewidth = 1, linetype = "dashed", color = "grey50") +
+  geom_hline(yintercept = 96.4, linewidth = 1, linetype = "dashed", color = "grey50") +
   geom_text(aes(label = sum), vjust = 1.5, color = "white") +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
-  theme(axis.text = element_text(color = "black"),
-        axis.title.y = element_text(color = "black")) +
-  geom_text(aes(x = "Oct", y = 90), 
-            label = "81.4 mm",
+  theme(axis.text = element_text(color = "black", size = 12),
+        axis.title.y = element_text(color = "black", size = 12)) +
+  geom_text(aes(x = "Feb", y = 105), 
+            label = "96.4 mm",
             size = 4.5,
             color = "grey50") +
   labs(x = '',
-       y = 'Total Monthly Precipitation (mm)',
-       caption = "Hortizontal line represents current year monthly average.")
+       y = 'Precipitation (mm)',
+       caption = "Hortizontal line represents monthly average.")
+
+## DAILY ----
 
 fun_in <- function(x) sum(x, na.rm = TRUE)
 
@@ -131,46 +130,16 @@ MET |>
   scale_y_continuous(expand = c(0,0), limits = c(0,70)) +
   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
   theme_classic() +
-  theme(axis.text = element_text(color = "black"),
-        axis.title.y = element_text(color = "black")) +
+  theme(axis.text = element_text(color = "black", size = 12),
+        axis.title.y = element_text(color = "black", size = 12)) +
   labs(x = '',
        y = 'Total Daily Precipitation (mm)',
        color = "Amount of Rain")
 
+## INTENSITY ----
 
 # rainfall intensity 
 # in mm/hr
-
-# MET |>
-#   filter(datetimestamp > '2023-01-01 00:15') %>% 
-#   aggreswmp(by = "hours", FUN = fun_in, params = "totprcp") %>% 
-#   rename(intensity = totprcp) %>%
-#   filter(intensity > 0) %>% 
-#   ggplot() +
-#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"), 
-#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"), 
-#                 ymin = 2.5, ymax = 7.6), 
-#             fill = "gray90", alpha = 0.5) +
-#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"), 
-#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"), 
-#                 ymin = 7.6, ymax = 50), 
-#             fill = "gray60", alpha = 0.5) +
-#   geom_rect(aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01"), 
-#                 xmax = as.POSIXct(Inf, origin = "1970-01-01"), 
-#                 ymin = 50, ymax = Inf), 
-#             fill = "steelblue4", alpha = 0.5) +
-#   geom_hline(yintercept = 2.5, linetype = "dashed") +
-#   geom_hline(yintercept = 7.6, linetype = "dashed") +
-#   geom_segment(aes(x = datetimestamp, xend = datetimestamp, y = 0, yend = intensity)) +
-#   geom_point(aes(x = datetimestamp, y = intensity))  +
-#   scale_y_continuous(expand = c(0,0), limits = c(0,50)) +
-#   scale_x_datetime(date_breaks = "1 month", date_labels = "%b") +
-#   theme_bw() +
-#   annotate("text",
-#            label = "Intense", 
-#            angle = 90,
-#            x = as.POSIXct("2023-01-01 00:00"),
-#            y = 1)
 
 MET |>
   filter(datetimestamp > '2023-01-01 00:15') %>% 
@@ -179,7 +148,7 @@ MET |>
   mutate(date = lubridate::date(datetimestamp),
          month = lubridate::month(datetimestamp, label = TRUE),
          intensity_cat = case_when(intensity == 0 ~ "No Rain (0 mm/hr)",
-           intensity > 0 & intensity < 2.5 ~ "Light Rain (<2.5 mm/hr)",
+                                    intensity > 0 & intensity < 2.5 ~ "Light Rain (<2.5 mm/hr)",
                                     intensity >= 2.5 & intensity < 7.6 ~ "Moderate Rain (2.5-7.6 mm/hr)",
                                     intensity >= 7.6 & intensity < 50 ~ "Heavy Rain (7.6-50 mm/hr)",
                                     intensity > 30 ~ "Intense Rain (>50mm/hr)"),
@@ -190,67 +159,66 @@ MET |>
                                                           "Intense Rain (>50mm/hr)")
                                 )
          ) %>% 
-  # group_by(month, intensity_cat) %>% 
-  # count() %>% 
+  # group_by(month, intensity_cat) %>%
+  # count() %>%
   filter(intensity_cat != "No Rain (0 mm/hr)") %>% 
   ggplot() +
-  geom_bar(aes(x = month, fill = intensity_cat),
-           position = "dodge") +
+  geom_bar(aes(x = month, fill = intensity_cat)) +
   ggthemes::scale_fill_colorblind() +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() +
-  theme(axis.text = element_text(color = "black"),
-        axis.title.y = element_text(color = "black")) +
+  theme(axis.text = element_text(color = "black", size = 12),
+        axis.title.y = element_text(color = "black", size = 12)) +
   labs(x = "",
        y = "Amount of Hours",
        fill = "Intensity Category")
 ```
 
+### Light Intensity
+
+The plot below is interactive. Clicking on elements in the legend (months) will select or deselect months of interest. Additionally, the axis can be adjusted by selecting portions of the plot to isolate.
+
+```{r}
+#| label: fig-lightintensity
+#| echo: false
+#| fig.cap: "Total light intensity by time of day for each month based on photosynthetically active radiation data collected at the Pellicer Creek weather station."
+
+ggplotly(
+MET %>% 
+  filter(datetimestamp > '2023-01-01 00:15') %>% 
+  select(datetimestamp, totpar) %>% 
+  mutate(month = lubridate::month(datetimestamp, label = T), 
+         day = lubridate::day(datetimestamp),
+         hour = lubridate::hour(datetimestamp),
+         minute = lubridate::minute(datetimestamp),
+         time = format(as.POSIXct(datetimestamp), format = "%H:%M")) %>% 
+  group_by(month, time) %>% 
+  summarize(intensity = sum(totpar, na.rm = T)) %>% 
+  ungroup() %>% 
+  mutate(time = strptime(time, format = "%H:%M", tz = ""),
+         datetime = as.POSIXct(time)) %>% 
+  ggplot(aes(x = datetime, y = intensity, group = month)) +
+  geom_line(aes(color = month)) +
+  scale_x_datetime(date_breaks = "hours", 
+                   date_labels = "%H:%M") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5),
+        axis.text = element_text(color = "black")) +
+  labs(x = "Time of Day (HH:MM)",
+       y = "Intensity of Photosynthetically Active Radiation (mMol/m-2)")
+)
+```
+
 ### Temperature
 
-Air and water temperatures are presented as daily averages (blue line) with historic ranges (daily range and average daily range) provided in shades of gray. Additionally, due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (°C) with total monthly precipitation (mm). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red.
+Air and water temperatures are presented as daily averages (blue line) with historic ranges (daily range and average daily range) provided in shades of gray. 
 
 ```{r}
 #| label: fig-range-atemp
 #| echo: false
-#| fig.cap: Air temperature recorded at the SWMP weather station.
-#| fig-subcap: 
-#|    - "Historical daily range of air temperature at the SWMP weather station with current year daily average overlaid in blue."
-#|    - "Comparison of average dew point and air temperature with total monthly precipitation for the months of June and July. This year is indicated in red."
-#| layout-ncol: 2
+#| fig.cap: "Historical daily range of air temperature at the SWMP weather station with current year daily average overlaid in blue."
 
 historical_daily_range(MET, param = 'atemp', target_yr = 2023)
-
-fun_in <- function(x) sum(x, na.rm = TRUE)
-
-gtm_prcp <- SWMPr::aggreswmp(MET, FUN = fun_in, by = "months", params = c('totprcp')) %>% 
-  mutate(prcp_in = totprcp * 0.0393701)
-
-MET %>% 
-  SWMPr::aggreswmp(by = "months") %>%
-  select(datetimestamp, atemp, rh) %>% 
-  mutate(dew_pt = atemp - ((100-rh)/5.),
-         dew_pt_f = ((dew_pt*9/5) + 32),
-         atemp_f = ((atemp * 9/5) + 32)) %>% 
-  # select(datetimestamp, dew_pt_f, atemp_f) %>% 
-  dplyr::left_join(gtm_prcp, by = "datetimestamp") %>% 
-  # select(-totprcp) %>% 
-  mutate(year = lubridate::year(datetimestamp),
-         month = lubridate::month(datetimestamp, label = TRUE)) %>% 
-  filter(month %in% c("Jun", "Jul"))  %>%
-  filter(totprcp > 0) %>% 
-    ggplot(aes(x = atemp, y = dew_pt)) +
-    geom_point(aes(size = totprcp, color = year >= 2023), alpha = 0.5) +
-    scale_size(range = c(1, 24), name="Total Precipitation (mm)") +
-    geom_text(aes(label = year), size = 2) +
-    facet_wrap(~month, ncol = 1) +
-    scale_color_manual(values = c("gray", "red")) +
-    theme_classic() +
-    labs(x = "Average Air Temperature (C)",
-         y = "Average Dew Point (C)") +
-    guides(color = "none")
-
-rm(fun_in, gtm_prcp)
 
 ```
 
@@ -296,97 +264,4 @@ historical_daily_range(fm, param = 'sal', target_yr = 2023)
 historical_daily_range(pc, param = 'sal', target_yr = 2023)
 ```
 
-### Wind Speed
 
-Wind speeds at the Pellicer Creek weather station during the timeperiod of a Nor'easter within the state of Florida, USA (Friday, April 7 - Friday, April 14, 2023). All data is based on five-second readings taken at the weather station which are averaged for each 15-minute timeperiod. The maximum gust during the 15-minute time period is also recorded as "Max Wind Speed".
-
-```{r}
-#| label: fig-winds
-#| echo: false
-#| fig.cap: Hourly wind speed and direction from the Pellicer Creek weather station during the timeperiod of a Nor'easter within the state of Florida, USA (Friday, April 7 - Friday, April 14, 2023). The warmer the color, the higher the recorded wind speed. The arrows indicate the direction the wind was blowing towards and the length of the arrow reflects the wind speed information with longer meaning faster. All data is based upon 5 second readings at the weather station.
-#| fig.subcap:
-#|    - "Averaged hourly wind speeds"
-#|    - "Maximum wind gust recorded within each hour"
-#| layout-ncol: 2
-
-# helpful resources
-# https://stackoverflow.com/questions/47880918/how-to-plot-wind-direction-with-lat-lon-and-arrow-in-ggplot2 
-# https://stackoverflow.com/questions/49639881/how-to-get-a-legend-on-geom-spoke
-
-# create new df for just wspd and direction data with conversions to SI units
-MET_wind_April <- MET %>% 
-  filter(between(datetimestamp, 
-                 as.POSIXct("2023-04-08 00:00:00"), 
-                 as.POSIXct("2023-04-14 00:00:00"))) %>%
-  aggreswmp(by = "hours", params = c('wspd', 'maxwspd', 'wdir')) %>% 
-  mutate(day = lubridate::date(datetimestamp),
-         hour = lubridate::hour(datetimestamp),
-         wspd_mph = wspd * 2.23694,
-         maxwspd_mph = maxwspd * 2.23694,
-         wdir_x = ((wdir +180) * 0.0174533)) # angles are in radians not degrees, need to convert for plotting
-
-
-MET_wind_April %>% 
-  filter(day > as.Date("2023-04-07")) %>% 
-  ggplot(aes(x = hour, 
-             y = day, 
-             fill = wspd_mph, 
-             angle = wdir_x, 
-             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
-    geom_raster() +
-    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
-    scale_fill_distiller(palette = "RdYlBu") + 
-    coord_equal(expand = 0) +
-    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
-    theme_classic() +
-  theme(axis.text = element_text(color = "black", size = 12),
-        legend.position = 'top', 
-        legend.direction = 'horizontal') +
-  labs(x = "Hour of Day (24hr)",
-       y = "",
-       fill = "Wind Speed (mph)")
-
-
-MET_wind_April %>% 
-  filter(day > as.Date("2023-04-07")) %>% 
-  ggplot(aes(x = hour, 
-             y = day, 
-             fill = maxwspd_mph, 
-             angle = wdir_x, 
-             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
-    geom_raster() +
-    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
-    scale_fill_distiller(palette = "RdYlBu") + 
-    coord_equal(expand = 0) +
-    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
-    theme_classic() +
-  theme(axis.text = element_text(color = "black", size = 12),
-        legend.position = 'top', 
-        legend.direction = 'horizontal') +
-  labs(x = "Hour of Day (24hr)",
-       y = "",
-       fill = "Max Wind Gusts (mph)")
-
-```
-
-### Water Depth
-
-```{r}
-#| label: fig-range-depth
-#| echo: false
-#| fig.cap: Historical daily range of water depth at each SWMP water quality station with current year daily average overlaid in blue.
-#| fig.subcap:
-#|    - "Pine Island"
-#|    - "San Sebastian"
-#|    - "Fort Matanzas"
-#|    - "Pellicer Creek"
-#| layout-ncol: 2
-
-historical_daily_range(pi, param = 'cdepth', target_yr = 2023)
-
-historical_daily_range(ss, param = 'cdepth', target_yr = 2023)
-
-historical_daily_range(fm, param = 'cdepth', target_yr = 2023)
-
-historical_daily_range(pc, param = 'clevel', target_yr = 2023)
-```

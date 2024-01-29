@@ -1,0 +1,430 @@
+---
+title: "Environmental Drivers"
+execute: 
+  warning: false
+  error: false
+filters: 
+  - lightbox
+lightbox: auto
+bibliography: references.bib
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| label: data-load
+#| include: false
+library(here)
+
+source(here::here('R', '00_loadpackages.R'))
+# source(here::here('R', '02.2_load_wrangle_WQ-and-MET.R'))
+
+load(here('output','data', 'MET.Rdata'))
+
+load(here('output','data', 'pi_wq.Rdata'))
+load(here('output','data', 'ss_wq.Rdata'))
+load(here('output','data', 'fm_wq.Rdata'))
+load(here('output','data', 'pc_wq.Rdata'))
+```
+
+This section includes drivers of environmental patterns such as significant weather events (e.g., tropical cyclones, Nor'easters, large rainfall events), anomalies, and other local events with impact.
+
+# Tropical Cyclones
+
+There were no tropical cyclones that had direct impacts in the GTM estuary during this reporting year.
+
+# Nor'easters
+
+Typically, a Nor'easter is a storm along the East Coast of the United States with predominating winds from the northeast. These storms can last anywhere from a single day (24 hours) to several days or weeks. @callahan2022 found that these events can produce surges just as severe as tropical cyclone events, and occur much more frequently. These events are often in the news associated with blizzards in the New England area of the US; however, their impacts to northeast Florida are not insignificant. Often these storms bring higher water levels, heavy prevailing winds, precipitation, and reduced tidal exchange.
+
+Using duration of wind directions between 0-100 degrees for greater than 24-hrs, several "Nor'easter" events were identified using data from the Pellicer Creek weather station (@tbl-neer). Occasionally, localized wind directions result in values outside of this 0-100 degree window, which in turn affects the duration calculations, but it appears that there were at least 11-14 possible Nor'easter events identified in this way for 2023. The longest event occurred in the second half of the year from September 28th - October 6th, approximately nine days. This table does not identify strength of the winds during these events, just the time frames in which winds were originating and prevailing in the 0-100 degree directions. When examining daily median wind speeds over the year, the highest values are most often associated with winds in the north-northeast (NNE) and east-northeast (ENE) directions (@fig-medianwspd).
+
+The April Nor'easter had strong winds from the N and NE directions for four days (@fig-winds-april). Strong winds from all of the Nor'easters initially raised salinity at all stations (@fig-range-sal), and the effect was especially pronounced at Pellicer Creek (@fig-range-sal-4). After the winds died down, the effects of the heavy rainfall were evident in the drops in salinity following the storm events. Compared to the Nor'easter in April, the longest one that occurred between September 27 - October 6, 2023 did not have as high of winds for quite as long, but they were from the NNE and ENE directions for a much longer period of time (@fig-winds-long). 
+
+![Weather Service Image from Flagler Live showing the wind speed predictions for the April Nor\'easter](/images/weather-service-easter.jpg) 
+
+Many of these events correspond to months with rainfall totals exceeding the annual monthly average (@fig-rainfall-2), particularly months within the "drier" times of the year, such as April, November, and December. The heaviest rain (7.6-50 mm/hr) for April, June, and December were all associated with Nor'easter events (@fig-rainfall-3).
+
+```{r}
+#| label: tbl-neer
+#| echo: false
+#| tbl-cap: "Identification and Duration of Wind from 0-100 degrees for periods greater than 24 hours"
+
+
+MET %>% 
+  filter(datetimestamp > "2023-01-01 00:00") %>% 
+  setstep() %>% 
+  threshold_identification(param = c('wdir'),
+                           parameter_threshold = c(100),
+                           threshold_type = c('<='),
+                           time_threshold = 24) %>% 
+  select(-parameter, -thr_violation, -statement) %>% 
+  rename(`Duration (hrs)` = duration,
+         `Start Time` = starttime,
+         `End Time` = endtime) %>% 
+  kbl(align = "c") %>%
+  kable_styling(fixed_thead = T) %>% 
+  column_spec(3, border_left = T)
+
+```
+
+```{r}
+#| label: fig-medianwspd
+#| echo: false
+#| fig-cap: "Daily median wind speeds observed in 2023 at the Pellicer Creek weather station. Winds from the north-northeast and east-northeast directions are identified with color, all other values are gray."
+
+# fun_in <- function(x) median(x, na.rm = TRUE)
+# 
+# a <- MET %>% 
+#   filter(datetimestamp > '2023-01-01 00:15') %>% 
+#   aggreswmp(by = "days", FUN = fun_in, params = c('wspd', 'maxwspd', 'wdir'))
+# 
+# # use linear model to determine 95% confidence interval of median wind speeds to determine lower limit of wind speed
+# l.model <- lm(maxwspd ~ 1, a)
+# confint(l.model, level = 0.95)
+
+MET %>% 
+  filter(datetimestamp > '2023-01-01 00:15') %>% 
+  aggreswmp(by = "days", FUN = fun_in, params = c('wspd', 'maxwspd', 'wdir')) %>%
+  mutate(compass = cimir::cimis_degrees_to_compass(wdir)) %>%
+  # filter(wspd > 2.278 & maxwspd > 4.03469) %>%
+  ggplot(aes(x = datetimestamp, y = wspd, color = compass)) +
+  geom_point(size = 2) +
+  gghighlight(compass %in% c('NNE', 'ENE'), use_direct_label = FALSE) +
+  scale_x_date(date_breaks = "month", date_labels = "%b") +
+  ggthemes::scale_color_colorblind() +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black")) +
+  labs(x = "",
+       y = "Daily Median Wind Speed (m/s)",
+       color = "Cardinal Direction")
+```
+
+
+```{r}
+#| label: fig-winds-april
+#| echo: false
+#| fig.cap: Hourly wind speed and direction from the Pellicer Creek weather station during the timeperiod of a Noreaster within the state of Florida, USA (Friday, April 7 - Friday, April 14, 2023). The warmer the color, the higher the recorded wind speed. The arrows indicate the direction the wind was blowing towards and the length of the arrow reflects the wind speed information with longer meaning faster. All data is based upon 5 second readings at the weather station.
+#| fig.subcap:
+#|    - "Averaged hourly wind speeds"
+#|    - "Maximum wind gust recorded within each hour"
+#| layout-ncol: 2
+
+# helpful resources
+# https://stackoverflow.com/questions/47880918/how-to-plot-wind-direction-with-lat-lon-and-arrow-in-ggplot2 
+# https://stackoverflow.com/questions/49639881/how-to-get-a-legend-on-geom-spoke
+
+# create new df for just wspd and direction data with conversions to SI units
+MET_wind_April <- MET %>% 
+  filter(between(datetimestamp, 
+                 as.POSIXct("2023-04-08 00:00:00"), 
+                 as.POSIXct("2023-04-14 00:00:00"))) %>%
+  aggreswmp(by = "hours", params = c('wspd', 'maxwspd', 'wdir')) %>% 
+  mutate(day = lubridate::date(datetimestamp),
+         hour = lubridate::hour(datetimestamp),
+         wspd_mph = wspd * 2.23694,
+         maxwspd_mph = maxwspd * 2.23694,
+         wdir_x = ((wdir +180) * 0.0174533)) # angles are in radians not degrees, need to convert for plotting
+
+
+MET_wind_April %>% 
+  filter(day > as.Date("2023-04-07")) %>% 
+  ggplot(aes(x = hour, 
+             y = day, 
+             fill = wspd_mph, 
+             angle = wdir_x, 
+             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
+    geom_raster() +
+    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
+    scale_fill_distiller(palette = "RdYlBu") + 
+    coord_equal(expand = 0) +
+    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
+    theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12),
+        legend.position = 'top', 
+        legend.direction = 'horizontal') +
+  labs(x = "Hour of Day (24hr)",
+       y = "",
+       fill = "Wind Speed (mph)")
+
+
+MET_wind_April %>% 
+  filter(day > as.Date("2023-04-07")) %>% 
+  ggplot(aes(x = hour, 
+             y = day, 
+             fill = maxwspd_mph, 
+             angle = wdir_x, 
+             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
+    geom_raster() +
+    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
+    scale_fill_distiller(palette = "RdYlBu") + 
+    coord_equal(expand = 0) +
+    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
+    theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12),
+        legend.position = 'top', 
+        legend.direction = 'horizontal') +
+  labs(x = "Hour of Day (24hr)",
+       y = "",
+       fill = "Max Wind Gusts (mph)")
+
+```
+
+```{r}
+#| label: fig-winds-long
+#| echo: false
+#| fig.cap: Hourly wind speed and direction from the Pellicer Creek weather station during the timeperiod of the longest Noreaster observed at the station (Thursday, September 28 - Friday, October 6, 2023). The warmer the color, the higher the recorded wind speed. The arrows indicate the direction the wind was blowing towards and the length of the arrow reflects the wind speed information with longer meaning faster. All data is based upon 5 second readings at the weather station.
+#| fig.subcap:
+#|    - "Averaged hourly wind speeds"
+#|    - "Maximum wind gust recorded within each hour"
+#| layout-ncol: 2
+
+# helpful resources
+# https://stackoverflow.com/questions/47880918/how-to-plot-wind-direction-with-lat-lon-and-arrow-in-ggplot2 
+# https://stackoverflow.com/questions/49639881/how-to-get-a-legend-on-geom-spoke
+
+# create new df for just wspd and direction data with conversions to SI units
+MET_wind_long <- MET %>% 
+  filter(between(datetimestamp, 
+                 as.POSIXct("2023-09-28 00:00:00"), 
+                 as.POSIXct("2023-10-06 00:00:00"))) %>%
+  aggreswmp(by = "hours", params = c('wspd', 'maxwspd', 'wdir')) %>% 
+  mutate(day = lubridate::date(datetimestamp),
+         hour = lubridate::hour(datetimestamp),
+         wspd_mph = wspd * 2.23694,
+         maxwspd_mph = maxwspd * 2.23694,
+         wdir_x = ((wdir +180) * 0.0174533)) # angles are in radians not degrees, need to convert for plotting
+
+
+MET_wind_long %>% 
+  filter(day > as.Date("2023-09-27")) %>% 
+  ggplot(aes(x = hour, 
+             y = day, 
+             fill = wspd_mph, 
+             angle = wdir_x, 
+             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
+    geom_raster() +
+    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
+    scale_fill_distiller(palette = "RdYlBu") + 
+    coord_equal(expand = 0) +
+    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
+    theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12),
+        legend.position = 'top', 
+        legend.direction = 'horizontal') +
+  labs(x = "Hour of Day (24hr)",
+       y = "",
+       fill = "Wind Speed (mph)")
+
+
+MET_wind_long %>% 
+  filter(day > as.Date("2023-09-27")) %>% 
+  ggplot(aes(x = hour, 
+             y = day, 
+             fill = maxwspd_mph, 
+             angle = wdir_x, 
+             radius = scales::rescale(wspd_mph, c(.3, .8)))) +
+    geom_raster() +
+    geom_spoke(arrow = arrow(length = unit(.05, 'inches'))) + 
+    scale_fill_distiller(palette = "RdYlBu") + 
+    coord_equal(expand = 0) +
+    scale_x_continuous(breaks = c(0,2,4,6,8,10,12,14,16,18,20,22)) +
+    theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12),
+        legend.position = 'top', 
+        legend.direction = 'horizontal') +
+  labs(x = "Hour of Day (24hr)",
+       y = "",
+       fill = "Max Wind Gusts (mph)")
+
+```
+
+# King Tides
+
+"King Tides" are the highest predicted tides of the year and in northeast Florida, these typically occur during the fall months. For the city of St. Augustine, these events often bring nuisance flooding in coastal and low-lying areas. For the estuary, this typically also means reduced tidal exchange, a lack of low tide events, and more and prolonged flooding in the intertidal wetlands. The city reports these events on their [website](https://www.citystaug.com/1032/King-Tide-Chart-Prediction).
+
+Predicted king tide events for 2023 were:
+
+-   September 26-30th
+
+-   October 1st-3rd
+
+-   October 27th-31st
+
+-   November 25-28th
+
+-   December 13-15th
+
+The effect of the King Tides on daily average water depths at all the stations is observable in the steady climb of the water beginning in mid-September (@fig-range-depth); however, the individual "events" are not quite as clear outside of the Pellicer Creek station (@fig-range-depth-4) where clear increases in water levels are closely aligned with these periods. Unfortunately, September King Tide, which was coupled with a Nor'easter, was not captured at this station due to equipment maintenance issues.
+
+## Water Depth
+
+Note that the water level data at Pellicer Creek only includes data from 2021-2023, which is due to this station switching from reporting depth to reporting level (NAVD88) in 2021 (@fig-range-depth-4).
+
+```{r}
+#| label: fig-range-depth
+#| echo: false
+#| fig.cap: Historical daily range of water depth at each SWMP water quality station with current year daily average overlaid in blue.
+#| fig.subcap:
+#|    - "Pine Island"
+#|    - "San Sebastian"
+#|    - "Fort Matanzas"
+#|    - "Pellicer Creek"
+#| layout-ncol: 2
+
+historical_daily_range(pi, param = 'cdepth', target_yr = 2023)
+
+historical_daily_range(ss, param = 'cdepth', target_yr = 2023)
+
+historical_daily_range(fm, param = 'cdepth', target_yr = 2023)
+
+historical_daily_range(pc, param = 'clevel', target_yr = 2023)
+```
+
+# Temperature anomalies
+
+Extreme temperatures, both high and low, have drastic impacts on environmental function. For black mangroves (*Avicennia germinans*), temperatures under -4°C have been found to reduce mangrove cover [@cavanaugh2013]. Extreme high temperatures are often health risks as they result in many [heat-related illnesses](https://www.weather.gov/safety/heat-illness).
+
+Overall, examining monthly temperature anomalies this year, the first part of the year (January - April) and August were higher than "normal" (@fig-temp-anomalies). With February of this year almost setting a record on the time series (2018 had the hottest February). May, June, and October were "cooler" than normal.  
+
+Due to news reports of extremely high temperatures in the summer months this year, a comparison was made of previous data for the months of June and July with average dew point (°C) and average air temperature (°C) with total monthly precipitation (mm) (@fig-dewpt). The greater the dew point, the greater the moisture in the air. This year, 2023, is indicated in red. This year, 2023, has been one of the hotter and wetter summers on record (@fig-dewpt).
+
+In Florida, excessive heat warnings are issued with the heat index (what the temperature "feels like", which takes relative humidity into consideration) exceeds 113 degrees. The Pellicer Creek station recorded several times when the hourly average heat index exceeded this threshold (@fig-heatindex), particularly in [August](https://www.jacksonville.com/story/weather/2023/08/08/florida-heat-excessive-heat-warning-watch-advisory-heat-index-hot-weather/70548546007/).
+
+Heat waves are periods of abnormally hot weather that extend for more than two days (https://www.weather.gov/safety/heat-during). But what makes a heat wave? https://www.stormgeo.com/weather/articles/what-constitutes-a-heat-wave-around-the-world/#:\~:text=In%20the%20Northeast%20United%20States,F%20(32.2%20%C2%B0C). For the purposes here, periods of time where temperatures were in excess of 90 degrees fahrenheit for greater than 2 hours were examined (@tbl-high-temp-duration) and most of these periods were observed daily from August 7 - August 15, 2023, the longest of which was approximately 9.25 hours on August 10, 2023.
+
+No freezing events were recorded in this recording year.
+
+```{r}
+#| label: fig-temp-anomalies
+#| echo: false
+#| fig.cap: Monthly temperature anomalies at GTMNERR Pellicer Creek weather station from 2002-2023
+
+# refmean <-   MET %>% 
+#   aggreswmp(by = "days", params = c('atemp')) %>% # daily averages
+#   summarize(mean = mean(atemp, na.rm = T))
+
+monthly_means <- MET %>% 
+  aggreswmp(by = "months", params = c('atemp')) %>% # daily averages
+  mutate(year = lubridate::year(datetimestamp),
+         month = lubridate::month(datetimestamp, label = T)) %>% 
+  group_by(month) %>% 
+  summarize(monthly_mean = mean(atemp, na.rm = T))
+
+ggplotly(
+  MET %>% 
+  aggreswmp(by = "months", params = c('atemp')) %>% # daily averages
+  mutate(year = lubridate::year(datetimestamp),
+         month = lubridate::month(datetimestamp, label = T)) %>%
+  left_join(monthly_means, by = "month") %>% 
+  mutate(anomaly = atemp - monthly_mean) %>% 
+  ggplot(aes(x = month, y = anomaly, group = year)) +
+  geom_line(aes(color = year == 2023, size = year == 2023), show.legend = F) +
+  geom_hline(yintercept = 0, color = "gray30") +
+  scale_color_manual(values = c('gray', '#0075AC')) +
+  scale_size_manual(values = c(1, 1.5)) +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 12)) +
+  labs(x = "",
+       y = "Monthly temperature anomaly (\u00b0C)") +
+  annotate("text",
+           label = "2023",
+           x = 'Feb',
+           y = 4,
+           color = '#0075AC')
+)
+```
+
+```{r}
+#| label: fig-dewpt
+#| echo: false
+#| fig.cap: Comparison of average dew point and air temperature with total monthly precipitation for the months of June and July. This year is indicated in red.
+
+
+fun_in <- function(x) sum(x, na.rm = TRUE)
+
+gtm_prcp <- SWMPr::aggreswmp(MET, FUN = fun_in, by = "months", params = c('totprcp')) %>% 
+  mutate(prcp_in = totprcp * 0.0393701)
+
+MET %>% 
+  SWMPr::aggreswmp(by = "months") %>%
+  select(datetimestamp, atemp, rh) %>%
+  mutate(dew_pt = weathermetrics::humidity.to.dewpoint(rh = rh, t = atemp, temperature.metric = "celsius"),
+         dew_pt_f = weathermetrics::celsius.to.fahrenheit(dew_pt),
+         atemp_f = weathermetrics::celsius.to.fahrenheit(atemp)) %>% 
+  # mutate(dew_pt = atemp - ((100-rh)/5.),
+  #        dew_pt_f = ((dew_pt*9/5) + 32),
+  #        atemp_f = ((atemp * 9/5) + 32)) %>% 
+  # select(datetimestamp, dew_pt_f, atemp_f) %>% 
+  dplyr::left_join(gtm_prcp, by = "datetimestamp") %>% 
+  # select(-totprcp) %>% 
+  mutate(year = lubridate::year(datetimestamp),
+         month = lubridate::month(datetimestamp, label = TRUE)) %>% 
+  filter(month %in% c("Jun", "Jul"))  %>%
+  filter(totprcp > 0) %>% 
+    ggplot(aes(x = atemp, y = dew_pt)) +
+    geom_point(aes(size = totprcp, color = year >= 2023), alpha = 0.5) +
+    scale_size(range = c(1, 24), name="Total Precipitation (mm)") +
+    geom_text(aes(label = year), size = 2) +
+    facet_wrap(~month, ncol = 1) +
+    scale_color_manual(values = c("gray", "red")) +
+    theme_classic() +
+    theme(axis.text = element_text(size = 12, color = "black"),
+          axis.title = element_text(size = 12, color = "black")) +
+    labs(x = "Average Air Temperature (\u00b0C)",
+         y = "Average Dew Point (\u00b0C)") +
+    guides(color = "none")
+
+rm(fun_in, gtm_prcp)
+```
+
+```{r}
+#| label: fig-heatindex
+#| echo: false
+#| fig-cap: Hourly averaged heat index values recorded at the Pellicer Creek weather station in 2023 with values in excess of 113 degrees colored in red.
+
+# Convert to 'heat index' from raw temperature. https://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml
+
+MET %>% 
+  filter(datetimestamp >= as.POSIXct("2023-01-01 00:00")) %>% 
+  aggreswmp(by = "hours") %>% 
+  select(datetimestamp, atemp, rh) %>% 
+  mutate(heat_index = weathermetrics::heat.index(t = atemp, rh = rh, temperature.metric = "celsius", 
+                                                 output.metric = "fahrenheit"),
+         atemp_f = weathermetrics::celsius.to.fahrenheit(atemp)) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = datetimestamp, y = heat_index)) +
+    geom_hline(yintercept = 113, linetype = "dashed", color = "gray") +
+    geom_point(aes(color = heat_index > 113)) +
+    scale_x_datetime(breaks = "months", date_labels = "%b") +
+    scale_color_manual(values = c("black", "tomato")) +
+    theme_classic() +
+    theme(axis.text = element_text(size = 12, color = "black"),
+          axis.title = element_text(size = 12, color = "black"),
+          legend.position = "none") +
+    labs(x = "",
+         y = "Heat Index (\u00b0F)")
+```
+
+```{r}
+#| label: tbl-high-temp-duration
+#| echo: false
+#| tbl-cal: Date and duration of temperatures over 90 degrees fahrenheit for greater than 2 hours at the Pellicer Creek weather station
+
+MET %>% 
+  filter(datetimestamp >= as.POSIXct("2023-01-01 00:00")) %>% 
+  setstep() %>% 
+  threshold_identification(param = c('atemp'),
+                           parameter_threshold = c(32.2),
+                           threshold_type = c('>='),
+                           time_threshold = 2) %>% 
+  mutate(date = as.Date(starttime)) %>% 
+  group_by(date) %>% 
+  summarize(sum = sum(duration)) %>% 
+  rename(Date = date,
+         `Duration (hrs)` = sum) %>% 
+  kbl(align = "c") %>%
+  kable_styling(fixed_thead = T) %>% 
+  column_spec(1, border_left = T)
+```
+
