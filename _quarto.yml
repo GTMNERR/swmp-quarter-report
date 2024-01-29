@@ -24,10 +24,10 @@ book:
       chapters:
       - text/environmental.qmd
       - text/nut-indicators.qmd
+      - text/environmental-drivers.qmd
       - text/misc-bac.qmd
       - text/maintenance.qmd
       
-    - part: text/freshwater-pc.qmd
       
   appendices: 
     - text/a1-cmecs.qmd
@@ -41,7 +41,7 @@ book:
 
   page-footer:
       left: |
-        The data used in this report was last updated in November 2023.
+        The data used in this report was last updated in January 2024.
       right: |
         Built with <a href="https://quarto.org/">Quarto</a>.
 
