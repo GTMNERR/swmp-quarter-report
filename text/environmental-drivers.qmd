@@ -29,11 +29,11 @@ load(here('output','data', 'pc_wq.Rdata'))
 
 This section includes drivers of environmental patterns such as significant weather events (e.g., tropical cyclones, Nor'easters, large rainfall events), anomalies, and other local events with impact.
 
-# Tropical Cyclones
+## Tropical Cyclones
 
 There were no tropical cyclones that had direct impacts in the GTM estuary during this reporting year.
 
-# Nor'easters
+## Nor'easters
 
 Typically, a Nor'easter is a storm along the East Coast of the United States with predominating winds from the northeast. These storms can last anywhere from a single day (24 hours) to several days or weeks. @callahan2022 found that these events can produce surges just as severe as tropical cyclone events, and occur much more frequently. These events are often in the news associated with blizzards in the New England area of the US; however, their impacts to northeast Florida are not insignificant. Often these storms bring higher water levels, heavy prevailing winds, precipitation, and reduced tidal exchange.
 
@@ -73,7 +73,7 @@ MET %>%
 #| echo: false
 #| fig-cap: "Daily median wind speeds observed in 2023 at the Pellicer Creek weather station. Winds from the north-northeast and east-northeast directions are identified with color, all other values are gray."
 
-# fun_in <- function(x) median(x, na.rm = TRUE)
+fun_in <- function(x) median(x, na.rm = TRUE)
 # 
 # a <- MET %>% 
 #   filter(datetimestamp > '2023-01-01 00:15') %>% 
@@ -239,7 +239,7 @@ MET_wind_long %>%
 
 ```
 
-# King Tides
+## King Tides
 
 "King Tides" are the highest predicted tides of the year and in northeast Florida, these typically occur during the fall months. For the city of St. Augustine, these events often bring nuisance flooding in coastal and low-lying areas. For the estuary, this typically also means reduced tidal exchange, a lack of low tide events, and more and prolonged flooding in the intertidal wetlands. The city reports these events on their [website](https://www.citystaug.com/1032/King-Tide-Chart-Prediction).
 
@@ -257,7 +257,7 @@ Predicted king tide events for 2023 were:
 
 The effect of the King Tides on daily average water depths at all the stations is observable in the steady climb of the water beginning in mid-September (@fig-range-depth); however, the individual "events" are not quite as clear outside of the Pellicer Creek station (@fig-range-depth-4) where clear increases in water levels are closely aligned with these periods. Unfortunately, September King Tide, which was coupled with a Nor'easter, was not captured at this station due to equipment maintenance issues.
 
-## Water Depth
+### Water Depth
 
 Note that the water level data at Pellicer Creek only includes data from 2021-2023, which is due to this station switching from reporting depth to reporting level (NAVD88) in 2021 (@fig-range-depth-4).
 
@@ -281,7 +281,7 @@ historical_daily_range(fm, param = 'cdepth', target_yr = 2023)
 historical_daily_range(pc, param = 'clevel', target_yr = 2023)
 ```
 
-# Temperature anomalies
+## Temperature anomalies
 
 Extreme temperatures, both high and low, have drastic impacts on environmental function. For black mangroves (*Avicennia germinans*), temperatures under -4°C have been found to reduce mangrove cover [@cavanaugh2013]. Extreme high temperatures are often health risks as they result in many [heat-related illnesses](https://www.weather.gov/safety/heat-illness).
 
