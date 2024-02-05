@@ -42,7 +42,7 @@ Chlorophyll *a* values were often higher than average at all stations this year 
 
 Interpretations of patterns in total nitrogen (TN) and dissolved inorganic nitrogen (DIN) were difficult this year since quite a bit of the values were not able to be calculated. At Pine Island and Pellicer Creek, however, high TN was observed in the high rainfall months of July and August and also in November (@fig-tn-boxplots). Total Kjeldahl Nitrogen (TKN) was lower than average for most stations; however, all stations experienced higher levels in May, August, and November (@fig-tkn-boxplots).
 
-Total phosphorus continues to fall below the state threshold for every station and similar to TKN, all stations experienced elevated values of total phosphorus and orthophosphate in May (@fig-tp-boxplots; @fig-po4-boxplots). Relatively high levels of orthophosphate were observed at Pine Island January through May and again in August (@fig-po4-boxplots).
+Total phosphorus continues to fall below the state threshold for every station and similar to TKN, all stations experienced elevated values of total phosphorus and orthophosphate in May (@fig-tp-boxplots; @fig-po4-boxplots). Relatively high levels of orthophosphate were observed at Pine Island January through May and again in August (@fig-po4-boxplots-1).
 
 ## Data
 
@@ -246,7 +246,7 @@ boxplot_currentyear(station = "gtmpcnut",
 ```{r}
 #| label: fig-chla-agm
 #| echo: false
-#| fig.cap: Annual geometric means of monthly chlorophyll *a* at each SWMP water quality station. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530. Values exceeding the threshold are indicated in red. The 2022 value is based upon data to date and does not equal an entire year of data.
+#| fig.cap: Annual geometric means of monthly chlorophyll *a* at each SWMP water quality station. Horizontal dashed blue line indicates the state threshold, as found in F.A.C 62-302.530. Values exceeding the threshold are indicated in red. The 2023 value is based upon data to date and does not equal an entire year of data.
 #| fig.subcap:
 #|    - "Pine Island"
 #|    - "San Sebastian"
