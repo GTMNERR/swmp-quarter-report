@@ -385,6 +385,7 @@ rm(fun_in, gtm_prcp)
 
 # Convert to 'heat index' from raw temperature. https://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml
 
+ggplotly(
 MET %>% 
   filter(datetimestamp >= as.POSIXct("2023-01-01 00:00")) %>% 
   aggreswmp(by = "hours") %>% 
@@ -403,7 +404,8 @@ MET %>%
           axis.title = element_text(size = 12, color = "black"),
           legend.position = "none") +
     labs(x = "",
-         y = "Heat Index (\u00b0F)")
+         y = "Hourly Averaged Heat Index (\u00b0F)")
+)
 ```
 
 ```{r}
