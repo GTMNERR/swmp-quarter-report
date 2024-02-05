@@ -15,7 +15,7 @@ lightbox: auto
 The continuous water quality component of the SWMP is comprised of four fixed monitoring stations, at which automated instruments (data sondes) are deployed to continuously collect information on a suite of water quality parameters. Discrete water samples are collected monthly for nutrients and other parameters at these same four stations, with an additional diel sampler deployed at one station. To complement the water quality data, the GTMNERR also operates and maintains one continuous meteorological station.
 
 ::: callout-note
-All SWMP data are publicly available for download through the NERRS Centralized Data Management Office (CDMO). The CDMO supports data management protocols for SWMP and is responsible for ensuring that SWMP data are of high quality and accessible online (<https://www.nerrsdata.org>).
+All SWMP data are publicly available for download through the NERRS Centralized Data Management Office (CDMO). The CDMO supports data management protocols for SWMP and is responsible for ensuring that SWMP data are of high quality and accessible online (<https://nerrsdata.org>).
 :::
 
 ## Locations
